@@ -81,7 +81,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <nav className="bg-gray-50 py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center space-x-2 text-sm text-gray-600">
-            <Link href="/" className="hover:text-blue-600">Home</Link>
+            <Link href="/search" className="hover:text-blue-600">Directory</Link>
             <span>/</span>
             <Link href={`/${listing.category}`} className="hover:text-blue-600 capitalize">
               {categoryName}

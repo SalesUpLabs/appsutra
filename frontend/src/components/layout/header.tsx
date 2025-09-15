@@ -22,7 +22,12 @@ export function Header() {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex items-center">
-            <Link href="/" className="flex items-center space-x-2">
+            <Link
+              href="https://www.appsutra.ai/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center space-x-2"
+            >
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-sm">AS</span>
               </div>
