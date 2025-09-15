@@ -9,10 +9,10 @@ import { getListingBySlug, getAllListings, getRelatedListings } from '@/lib/list
 import { formatPricing, isIndianCompany, formatDate, getCategoryDisplayName } from '@/lib/utils'
 
 interface ProductPageProps {
-  params: {
+  params: Promise<{
     category: string
     slug: string
-  }
+  }>
 }
 
 export async function generateStaticParams() {
@@ -24,7 +24,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
-  const listing = await getListingBySlug(params.category, params.slug)
+  const { category, slug } = await params
+  const listing = await getListingBySlug(category, slug)
 
   if (!listing) {
     return {
@@ -61,7 +62,8 @@ function parseMarkdownContent(content: string) {
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const listing = await getListingBySlug(params.category, params.slug)
+  const { category, slug } = await params
+  const listing = await getListingBySlug(category, slug)
 
   if (!listing) {
     notFound()

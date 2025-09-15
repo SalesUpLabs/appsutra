@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Search, Filter, X, ChevronDown } from 'lucide-react'
 import { Header } from '@/components/layout/header'
@@ -11,7 +11,7 @@ import { getCategories } from '@/lib/listings'
 import { Listing, SearchFilters, Category } from '@/lib/types'
 import { getCategoryDisplayName } from '@/lib/utils'
 
-export default function SearchPage() {
+function SearchContent() {
   const searchParams = useSearchParams()
   const [query, setQuery] = useState(searchParams.get('q') || '')
   const [results, setResults] = useState<Listing[]>([])
@@ -292,5 +292,29 @@ export default function SearchPage() {
 
       <Footer />
     </div>
+  )
+}
+
+export default function SearchPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-white">
+        <Header />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+          <div className="animate-pulse">
+            <div className="h-12 bg-gray-200 rounded w-1/2 mx-auto mb-8"></div>
+            <div className="h-16 bg-gray-200 rounded mb-8"></div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, i) => (
+                <div key={i} className="h-64 bg-gray-200 rounded"></div>
+              ))}
+            </div>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    }>
+      <SearchContent />
+    </Suspense>
   )
 }

@@ -13,7 +13,7 @@ export default function NotFound() {
           <Search className="h-16 w-16 text-gray-400 mx-auto mb-4" />
           <h1 className="text-4xl font-bold text-gray-900 mb-4">Page Not Found</h1>
           <p className="text-lg text-gray-600 mb-8">
-            The page you're looking for doesn't exist or may have been moved.
+            The page you&apos;re looking for doesn&apos;t exist or may have been moved.
           </p>
         </div>
 

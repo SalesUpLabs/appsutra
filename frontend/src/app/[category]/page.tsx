@@ -7,9 +7,9 @@ import { getListingsByCategory, getCategories } from '@/lib/listings'
 import { getCategoryDisplayName } from '@/lib/utils'
 
 interface CategoryPageProps {
-  params: {
+  params: Promise<{
     category: string
-  }
+  }>
 }
 
 export async function generateStaticParams() {
@@ -20,8 +20,9 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
-  const categoryName = getCategoryDisplayName(params.category)
-  const listings = await getListingsByCategory(params.category)
+  const { category } = await params
+  const categoryName = getCategoryDisplayName(category)
+  const listings = await getListingsByCategory(category)
 
   if (listings.length === 0) {
     return {
@@ -42,8 +43,9 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 }
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
-  const listings = await getListingsByCategory(params.category)
-  const categoryName = getCategoryDisplayName(params.category)
+  const { category } = await params
+  const listings = await getListingsByCategory(category)
+  const categoryName = getCategoryDisplayName(category)
 
   if (listings.length === 0) {
     notFound()
