@@ -1,0 +1,48 @@
+# Auto-labeling configuration for AppSutra Directory
+# Labels are applied based on file paths in PRs
+
+# Category labels
+'category:crm':
+  - 'listings/crm/**'
+
+'category:hr':
+  - 'listings/hr/**'
+
+'category:marketing':
+  - 'listings/marketing/**'
+
+'category:finance':
+  - 'listings/finance/**'
+
+'category:support':
+  - 'listings/support/**'
+
+'category:analytics':
+  - 'listings/analytics/**'
+
+'category:security':
+  - 'listings/security/**'
+
+'category:devtools':
+  - 'listings/devtools/**'
+
+'category:accounting':
+  - 'listings/accounting/**'
+
+# Type labels
+'documentation':
+  - '*.md'
+  - 'CONTRIBUTING.md'
+  - 'README.md'
+  - 'MODERATION.md'
+
+'validation':
+  - 'schema/**'
+  - 'scripts/**'
+
+'github-config':
+  - '.github/**'
+
+'dependencies':
+  - 'package.json'
+  - 'package-lock.json'

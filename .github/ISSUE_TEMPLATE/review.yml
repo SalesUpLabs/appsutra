@@ -1,0 +1,105 @@
+name: "📝 Write a Review"
+description: "Share your experience with a SaaS product listed on AppSutra Directory"
+title: "Review: [PRODUCT NAME]"
+labels: ["review", "user-feedback"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for sharing your experience! Your review helps the community make informed decisions about SaaS tools.
+
+  - type: dropdown
+    id: product
+    attributes:
+      label: "Product"
+      description: "Which product are you reviewing?"
+      options:
+        - "Zoho CRM"
+        - "Freshsales"
+        - "LeadSquared"
+        - "Razorpay"
+        - "Other (specify in review)"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: rating
+    attributes:
+      label: "Overall Rating"
+      description: "How would you rate this product overall?"
+      options:
+        - "⭐ 1 - Poor"
+        - "⭐⭐ 2 - Below Average"
+        - "⭐⭐⭐ 3 - Average"
+        - "⭐⭐⭐⭐ 4 - Good"
+        - "⭐⭐⭐⭐⭐ 5 - Excellent"
+    validations:
+      required: true
+
+  - type: textarea
+    id: pros
+    attributes:
+      label: "👍 What did you like?"
+      description: "Share the positive aspects of your experience"
+      placeholder: "e.g., Easy to use, great customer support, excellent integrations..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: cons
+    attributes:
+      label: "👎 What could be improved?"
+      description: "Share any challenges or areas for improvement"
+      placeholder: "e.g., Pricing could be better, missing feature X, slow customer support..."
+
+  - type: textarea
+    id: context
+    attributes:
+      label: "📊 Your Context"
+      description: "Help others understand your perspective"
+      placeholder: |
+        - Team size: (e.g., 5-10 people)
+        - Industry: (e.g., E-commerce, SaaS, Consulting)
+        - Use case: (e.g., Lead management, Customer support)
+        - Duration used: (e.g., 6 months)
+        - Plan used: (e.g., Free, Starter, Pro)
+    validations:
+      required: true
+
+  - type: textarea
+    id: detailed_review
+    attributes:
+      label: "📝 Detailed Review"
+      description: "Share your detailed experience, specific features you used, and any tips for other users"
+      placeholder: "Tell us more about your experience with this product..."
+
+  - type: checkboxes
+    id: verification
+    attributes:
+      label: "Verification"
+      description: "Please confirm the following"
+      options:
+        - label: "I am a genuine user of this product"
+          required: true
+        - label: "This review reflects my honest experience"
+          required: true
+        - label: "I am not affiliated with this company (unless disclosed below)"
+          required: true
+
+  - type: textarea
+    id: disclosure
+    attributes:
+      label: "🔍 Disclosure"
+      description: "Any relationships, partnerships, or compensation from the company? (Optional but appreciated for transparency)"
+      placeholder: "e.g., I work for a partner company, I received a discount, etc."
+
+  - type: markdown
+    attributes:
+      value: |
+        ### Guidelines for Reviews
+        - Keep it constructive and helpful
+        - Focus on your actual experience
+        - Be specific with examples when possible
+        - Respect community guidelines
+        - Companies may respond to reviews with clarifications

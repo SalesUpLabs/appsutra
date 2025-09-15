@@ -1,0 +1,107 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://appsutra.ai/listing.schema.json",
+  "title": "AppSutra Listing",
+  "description": "Schema for SaaS product listings in AppSutra Directory",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 100,
+      "description": "Product name"
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "minLength": 2,
+      "maxLength": 50,
+      "description": "Unique slug for URL (lowercase, kebab-case)"
+    },
+    "category": {
+      "type": "string",
+      "description": "Product category (must match categories.json)"
+    },
+    "website": {
+      "type": "string",
+      "format": "uri",
+      "description": "Official website URL"
+    },
+    "logo": {
+      "type": ["string", "null"],
+      "format": "uri",
+      "description": "Logo image URL (optional)"
+    },
+    "pricing": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 200,
+      "description": "Pricing information (e.g., 'Free + Paid from ₹900/mo')"
+    },
+    "locations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "description": "Supported locations/regions"
+    },
+    "use_cases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 10,
+      "description": "Primary use cases"
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 15,
+      "description": "Search keywords"
+    },
+    "trial": {
+      "type": "boolean",
+      "description": "Whether a free trial is available"
+    },
+    "integrations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 20,
+      "description": "Third-party integrations"
+    },
+    "contact_email": {
+      "type": ["string", "null"],
+      "format": "email",
+      "description": "Contact email for partnerships (optional)"
+    },
+    "listing_owner_github": {
+      "type": ["string", "null"],
+      "pattern": "^@[a-zA-Z0-9_-]+$",
+      "description": "GitHub handle of listing owner (e.g., @username)"
+    },
+    "verified": {
+      "type": "boolean",
+      "description": "Whether the listing has been verified by maintainers"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date",
+      "description": "Last updated date (YYYY-MM-DD)"
+    }
+  },
+  "required": [
+    "name",
+    "slug",
+    "category",
+    "website",
+    "pricing",
+    "locations",
+    "updated_at"
+  ],
+  "additionalProperties": false
+}

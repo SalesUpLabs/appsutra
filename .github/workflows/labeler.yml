@@ -1,0 +1,86 @@
+name: 🏷️ Auto Label PRs
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  label:
+    name: Add Category Labels
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - name: 📥 Checkout repository
+        uses: actions/checkout@v4
+
+      - name: 🏷️ Apply category labels
+        uses: actions/labeler@v5
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          configuration-path: .github/labeler.yml
+
+      - name: 🔍 Add listing type labels
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { execSync } = require('child_process');
+
+            // Get changed files
+            const { data: files } = await github.rest.pulls.listFiles({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number
+            });
+
+            const labels = new Set();
+
+            // Check for new listings
+            const newListings = files.filter(f =>
+              f.filename.startsWith('listings/') &&
+              f.filename.endsWith('.md') &&
+              f.status === 'added'
+            );
+
+            const modifiedListings = files.filter(f =>
+              f.filename.startsWith('listings/') &&
+              f.filename.endsWith('.md') &&
+              f.status === 'modified'
+            );
+
+            if (newListings.length > 0) {
+              labels.add('new-listing');
+            }
+
+            if (modifiedListings.length > 0) {
+              labels.add('listing-update');
+            }
+
+            // Check for schema changes
+            const schemaChanges = files.some(f => f.filename.startsWith('schema/'));
+            if (schemaChanges) {
+              labels.add('schema-change');
+            }
+
+            // Check for script changes
+            const scriptChanges = files.some(f => f.filename.startsWith('scripts/'));
+            if (scriptChanges) {
+              labels.add('scripts');
+            }
+
+            // Add size label
+            if (newListings.length > 5) {
+              labels.add('large-batch');
+            }
+
+            // Apply labels
+            if (labels.size > 0) {
+              await github.rest.issues.addLabels({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                labels: Array.from(labels)
+              });
+            }

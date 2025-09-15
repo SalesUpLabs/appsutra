@@ -1,0 +1,88 @@
+name: "🐛 Bug Report"
+description: "Report a problem with the AppSutra Directory"
+title: "Bug: [Brief description]"
+labels: ["bug"]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug! This helps us improve the directory for everyone.
+
+  - type: dropdown
+    id: bug_type
+    attributes:
+      label: "Bug Type"
+      description: "What type of issue are you experiencing?"
+      options:
+        - "Listing information is incorrect"
+        - "Broken or invalid link"
+        - "Missing or broken images"
+        - "Search/filtering not working"
+        - "Website display issue"
+        - "Other"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: "Description"
+      description: "A clear and concise description of the bug"
+      placeholder: "Describe what happened and what you expected to happen"
+    validations:
+      required: true
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: "Steps to Reproduce"
+      description: "How can we reproduce this issue?"
+      placeholder: |
+        1. Go to '...'
+        2. Click on '...'
+        3. See error
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: "Expected Behavior"
+      description: "What should have happened instead?"
+    validations:
+      required: true
+
+  - type: textarea
+    id: screenshots
+    attributes:
+      label: "Screenshots"
+      description: "If applicable, add screenshots to help explain the problem"
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: "Environment"
+      description: "Please provide details about your environment"
+      placeholder: |
+        - Browser: (e.g., Chrome 120, Firefox 118)
+        - Operating System: (e.g., Windows 10, macOS 14, Ubuntu 22.04)
+        - Device: (e.g., Desktop, Mobile, Tablet)
+        - Screen size: (if relevant)
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: "Additional Context"
+      description: "Any other context about the problem"
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: "Checklist"
+      description: "Please confirm"
+      options:
+        - label: "I have searched existing issues to avoid duplicates"
+          required: true
+        - label: "This is a bug with the directory, not a product-specific issue"
+          required: true
