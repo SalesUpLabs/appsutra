@@ -3,8 +3,8 @@
 import { useState, useEffect, useCallback, Suspense } from 'react'
 import { useSearchParams } from 'next/navigation'
 import { Search, Filter, X, ChevronDown } from 'lucide-react'
-import { Header } from '@/components/layout/header'
-import { Footer } from '@/components/layout/footer'
+// import { Header } from '@/components/layout/header'
+// import { Footer } from '@/components/layout/footer'
 import { ListingCard } from '@/components/listings/listing-card'
 import { searchListings, getPopularSearchTerms } from '@/lib/search'
 import { getCategories } from '@/lib/listings'
@@ -69,11 +69,10 @@ function SearchContent() {
   const activeFilterCount = Object.values(filters).filter(v => v !== undefined).length
 
   return (
-    <div className="min-h-screen bg-white">
-      <Header />
+    <div className="min-h-screen ">
 
       {/* Search Header */}
-      <section className="bg-gray-50 py-12">
+      <section className=" py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto">
             <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">
@@ -290,7 +289,7 @@ function SearchContent() {
         </div>
       </section>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }
@@ -299,7 +298,7 @@ export default function SearchPage() {
   return (
     <Suspense fallback={
       <div className="min-h-screen bg-white">
-        <Header />
+        {/* <Header /> */}
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="animate-pulse">
             <div className="h-12 bg-gray-200 rounded w-1/2 mx-auto mb-8"></div>
@@ -311,7 +310,6 @@ export default function SearchPage() {
             </div>
           </div>
         </div>
-        <Footer />
       </div>
     }>
       <SearchContent />
