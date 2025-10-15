@@ -3,7 +3,7 @@
  * Colors cycle through blue -> green -> yellow
  */
 
-export const TAG_ACCENT_COLORS = [
+export const ACCENT_COLORS = [
   '#2563EB', // Blue
   '#1DE165', // Green
   '#EB9010', // Yellow
@@ -13,6 +13,6 @@ export const TAG_ACCENT_COLORS = [
  * Get tag accent color based on index
  * Colors cycle through blue -> green -> yellow
  */
-export function getTagColor(index: number): string {
-  return TAG_ACCENT_COLORS[index % TAG_ACCENT_COLORS.length];
+export function getAccentColor(index: number): string {
+  return ACCENT_COLORS[index % ACCENT_COLORS.length];
 }

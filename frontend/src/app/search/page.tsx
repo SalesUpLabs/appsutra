@@ -10,7 +10,7 @@ import { searchListings, getPopularSearchTerms } from "@/lib/search";
 import { getCategories } from "@/lib/listings";
 import { Listing, SearchFilters, Category } from "@/lib/types";
 // import { getCategoryDisplayName } from "@/lib/utils";
-import { getTagColor } from "@/lib/tag-colors";
+import { getAccentColor } from "@/lib/accent-color";
 
 function SearchContent() {
   const searchParams = useSearchParams();
@@ -80,13 +80,13 @@ function SearchContent() {
           <div className="max-w-5xl mx-auto">
             <div className="flex justify-center">
               <div
-                className="inline-flex bg-[#3F78F6] bg-opacity-[12%] text-md items-center rounded-md  text-[#124BC8] px-[20px] py-[10px] gap-3  font-medium ring-1 ring-[#3F78F6] ring-opacity-60 mb-3"
+                className="inline-flex bg-[#3F78F6] bg-opacity-[12%] text-sm items-center rounded-md text-[#124BC8] px-3 py-1.5 gap-2 font-medium ring-1 ring-[#3F78F6] ring-opacity-60 mb-3"
                 aria-label="India's Leading Business Solution Consultant"
               >
                 <img
                   src="/ribbon-badge.png"
                   alt="ribbon badge"
-                  className="mr-2 h-5 w-5"
+                  className="h-4 w-4"
                 />
                 India's Leading Business Solution Consultant
               </div>
@@ -121,6 +121,7 @@ function SearchContent() {
                         if (query.trim() && !searchTags.includes(query.trim())) {
                           setSearchTags([...searchTags, query.trim()]);
                         }
+                        setQuery("");
                         performSearch();
                       }
                     }}
@@ -149,6 +150,7 @@ function SearchContent() {
                       if (query.trim() && !searchTags.includes(query.trim())) {
                         setSearchTags([...searchTags, query.trim()]);
                       }
+                      setQuery("");
                       performSearch();
                     }}
                     className="
@@ -182,12 +184,15 @@ function SearchContent() {
               <div className="flex flex-wrap gap-2 mt-4">
                 {/* map it here */}
                 {searchTags.map((tag, index) => {
-                  const accentColor = getTagColor(index);
+                  const accentColor = getAccentColor(index);
                   return (
                     <span
                       key={index}
-                      className={`inline-flex items-center bg-${accentColor}/10 rounded-lg text-gray-800 text-sm font-medium px-2.5 py-0.5  border-2`}
-                      style={{ borderColor: accentColor }}
+                      className="inline-flex items-center rounded-lg text-gray-800 text-sm font-medium px-2.5 py-0.5 border-2"
+                      style={{
+                        borderColor: accentColor,
+                        backgroundColor: `${accentColor}1A`
+                      }}
                     > 
 
                       {tag}
