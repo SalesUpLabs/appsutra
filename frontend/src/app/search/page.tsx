@@ -9,11 +9,13 @@ import { ListingCard } from "@/components/listings/listing-card";
 import { searchListings, getPopularSearchTerms } from "@/lib/search";
 import { getCategories } from "@/lib/listings";
 import { Listing, SearchFilters, Category } from "@/lib/types";
-import { getCategoryDisplayName } from "@/lib/utils";
+// import { getCategoryDisplayName } from "@/lib/utils";
+import { getTagColor } from "@/lib/tag-colors";
 
 function SearchContent() {
   const searchParams = useSearchParams();
   const [query, setQuery] = useState(searchParams.get("q") || "");
+  const [searchTags, setSearchTags] = useState<string[]>([]);
   const [results, setResults] = useState<Listing[]>([]);
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
@@ -73,8 +75,8 @@ function SearchContent() {
   return (
     <div className="min-h-screen ">
       {/* Search Header */}
-      <section className=" py-12 border-2 ">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-2  border-green-800">
+      <section className=" py-12  ">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ">
           <div className="max-w-5xl mx-auto">
             <div className="flex justify-center">
               <div
@@ -101,78 +103,28 @@ function SearchContent() {
 
             {/* Search Bar */}
             {/* Search Bar */}
-            {/* <div className="relative mb-6 bg-white rounded-xl p-6 shadow-[0px_4px_25.5px_0px_#3B3A3A14]">
-              <Search className="absolute  left-8 top-1/2 transform -translate-y-1/2 text-gray-400" />
-              <input
-                type="text"
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search for your required software here"
-                onKeyDown={(e) => e.key === "Enter" && performSearch()}
-                className="
-    absolute 
-    left-1/2 
-    top-[27px] 
-    -translate-x-1/2 
-    w-[1020px] 
-    h-[51px] 
-    box-border 
-    bg-[#F1F0F3] 
-    border 
-    border-[rgba(214,212,255,0.4)] 
-    rounded-[9px] 
-    pl-12 
-    pr-4 
-    text-lg 
-    text-gray-800 
-    placeholder-gray-500 
-    focus:outline-none 
-    focus:ring-2 
-    focus:ring-blue-500 
-    focus:border-transparent
-  "
-              />
+            <div className="relative mb-6 bg-white rounded-xl p-6 shadow-[0px_4px_25.5px_0px_#3B3A3A14]">
+              <div className="flex justify-center">
+                <div className="relative w-[1020px]">
+                  <Search
+                    className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5"
+                    strokeWidth={3}
+                  />
 
-              <button
-                onClick={performSearch}
-                className="
-    absolute 
-    right-4 
-    top-1/2 
-    -translate-y-1/2 
-    flex 
-    flex-row 
-    justify-center 
-    items-center 
-    px-5 
-    py-[15px] 
-    gap-2 
-    w-[65px] 
-    h-[52px] 
-    bg-gradient-to-b 
-    from-blue-600 
-    to-[#153885] 
-    text-white 
-    font-medium 
-    rounded-[9px] 
-    transition-colors 
-    hover:opacity-90
-  "
-              >
-                Go
-              </button>
-            </div> */}
-            <div className="relative mb-6 bg-white rounded-xl p-6 shadow-[0px_4px_25.5px_0px_#3B3A3A14] flex justify-center">
-  <div className="relative w-[1020px]">
-    <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5" strokeWidth={3}  />
-
-    <input
-      type="text"
-      value={query}
-      onChange={(e) => setQuery(e.target.value)}
-      placeholder="Search for your required software here"
-      onKeyDown={(e) => e.key === 'Enter' && performSearch()}
-      className="
+                  <input
+                    type="text"
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search for your required software here"
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") {
+                        if (query.trim() && !searchTags.includes(query.trim())) {
+                          setSearchTags([...searchTags, query.trim()]);
+                        }
+                        performSearch();
+                      }
+                    }}
+                    className="
         w-full
         h-[51px]
         box-border
@@ -185,15 +137,21 @@ function SearchContent() {
         text-lg
         text-gray-800
         placeholder-gray-500
+        placeholder:font-medium
         focus:outline-none
         focus:ring-2
         focus:border-transparent
       "
-    />
+                  />
 
-    <button
-      onClick={performSearch}
-      className="
+                  <button
+                    onClick={() => {
+                      if (query.trim() && !searchTags.includes(query.trim())) {
+                        setSearchTags([...searchTags, query.trim()]);
+                      }
+                      performSearch();
+                    }}
+                    className="
         absolute
         right-[0px]
         top-1/2
@@ -216,30 +174,37 @@ function SearchContent() {
         transition-colors
         hover:opacity-90
       "
-    >
-      Go
-    </button>
-  </div>
-</div>
-
-
-            {/* Popular Search Terms
-            {!query && (
-              <div className="text-center">
-                <p className="text-sm text-gray-600 mb-3">Popular searches:</p>
-                <div className="flex flex-wrap justify-center gap-2">
-                  {popularTerms.map(term => (
-                    <button
-                      key={term}
-                      onClick={() => setQuery(term)}
-                      className="px-3 py-1 bg-white border border-gray-200 rounded-full text-sm text-gray-700 hover:border-blue-300 hover:text-blue-600 transition-colors"
-                    >
-                      {term}
-                    </button>
-                  ))}
+                  >
+                    Go
+                  </button>
                 </div>
               </div>
-            )} */}
+              <div className="flex flex-wrap gap-2 mt-4">
+                {/* map it here */}
+                {searchTags.map((tag, index) => {
+                  const accentColor = getTagColor(index);
+                  return (
+                    <span
+                      key={index}
+                      className={`inline-flex items-center bg-${accentColor}/10 rounded-lg text-gray-800 text-sm font-medium px-2.5 py-0.5  border-2`}
+                      style={{ borderColor: accentColor }}
+                    > 
+
+                      {tag}
+                      <button
+                        onClick={() => {
+                          const newTags = searchTags.filter((_, i) => i !== index);
+                          setSearchTags(newTags);
+                        }}
+                        className="ml-1 text-gray-600 hover:text-gray-900"
+                      >
+                        &times;
+                      </button>
+                    </span>
+                  );
+                })}
+              </div>
+            </div>
           </div>
         </div>
       </section>
