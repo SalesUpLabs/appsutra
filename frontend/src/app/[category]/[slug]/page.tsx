@@ -2,8 +2,8 @@ import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { ExternalLink, CheckCircle, MapPin, Calendar, Github, Star, MessageSquare } from 'lucide-react'
-import { Header } from '@/components/layout/header'
-import { Footer } from '@/components/layout/footer'
+// import { Header } from '@/components/layout/header'
+// import { Footer } from '@/components/layout/footer'
 import { ListingCard } from '@/components/listings/listing-card'
 import { getListingBySlug, getAllListings, getRelatedListings } from '@/lib/listings'
 import { formatPricing, isIndianCompany, formatDate, getCategoryDisplayName } from '@/lib/utils'
@@ -75,7 +75,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      {/* <Header /> */}
 
       {/* Breadcrumb */}
       <nav className="bg-gray-50 py-4">
@@ -312,7 +312,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </section>
       )}
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }

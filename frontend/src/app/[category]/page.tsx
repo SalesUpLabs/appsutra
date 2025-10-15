@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
-import { Header } from '@/components/layout/header'
-import { Footer } from '@/components/layout/footer'
+// import { Header } from '@/components/layout/header'
+// import { Footer } from '@/components/layout/footer'
 import { ListingCard } from '@/components/listings/listing-card'
 import { getListingsByCategory, getCategories } from '@/lib/listings'
 import { getCategoryDisplayName } from '@/lib/utils'
@@ -63,7 +63,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
 
   return (
     <div className="min-h-screen bg-white">
-      <Header />
+      {/* <Header /> */}
 
       {/* Category Hero */}
       <section className="bg-gradient-to-r from-blue-50 to-indigo-100 py-16">
@@ -197,7 +197,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         </div>
       </section>
 
-      <Footer />
+      {/* <Footer /> */}
     </div>
   )
 }
