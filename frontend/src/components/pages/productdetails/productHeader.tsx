@@ -36,14 +36,22 @@ export function ProductHeader({ company, name, icon, freeplan, freeplanpricing, 
 
   const handleTabClick = (tabId: string) => {
     setActiveTab(tabId);
-    
+
     // Update URL hash
     window.history.pushState(null, '', `#${tabId}`);
-    
-    // Scroll to element
+
+    // Scroll to element with offset for sticky headers
     const element = document.getElementById(tabId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Calculate offset: main header (64px) + product nav (72px) + padding (20px) = 156px
+      const offset = 156;
+      const elementPosition = element.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
     }
   };
 

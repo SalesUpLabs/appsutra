@@ -10,6 +10,7 @@ import { formatPricing, isIndianCompany, formatDate, getCategoryDisplayName } fr
 import WhyChooseUs from '@/components/pages/productdetails/whyChooseUs'
 import { Product } from '@/types/product'
 import { ProductHeader } from '@/components/pages/productdetails/productHeader'
+import { ProductInfo } from '@/components/pages/productdetails/productinfo'
 
 interface ProductPageProps {
   params: Promise<{
@@ -132,7 +133,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       {/* <Header /> */}
       <WhyChooseUs/>
       <ProductHeader company={ProductData.company} name={ProductData.name} icon={ProductData.icon} freeplan={ProductData.freeplan} freeplanpricing={ProductData.freeplanpricing}  categorySlug={ProductData.categorySlug} slug={ProductData.slug}/>
-
+      <ProductInfo/>
       {/* Breadcrumb */}
       <nav className="bg-gray-50 py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
