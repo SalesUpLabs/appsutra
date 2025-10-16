@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button"
 import { Building2 } from "lucide-react"
 
 interface ProductHeaderProps {
-  params: Promise<{
     company: string
     name: string
     icon: string
@@ -10,7 +9,6 @@ interface ProductHeaderProps {
     freeplanpricing: string
     categorySlug: string
     slug: string
-  }>
 }
 export function ProductHeader({ company, name, icon, freeplan, freeplanpricing, categorySlug, slug }: ProductHeaderProps) {
   return (
