@@ -8,12 +8,65 @@ import { ListingCard } from '@/components/listings/listing-card'
 import { getListingBySlug, getAllListings, getRelatedListings } from '@/lib/listings'
 import { formatPricing, isIndianCompany, formatDate, getCategoryDisplayName } from '@/lib/utils'
 import WhyChooseUs from '@/components/pages/productdetails/whyChooseUs'
+import { Product } from '@/types/product'
+import { ProductHeader } from '@/components/pages/productdetails/productHeader'
 
 interface ProductPageProps {
   params: Promise<{
     category: string
     slug: string
   }>
+}
+
+
+const ProductData: Product ={
+  "icon": "/icons/ProductDetailsPage/keka/icon.png",
+  "name": "Keka Services",
+  "company":"Keka Services Private Limited",
+  "freeplan": true,
+  "freeplanpricing": "Rs.1,200/mo",
+  "category": "Human Resource",
+  "categorySlug":"human-resource",
+  "slug": "keka-services",
+  "useCases": ["Lead Management","Sales Pipeline", "Finnancial Services"],
+  "keywords": ["hr","hrms","payroll","employee management","attendance","time tracking","performance management","recruitment","onboarding","offboarding","leave management","benefits administration","compliance management"],
+  "integration": [{ "icon": "razorpay.png" , "title": "Razorpay"},{ "icon": "zapier.png" , "title": "Zapier"},{ "icon": "slack.png" , "title": "Slack"},{ "icon": "microsoft-teams.png" , "title": "Microsoft Teams"}],
+  "description": "## About\n\
+Zoho CRM is a comprehensive customer relationship management platform designed for businesses of all sizes...\n\
+\n\
+## Highlights\n\
+- Advanced pipeline management\n\
+- WhatsApp integration for India\n\
+- Mobile apps for field sales\n\
+\n\
+## Pricing\n\
+- **Free:** Up to 3 users\n\
+- **Standard:** ₹900/user/month\n\
+- **Professional:** ₹1,600/user/month\n"
+  ,//markdown content
+  "locations": ["India", "Global"],
+  "website": "https://www.keka.com/?utm=appsutra.com",
+  "keyFeatures": {"description": "Our platform is designed to simplify HR and payroll processes while empowering employees and managers. From seamless leave management to automated payroll and real-time analytics, these features help businesses stay compliant, boost efficiency, and improve overall workforce management.", "features": [{"icon": "calender.png", "title": "Leave & Claims Management", "desc": "Manage employee leaves and claims with ease."}]},
+  "buyingGuide":[{"question":"1. What's your team size and expected growth?","why": "Critical for pricing and feature planning", "answer":"Consider both current needs and 12-18 month projections"}],
+  "pricing": {
+    "desc": "Keka offers a variety of pricing plans to suit different business needs. Here are the main plans available:",
+    "plans": [
+      {
+        "icon": "/Keka.png",
+        "title": "Startup Plan",
+        "pricing": "Rs.1,200/mo", //per user per month
+        "desc": "Ideal for small businesses and startups looking for essential HR and payroll features.",
+      "link": "https://www.keka.com/pricing/"
+      },
+      {
+        "icon": "/Keka.png",
+        "title": "Business Plan",
+        "pricing": "Custom Pricing", //contact for pricing
+        "desc": "Designed for growing businesses that need advanced HR functionalities and integrations.",
+      "link": "https://www.keka.com/pricing/"
+      }]
+  }
+
 }
 
 export async function generateStaticParams() {
@@ -78,6 +131,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
     <div className="min-h-screen bg-white">
       {/* <Header /> */}
       <WhyChooseUs/>
+      <ProductHeader company={ProductData.company} name={ProductData.name} icon={ProductData.icon} freeplan={ProductData.freeplan} freeplanpricing={ProductData.freeplanpricing}  categorySlug={ProductData.categorySlug} slug={ProductData.slug}/>
 
       {/* Breadcrumb */}
       <nav className="bg-gray-50 py-4">
