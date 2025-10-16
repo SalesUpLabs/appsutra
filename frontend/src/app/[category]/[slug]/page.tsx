@@ -7,6 +7,7 @@ import { ExternalLink, CheckCircle, MapPin, Calendar, Github, Star, MessageSquar
 import { ListingCard } from '@/components/listings/listing-card'
 import { getListingBySlug, getAllListings, getRelatedListings } from '@/lib/listings'
 import { formatPricing, isIndianCompany, formatDate, getCategoryDisplayName } from '@/lib/utils'
+import WhyChooseUs from '@/components/pages/productdetails/whyChooseUs'
 
 interface ProductPageProps {
   params: Promise<{
@@ -76,6 +77,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
   return (
     <div className="min-h-screen bg-white">
       {/* <Header /> */}
+      <WhyChooseUs/>
 
       {/* Breadcrumb */}
       <nav className="bg-gray-50 py-4">
