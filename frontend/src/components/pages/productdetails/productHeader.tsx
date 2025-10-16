@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button"
-import { Building2 } from "lucide-react"
+import { Building2, Calendar, Calendar1, Scale } from "lucide-react"
 
 interface ProductHeaderProps {
     company: string
@@ -43,15 +43,16 @@ export function ProductHeader({ company, name, icon, freeplan, freeplanpricing, 
 
         {/* Right side - Action buttons */}
         <div className="flex flex-col gap-3">
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-medium">
-            📋 Curate Demo
-          </Button>
-          <Button
-            variant="outline"
-            className="border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-2 rounded-lg font-medium bg-transparent"
+            <button className="w-[199px] text-white font-semibold h-14 rounded-[9px] bg-gradient-to-r from-[#2563EB] to-[#5288FF] border border-[rgba(37,99,235,0.4)] flex flex-row items-center justify-center gap-2.5 px-5 py-3.75 hover:opacity-90 transition-opacity">
+              <Calendar className="w-5 h-5" />
+              Curate Demo
+          </button>
+          <button
+            className="w-[199px] h-14 rounded-[9px] bg-gradient-to-br from-[rgba(37,99,235,0.04)] to-[rgba(255,255,255,0.04)] border border-[rgba(37,99,235,0.4)] flex flex-row items-center justify-center gap-1 px-3.75 py-2.5 hover:bg-gradient-to-br hover:from-[rgba(37,99,235,0.08)] hover:to-[rgba(255,255,255,0.08)] transition-colors font-semibold text-[#2563EB]"
           >
-            ⚖️ Compare Items
-          </Button>
+            <Scale className="w-5 h-5" />
+             Compare Items
+          </button>
         </div>
       </div>
     </div>
