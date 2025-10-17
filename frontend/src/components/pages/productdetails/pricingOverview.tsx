@@ -10,7 +10,7 @@ import image4 from '@/public/image4.png';
 const pricingPlans = [
     {
         name: 'Starter Plan',
-        Icon: image1,
+        Icon: image1 || '/image1.png',
         price: 'Rs. 8,000',
         priceSuffix: 'per month',
         description: <>For up to <strong>50 employees</strong>, Keka offers an affordable starter plan with all essential HR and payroll features.</>,
@@ -22,7 +22,7 @@ const pricingPlans = [
     },
     {
         name: 'Growth Plan',
-        Icon: image2,
+        Icon: image2 || '/image2.png',
         price: 'Rs. 12,000',
         priceSuffix: 'per month',
         description: <>Plans start at a monthly rate, covering up to <strong>100 employees</strong> with core HR and payroll features.</>,
@@ -34,7 +34,7 @@ const pricingPlans = [
     },
     {
         name: 'Scale Plan',
-        Icon: image3,
+        Icon: image3 || '/image3.png',
         price: 'Rs. 8000',
         priceSuffix: 'per month',
         description: <>Available at a monthly rate for up to <strong>200 employees</strong>, with complete HR and payroll functionality.</>,
@@ -46,7 +46,7 @@ const pricingPlans = [
     },
     {
         name: 'Enterprise Plan',
-        Icon: image4,
+        Icon: image4 || '/image4.png',
         price: 'Rs. 8000',
         priceSuffix: 'per month',
         description: <>Custom pricing for 200+ employees - Includes payroll processing statutory compliance and support.</>,

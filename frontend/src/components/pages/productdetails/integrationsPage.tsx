@@ -2,31 +2,31 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 
-import google from '@/public/google.png';
-import microsoftteam from '@/public/microsoftteam.png';
-import hdfc from '@/public/hdfc.png';
-import razorpay from '@/public/razorpay.png';
-import slack from '@/public/slack.png';
+// import microsoftteam from '@/public/microsoftteam.png';
+// import google from '@/public/google.png';
+// import hdfc from '@/public/hdfc.png';
+// import razorpay from '@/public/razorpay.png';
+// import slack from '@/public/slack.png';
 
 // --- Integrations Data ---
 // Array is populated to have 52 items as shown in the image.
 const initialIntegrations = [
-  { name: 'Razorpay', icon: <Image src={razorpay} alt="Razorpay" width={24} height={24} />, color: 'blue-500' },
-  { name: 'Slack', icon: <Image src={slack} alt="Slack" width={24} height={24} />, color: 'green-500' },
-  { name: 'Microsoft Teams', icon: <Image src={microsoftteam} alt="Microsoft Teams" width={24} height={24} />, color: 'indigo-500' },
-  { name: 'Google workspace', icon: <Image src={google} alt="Google Workspace" width={24} height={24} />, color: 'green-500' },
-  { name: 'HDFC Bank', icon: <Image src={hdfc} alt="HDFC Bank" width={24} height={24} />, color: 'red-500' },
-  { name: 'Razorpay', icon: <Image src={razorpay} alt="Razorpay" width={24} height={24} />, color: 'blue-500' },
-  { name: 'Microsoft Teams', icon: <Image src={microsoftteam} alt="Microsoft Teams" width={24} height={24} />, color: 'indigo-500' },
-  { name: 'Slack', icon: <Image src={slack} alt="Slack" width={24} height={24} />, color: 'green-500' },
-  { name: 'Microsoft Teams', icon: <Image src={microsoftteam} alt="Microsoft Teams" width={24} height={24} />, color: 'orange-500' },
-  { name: 'HDFC Bank', icon: <Image src={hdfc} alt="HDFC Bank" width={24} height={24} />, color: 'red-500' },
-  { name: 'Razorpay', icon: <Image src={razorpay} alt="Razorpay" width={24} height={24} />, color: 'blue-500' },
-  { name: 'Razorpay', icon: <Image src={razorpay} alt="Razorpay" width={24} height={24} />, color: 'blue-500' },
-  { name: 'Google workspace', icon: <Image src={google} alt="Google Workspace" width={24} height={24} />, color: 'green-500' },
-  { name: 'Microsoft Teams', icon: <Image src={microsoftteam} alt="Microsoft Teams" width={24} height={24} />, color: 'orange-500' },
-  { name: 'Slack', icon: <Image src={slack} alt="Slack" width={24} height={24} />, color: 'green-500' },
-  { name: 'Google work', icon: <Image src={google} alt="Google Workspace" width={24} height={24} />, color: 'green-500' },
+  { name: 'Razorpay', icon: <Image src={ '/razorpay.png'} alt="Razorpay" width={24} height={24} />, color: 'blue-500' },
+  { name: 'Slack', icon: <Image src={ '/slack.png'} alt="Slack" width={24} height={24} />, color: 'green-500' },
+  { name: 'Microsoft Teams', icon: <Image src={'/microsoftteam.png'} alt="Microsoft Teams" width={24} height={24} />, color: 'indigo-500' },
+  { name: 'Google workspace', icon: <Image src={'/google.png'} alt="Google Workspace" width={24} height={24} />, color: 'green-500' },
+  { name: 'HDFC Bank', icon: <Image src={'/hdfc.png'} alt="HDFC Bank" width={24} height={24} />, color: 'red-500' },
+  { name: 'Razorpay', icon: <Image src={ '/razorpay.png'} alt="Razorpay" width={24} height={24} />, color: 'blue-500' },
+  { name: 'Microsoft Teams', icon: <Image src={'/microsoftteam.png'} alt="Microsoft Teams" width={24} height={24} />, color: 'indigo-500' },
+  { name: 'Slack', icon: <Image src={'/slack.png'} alt="Slack" width={24} height={24} />, color: 'green-500' },
+  { name: 'Microsoft Teams', icon: <Image src={ '/microsoftteam.png'} alt="Microsoft Teams" width={24} height={24} />, color: 'orange-500' },
+  { name: 'HDFC Bank', icon: <Image src={'/microsoftteam.png'} alt="HDFC Bank" width={24} height={24} />, color: 'red-500' },
+  { name: 'Razorpay', icon: <Image src={ '/microsoftteam.png'} alt="Razorpay" width={24} height={24} />, color: 'blue-500' },
+  { name: 'Razorpay', icon: <Image src={ '/microsoftteam.png'} alt="Razorpay" width={24} height={24} />, color: 'blue-500' },
+  { name: 'Google workspace', icon: <Image src={ '/microsoftteam.png'} alt="Google Workspace" width={24} height={24} />, color: 'green-500' },
+  { name: 'Microsoft Teams', icon: <Image src={'/microsoftteam.png'} alt="Microsoft Teams" width={24} height={24} />, color: 'orange-500' },
+  { name: 'Slack', icon: <Image src={'/slack.png'} alt="Slack" width={24} height={24} />, color: 'green-500' },
+  { name: 'Google workspace', icon: <Image src={'/google.png'} alt="Google Workspace" width={24} height={24} />, color: 'green-500' },
 ];
 
 const allIntegrations = Array.from({ length: 3 }).flatMap(() => initialIntegrations).slice(0, 52);

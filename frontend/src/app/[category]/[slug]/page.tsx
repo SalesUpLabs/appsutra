@@ -13,6 +13,9 @@ import { ProductHeader } from '@/components/pages/productdetails/productHeader'
 import { ProductInfo } from '@/components/pages/productdetails/productinfo'
 import KeyFeatures from '@/components/pages/productdetails/keyFeatures'
 import { SoftwareComparisonCarousel } from '@/components/pages/productdetails/alternative'
+import IntegrationsPage from '@/components/pages/productdetails/integrationsPage'
+import BuyingGuide from '@/components/pages/productdetails/buyingGuide'
+import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
 
 interface ProductPageProps {
   params: Promise<{
@@ -167,11 +170,17 @@ export default async function ProductPage({ params }: ProductPageProps) {
   return (
     <div className="min-h-screen bg-white">
       {/* <Header /> */}
-      <WhyChooseUs/>
+      <WhyChooseUs/> 
       <ProductHeader company={ProductData.company} name={ProductData.name} icon={ProductData.icon} freeplan={ProductData.freeplan} freeplanpricing={ProductData.freeplanpricing}  categorySlug={ProductData.categorySlug} slug={ProductData.slug}/>
-      <ProductInfo product={ProductData}/>
-      <KeyFeatures data={ProductData.keyFeatures}/>
-      <SoftwareComparisonCarousel/>
+      {/* <div className="relative flex flex-col h-screen"> */}
+    <div className="px-6 space-y-5 mt-6">
+      <ProductInfo product={ProductData} />
+      <KeyFeatures data={ProductData.keyFeatures} />
+      <BuyingGuide />
+      <IntegrationsPage />
+      <SoftwareComparisonCarousel />
+    </div>
+{/* </div> */}
 
       {/* <Footer /> */}
     </div>

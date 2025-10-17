@@ -103,7 +103,7 @@ export function ProductHeader({ company, name, icon, freeplan, freeplanpricing, 
       </div>
 
       {/* Navigation Bar */}
-      <div className="w-full h-[72px] flex items-start justify-start px-[100.5px] gap-x-[95px] bg-white  shadow-md  sticky top-16 z-10">
+      <div className="w-full h-[72px] flex items-start justify-start px-[50.5px] gap-x-[95px] bg-white  shadow-md  sticky top-16 z-10">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
           
@@ -116,7 +116,7 @@ export function ProductHeader({ company, name, icon, freeplan, freeplanpricing, 
               }`}
             >
               <span
-                className={` text-[18px] leading-[22px] whitespace-nowrap ${
+                className={` text-[18px] whitespace-nowrap ${
                   isActive
                     ? 'font-semibold text-blue-600'
                     : 'font-medium  text-neutral-800 hover:text-blue-600'

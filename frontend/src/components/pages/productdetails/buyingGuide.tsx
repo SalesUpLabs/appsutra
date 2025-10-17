@@ -1,11 +1,11 @@
 import React from "react";
 import Image from "next/image";
-import pointer from "@/public/image.png";
+// import pointer from "@/public/image.png";
 
 
 const PointerIcon = () => (
-  <Image
-    src={pointer}
+  <img
+    src="/icons/why-choose-us/pointer-icon.svg"
     alt="Pointer Icon"
     className="h-5 w-5" 
   />

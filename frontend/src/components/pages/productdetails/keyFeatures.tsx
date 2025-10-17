@@ -40,7 +40,7 @@ export default function KeyFeatures({ data }: KeyFeaturesProps) {
   };
 
   return (
-    <section id="key-features" className="w-full bg-white py-16 px-24">
+    <section id="key-features" className="w-full bg-white py-16 ">
       <div className="max-w-[1400px] mx-auto">
         {/* Header */}
         <h2 className="text-[36px] font-semibold text-black mb-6">Key Features</h2>
