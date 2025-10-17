@@ -22,14 +22,14 @@ interface ProductPageProps {
 }
 
 
-const ProductData: Product ={
+const ProductData: Product = {
   "icon": "/icons/ProductDetailsPage/keka/icon.png",
   "name": "Keka Services",
-  "company":"Keka Services Private Limited",
+  "company": "Keka Services Private Limited",
   "freeplan": true,
   "freeplanpricing": "Rs.1,200/mo",
   "category": "Human Resource",
-  "categorySlug":"human-resource",
+  "categorySlug": "human-resource",
   "slug": "keka-services",
   "useCases": ["Lead Management","Sales Pipeline", "Financial Services"],
   "keywords": ["hr","hrms","payroll","employee management","attendance","time tracking","performance management","recruitment","onboarding","offboarding","leave management","benefits administration","compliance management"],
@@ -93,14 +93,14 @@ const ProductData: Product ={
         "title": "Startup Plan",
         "pricing": "Rs.1,200/mo", //per user per month
         "desc": "Ideal for small businesses and startups looking for essential HR and payroll features.",
-      "link": "https://www.keka.com/pricing/"
+        "link": "https://www.keka.com/pricing/"
       },
       {
         "icon": "/Keka.png",
         "title": "Business Plan",
         "pricing": "Custom Pricing", //contact for pricing
         "desc": "Designed for growing businesses that need advanced HR functionalities and integrations.",
-      "link": "https://www.keka.com/pricing/"
+        "link": "https://www.keka.com/pricing/"
       }]
   }
 
