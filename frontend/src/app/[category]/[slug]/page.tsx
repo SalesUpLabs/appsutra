@@ -11,6 +11,7 @@ import WhyChooseUs from '@/components/pages/productdetails/whyChooseUs'
 import { Product } from '@/types/product'
 import { ProductHeader } from '@/components/pages/productdetails/productHeader'
 import { ProductInfo } from '@/components/pages/productdetails/productinfo'
+import KeyFeatures from '@/components/pages/productdetails/keyFeatures'
 
 interface ProductPageProps {
   params: Promise<{
@@ -47,7 +48,52 @@ Zoho CRM is a comprehensive customer relationship management platform designed f
   ,//markdown content
   "locations": ["India", "Global"],
   "website": "https://www.keka.com/?utm=appsutra.com",
-  "keyFeatures": {"description": "Our platform is designed to simplify HR and payroll processes while empowering employees and managers. From seamless leave management to automated payroll and real-time analytics, these features help businesses stay compliant, boost efficiency, and improve overall workforce management.", "features": [{"icon": "calender.png", "title": "Leave & Claims Management", "desc": "Manage employee leaves and claims with ease."}]},
+  // "keyFeatures": {"description": "Our platform is designed to simplify HR and payroll processes while empowering employees and managers. From seamless leave management to automated payroll and real-time analytics, these features help businesses stay compliant, boost efficiency, and improve overall workforce management.", "features": [{"icon": "calender.png", "title": "Leave & Claims Management", "desc": "Manage employee leaves and claims with ease."}]},
+   "keyFeatures": {
+    "description": "Our platform is designed to simplify HR and payroll processes while empowering employees and managers. From seamless leave management to automated payroll and real-time analytics, these features help businesses stay compliant, boost efficiency, and improve overall workforce management.", 
+    "features": [
+      {
+        "icon": "calendar", 
+        "title": "Leave & Claims Management", 
+        "desc": "Manage employee leaves and claims with ease."
+      },
+      {
+        "icon": "scale", 
+        "title": "Statutory Compliance", 
+        "desc": "Ensure PF, ESI, and tax compliance effortlessly."
+      },
+      {
+        "icon": "trending", 
+        "title": "Performance Management", 
+        "desc": "Track goals, appraisals & growth with ease."
+      },
+      {
+        "icon": "lock", 
+        "title": "Automated Payroll", 
+        "desc": "HR tasks anytime, anywhere via mobile."
+      },
+      {
+        "icon": "scale", 
+        "title": "Statutory Compliance", 
+        "desc": "Ensure PF, ESI, and tax compliance effortlessly."
+      },
+      {
+        "icon": "trending", 
+        "title": "Performance Management", 
+        "desc": "Track goals, appraisals & growth with ease."
+      },
+      {
+        "icon": "lock", 
+        "title": "Automated Payroll", 
+        "desc": "HR tasks anytime, anywhere via mobile."
+      },
+      {
+        "icon": "calendar", 
+        "title": "Leave & Claims Management", 
+        "desc": "Manage employee leaves and claims with ease."
+      }
+    ]
+  },
   "buyingGuide":[{"question":"1. What's your team size and expected growth?","why": "Critical for pricing and feature planning", "answer":"Consider both current needs and 12-18 month projections"}],
   "pricing": {
     "desc": "Keka offers a variety of pricing plans to suit different business needs. Here are the main plans available:",
@@ -134,6 +180,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <WhyChooseUs/>
       <ProductHeader company={ProductData.company} name={ProductData.name} icon={ProductData.icon} freeplan={ProductData.freeplan} freeplanpricing={ProductData.freeplanpricing}  categorySlug={ProductData.categorySlug} slug={ProductData.slug}/>
       <ProductInfo/>
+      <KeyFeatures data={ProductData.keyFeatures}/>
       {/* Breadcrumb */}
       <nav className="bg-gray-50 py-4">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
