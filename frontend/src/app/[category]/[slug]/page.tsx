@@ -11,6 +11,9 @@ import WhyChooseUs from '@/components/pages/productdetails/whyChooseUs'
 import { Product } from '@/types/product'
 import { ProductHeader } from '@/components/pages/productdetails/productHeader'
 import { ProductInfo } from '@/components/pages/productdetails/productinfo'
+import BuyingGuide from '@/components/pages/productdetails/buyingGuide'
+import PricingOverview from '@/components/pages/productdetails/pricingOverview'
+import IntegrationsPage from '@/components/pages/productdetails/integrationsPage'
 
 interface ProductPageProps {
   params: Promise<{
@@ -20,18 +23,18 @@ interface ProductPageProps {
 }
 
 
-const ProductData: Product ={
+const ProductData: Product = {
   "icon": "/icons/ProductDetailsPage/keka/icon.png",
   "name": "Keka Services",
-  "company":"Keka Services Private Limited",
+  "company": "Keka Services Private Limited",
   "freeplan": true,
   "freeplanpricing": "Rs.1,200/mo",
   "category": "Human Resource",
-  "categorySlug":"human-resource",
+  "categorySlug": "human-resource",
   "slug": "keka-services",
-  "useCases": ["Lead Management","Sales Pipeline", "Finnancial Services"],
-  "keywords": ["hr","hrms","payroll","employee management","attendance","time tracking","performance management","recruitment","onboarding","offboarding","leave management","benefits administration","compliance management"],
-  "integration": [{ "icon": "razorpay.png" , "title": "Razorpay"},{ "icon": "zapier.png" , "title": "Zapier"},{ "icon": "slack.png" , "title": "Slack"},{ "icon": "microsoft-teams.png" , "title": "Microsoft Teams"}],
+  "useCases": ["Lead Management", "Sales Pipeline", "Finnancial Services"],
+  "keywords": ["hr", "hrms", "payroll", "employee management", "attendance", "time tracking", "performance management", "recruitment", "onboarding", "offboarding", "leave management", "benefits administration", "compliance management"],
+  "integration": [{ "icon": "razorpay.png", "title": "Razorpay" }, { "icon": "zapier.png", "title": "Zapier" }, { "icon": "slack.png", "title": "Slack" }, { "icon": "microsoft-teams.png", "title": "Microsoft Teams" }],
   "description": "## About\n\
 Zoho CRM is a comprehensive customer relationship management platform designed for businesses of all sizes...\n\
 \n\
@@ -47,8 +50,49 @@ Zoho CRM is a comprehensive customer relationship management platform designed f
   ,//markdown content
   "locations": ["India", "Global"],
   "website": "https://www.keka.com/?utm=appsutra.com",
-  "keyFeatures": {"description": "Our platform is designed to simplify HR and payroll processes while empowering employees and managers. From seamless leave management to automated payroll and real-time analytics, these features help businesses stay compliant, boost efficiency, and improve overall workforce management.", "features": [{"icon": "calender.png", "title": "Leave & Claims Management", "desc": "Manage employee leaves and claims with ease."}]},
-  "buyingGuide":[{"question":"1. What's your team size and expected growth?","why": "Critical for pricing and feature planning", "answer":"Consider both current needs and 12-18 month projections"}],
+  "keyFeatures": { "description": "Our platform is designed to simplify HR and payroll processes while empowering employees and managers. From seamless leave management to automated payroll and real-time analytics, these features help businesses stay compliant, boost efficiency, and improve overall workforce management.", "features": [{ "icon": "calender.png", "title": "Leave & Claims Management", "desc": "Manage employee leaves and claims with ease." }] },
+  "buyingGuide": [
+    {
+      "question": "1. What's your team size and expected growth?",
+      "why": "Critical for pricing and feature planning",
+      "answer": "Consider both current needs and 12-18 month projections"
+    },
+    {
+      "question": "2. Which existing tools need integration?",
+      "why": "Affects workflow efficiency and adoption",
+      "answer": "List your current stack: CRM, project management, calendar, etc."
+    },
+    {
+      "question": "3. What's your security and compliance requirements?",
+      "why": "May be regulatory requirement",
+      "answer": "Consider GDPR, SOC2, HIPAA, or industry-specific standards"
+    },
+    {
+      "question": "4. Who will be the primary administrators?",
+      "why": "Affects training needs and ongoing management",
+      "answer": "Plan for user onboarding, training, and ongoing support"
+    },
+    {
+      "question": "5. What's your budget range and billing preference?",
+      "why": "Determines viable options",
+      "answer": "Consider monthly vs annual billing, volume discounts, and hidden costs"
+    },
+    {
+      "question": "6. Who will be the primary administrators?",
+      "why": "Affects training needs and ongoing management",
+      "answer": "Plan for user onboarding, training, and ongoing support"
+    },
+    {
+      "question": "7. What's your security and compliance requirements?",
+      "why": "May be regulatory requirement",
+      "answer": "Consider GDPR, SOC2, HIPAA, or industry-specific standards"
+    },
+    {
+      "question": "8. Which existing tools need integration?",
+      "why": "Affects workflow efficiency and adoption",
+      "answer": "List your current stack: CRM, project management, calendar, etc."
+    }
+  ],
   "pricing": {
     "desc": "Keka offers a variety of pricing plans to suit different business needs. Here are the main plans available:",
     "plans": [
@@ -57,14 +101,14 @@ Zoho CRM is a comprehensive customer relationship management platform designed f
         "title": "Startup Plan",
         "pricing": "Rs.1,200/mo", //per user per month
         "desc": "Ideal for small businesses and startups looking for essential HR and payroll features.",
-      "link": "https://www.keka.com/pricing/"
+        "link": "https://www.keka.com/pricing/"
       },
       {
         "icon": "/Keka.png",
         "title": "Business Plan",
         "pricing": "Custom Pricing", //contact for pricing
         "desc": "Designed for growing businesses that need advanced HR functionalities and integrations.",
-      "link": "https://www.keka.com/pricing/"
+        "link": "https://www.keka.com/pricing/"
       }]
   }
 
@@ -298,12 +342,18 @@ export default async function ProductPage({ params }: ProductPageProps) {
         </div>
       </section>
 
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="">
+          <BuyingGuide />
+          <PricingOverview />
+          <IntegrationsPage />
+        </div>
+      </div>
       {/* Product Content */}
-      <section className="py-12 bg-gray-50">
+      {/* <section className="py-12 bg-gray-50">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-lg p-8 shadow-sm">
             <div className="prose prose-lg max-w-none">
-              {/* Render parsed content sections */}
               {parsedContent.about && (
                 <div className="mb-8">
                   <h2 className="text-2xl font-bold text-gray-900 mb-4">About</h2>
@@ -340,7 +390,6 @@ export default async function ProductPage({ params }: ProductPageProps) {
                 </div>
               )}
 
-              {/* Fallback for any remaining content */}
               {!parsedContent.about && (
                 <div className="text-gray-700 whitespace-pre-line">
                   {listing.content}
@@ -349,7 +398,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Related Products */}
       {relatedListings.length > 0 && (
