@@ -191,11 +191,9 @@ export function ProductInfo({ product }: ProductInfoProps) {
         <div>
           <h3 className="font-bold text-black mb-3 text-base">Integrations:</h3>
           <div className="flex gap-2">
-            {product?.integration?.map((integration, index) => (
+            {product?.integration?.slice(0, 4).map((integration, index) => (
               <span key={index} className="text-lg" title={integration.title}>
-                <BrandIcon
-                  name={integration.title.toLowerCase()}
-                />
+                <BrandIcon name={integration.title.toLowerCase()} />
               </span>
             ))}
           </div>

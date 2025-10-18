@@ -53,10 +53,38 @@ const ProductData: Product = {
     "compliance management",
   ],
   integration: [
-    { icon: "razorpay.png", title: "Razorpay" },
-    { icon: "zapier.png", title: "Zapier" },
-    { icon: "slack.png", title: "Slack" },
-    { icon: "microsoft-teams.png", title: "Microsoft Teams" },
+    { title: "Razorpay" },
+    { title: "Slack" },
+    { title: "Microsoft Teams" },
+    { title: "Google workspace" },
+    { title: "HDFC Bank" },
+    { title: "Razorpay" },
+    { title: "Microsoft Teams" },
+    { title: "Slack" },
+    { title: "Microsoft Teams" },
+    { title: "HDFC Bank" },
+    { title: "Razorpay" },
+    { title: "Razorpay" },
+    { title: "Google workspace" },
+    { title: "Microsoft Teams" },
+    { title: "Slack" },
+    { title: "Google workspace" },
+    { title: "Razorpay" },
+    { title: "Slack" },
+    { title: "Microsoft Teams" },
+    { title: "Google workspace" },
+    { title: "HDFC Bank" },
+    { title: "Razorpay" },
+    { title: "Microsoft Teams" },
+    { title: "Slack" },
+    { title: "Microsoft Teams" },
+    { title: "HDFC Bank" },
+    { title: "Razorpay" },
+    { title: "Razorpay" },
+    { title: "Google workspace" },
+    { title: "Microsoft Teams" },
+    { title: "Slack" },
+    { title: "Google workspace" },
   ],
   description:
     "A modern HR & payroll platform for growing businesses.\n\nKeka is your people enabler. From automation of people processes to creating an engaged and driven culture, Keka is all you need to build a good to great company.\n\nThe world has changed, and it's going to keep changing. Keka HR helps your teams to adapt, evolve, and scale by working more effectively. Spend less time on mundane tasks and focus more on strategy. Turn data into smarter decisions and create experiences your employees will love.\n\nIt is a cloud-based HR and payroll management platform designed to simplify people operations for modern organizations. It streamlines employee lifecycle management — from hiring and onboarding to payroll, attendance, performance, and compliance — all in one place.\n\nBuilt with employee-first design, Keka empowers HR teams to automate repetitive tasks, reduce administrative overhead, and focus on people development. With seamless integrations, data security, and customizable workflows, it adapts to businesses of every size.\n\n**Key Highlights**\n- Unified HR, payroll, and talent management system\n- Employee self-service portal for accessibility\n- Customizable workflows to match company policies\n- Secure, compliant, and scalable for SMBs and enterprises",
@@ -105,8 +133,7 @@ const ProductData: Product = {
     {
       question: "1. What's your team size and expected growth?",
       why: "Critical for pricing and feature planning",
-      answer:
-        "Consider both current needs and 12-18 month projections",
+      answer: "Consider both current needs and 12-18 month projections",
     },
     {
       question: "2. Which existing tools need integration?",
@@ -117,14 +144,12 @@ const ProductData: Product = {
     {
       question: "3. What's your security and compliance requirements?",
       why: "May be regulatory requirement",
-      answer:
-        "Consider GDPR, SOC2, HIPAA, or industry-specific standards",
+      answer: "Consider GDPR, SOC2, HIPAA, or industry-specific standards",
     },
     {
       question: "4. Who will be the primary administrators?",
       why: "Affects training needs and ongoing management",
-      answer:
-        "Plan for user onboarding, training, and ongoing support",
+      answer: "Plan for user onboarding, training, and ongoing support",
     },
     {
       question: "5. What's your budget range and billing preference?",
@@ -135,70 +160,72 @@ const ProductData: Product = {
     {
       question: "6. Who will be the primary administrators?",
       why: "Affects training needs and ongoing management",
-      answer:
-        "Plan for user onboarding, training, and ongoing support",
+      answer: "Plan for user onboarding, training, and ongoing support",
     },
     {
       question: "7. What's your security and compliance requirements?",
       why: "May be regulatory requirement",
-      answer:
-        "Consider GDPR, SOC2, HIPAA, or industry-specific standards",
+      answer: "Consider GDPR, SOC2, HIPAA, or industry-specific standards",
     },
     {
       question: "8. Which existing tools need integration?",
       why: "Affects workflow efficiency and adoption",
       answer:
         "List your current stack: CRM, project management, calendar, etc.",
-    }
+    },
   ],
   pricing: {
     desc: "Keka offers a variety of pricing plans to suit different business needs. Here are the main plans available:",
     plans: [
-         {
-        name: 'Starter Plan',
+      {
+        name: "Starter Plan",
         pricing: {
-            amount: 8000,
-            currency: 'INR',
-            currencySymbol: '₹',
-            period: 'month',
-            perUnit: null, // null means flat rate, could be 'user', 'employee', etc.
+          amount: 8000,
+          currency: "INR",
+          currencySymbol: "₹",
+          period: "month",
+          perUnit: null, // null means flat rate, could be 'user', 'employee', etc.
         },
-        description: 'For up to **50 employees**, Keka offers an affordable starter plan with all essential HR and payroll features.',
-    },
-    {
-        name: 'Growth Plan',
+        description:
+          "For up to **50 employees**, Keka offers an affordable starter plan with all essential HR and payroll features.",
+      },
+      {
+        name: "Growth Plan",
         pricing: {
-            amount: 12000,
-            currency: 'INR',
-            currencySymbol: '₹',
-            period: 'month',
-            perUnit: null,
+          amount: 12000,
+          currency: "INR",
+          currencySymbol: "₹",
+          period: "month",
+          perUnit: null,
         },
-        description: 'Plans start at a monthly rate, covering up to **100 employees** with core HR and payroll features.',
-    },
-    {
-        name: 'Scale Plan',
+        description:
+          "Plans start at a monthly rate, covering up to **100 employees** with core HR and payroll features.",
+      },
+      {
+        name: "Scale Plan",
         pricing: {
-            amount: 8000,
-            currency: 'INR',
-            currencySymbol: '₹',
-            period: 'month',
-            perUnit: null,
+          amount: 8000,
+          currency: "INR",
+          currencySymbol: "₹",
+          period: "month",
+          perUnit: null,
         },
-        description: 'Available at a monthly rate for up to **200 employees**, with complete HR and payroll functionality.',
-    },
-    {
-        name: 'Enterprise Plan',
+        description:
+          "Available at a monthly rate for up to **200 employees**, with complete HR and payroll functionality.",
+      },
+      {
+        name: "Enterprise Plan",
         pricing: {
-            amount: null, // null for custom pricing
-            currency: 'INR',
-            currencySymbol: '₹',
-            period: 'month',
-            perUnit: null,
-            isCustom: true,
+          amount: null, // null for custom pricing
+          currency: "INR",
+          currencySymbol: "₹",
+          period: "month",
+          perUnit: null,
+          isCustom: true,
         },
-        description: 'Custom pricing for 200+ employees - Includes payroll processing statutory compliance and support.',
-    }
+        description:
+          "Custom pricing for 200+ employees - Includes payroll processing statutory compliance and support.",
+      },
     ],
   },
 };
@@ -298,9 +325,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <KeyFeatures data={ProductData.keyFeatures} />
         <BuyingGuide questions={ProductData.buyingGuide} />
         <PricingOverview data={ProductData.pricing} />
-        <div className="border-2 border-red-700">
-        <IntegrationsPage />
-        </div>
+        <IntegrationsPage integrations={ProductData.integration} />
         {/* <SoftwareComparisonCarousel /> */}
       </div>
       {/* </div> */}

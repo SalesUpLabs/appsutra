@@ -2,7 +2,6 @@
 // Based on the structure from t.js
 
 export interface Integration {
-  icon: string
   title: string
 }
 
