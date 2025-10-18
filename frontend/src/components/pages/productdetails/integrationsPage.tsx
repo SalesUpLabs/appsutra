@@ -18,7 +18,7 @@ const IntegrationsPage = ({ integrations = [] }: IntegrationsPageProps) => {
     : integrations.slice(0, INITIAL_DISPLAY_COUNT);
 
   return (
-    <div className="w-full bg-white p-6 sm:p-8 rounded-xl border border-orange-300 shadow-sm -mt-12 mb-10">
+    <div className="w-full bg-white p-6 sm:p-8 rounded-xl border border-orange-300 shadow-sm -mt-12 mb-10" id="integrations">
       <h1 className="text-3xl font-semibold text-gray-800 mb-6">
         Integrations ({integrations.length})
       </h1>

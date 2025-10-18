@@ -24,7 +24,7 @@ const BuyingGuide = ({ questions = [] }: BuyingGuideProps) => {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-6">
+      <div className="flex justify-between items-center mb-6" id="buying-guide">
         <h2 className="text-3xl font-semibold text-gray-800">
           Buying Guide
         </h2>

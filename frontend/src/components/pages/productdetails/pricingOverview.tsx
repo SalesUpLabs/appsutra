@@ -43,7 +43,7 @@ const PricingOverview = ({ data }: PricingOverviewProps) => {
   const plans = data.plans.slice(0, MAX_PLANS);
 
   return (
-    <div className="bg-white min-h-screen font-sans py-12 sm:py-16">
+    <div className="bg-white min-h-screen font-sans py-12 sm:py-16" id="pricing">
         {/* Header Section */}
         <div className="mb-14 text-left">
           <h1 className="text-3xl  font-semibold text-gray-800 mb-5">

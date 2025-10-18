@@ -31,7 +31,7 @@ export function ProductHeader({
     { id: "buying-guide", label: "Buying Guide" },
     { id: "pricing", label: "Pricing" },
     { id: "integrations", label: "Integrations" },
-    { id: "alternatives", label: "Alternatives" },
+    // { id: "alternatives", label: "Alternatives" },
   ];
 
   // Set active tab based on URL hash on mount

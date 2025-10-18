@@ -26,7 +26,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
   const keywordsString = product.keywords.slice(0, 6).join(", ");
 
   return (
-    <div className="grid grid-cols-5 gap-5">
+    <div className="grid grid-cols-5 gap-5" id="product-information">
       {/* Main Content Card */}
       <div className="col-span-4 border border-[#5D93FF] rounded-2xl p-8 gap-6 bg-white">
         {/* Header */}
