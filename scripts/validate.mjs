@@ -5,8 +5,17 @@ import matter from "gray-matter";
 import Ajv from "ajv";
 import addFormats from "ajv-formats";
 
+// Slugify function (same as frontend)
+function slugify(text) {
+  return text
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '') // Remove special characters
+    .replace(/[\s_-]+/g, '-') // Replace spaces and underscores with hyphens
+    .replace(/^-+|-+$/g, '') // Remove leading/trailing hyphens
+}
+
 // Load schema and categories
-const schema = JSON.parse(fs.readFileSync("schema/listing.schema.json", "utf8"));
+const schema = JSON.parse(fs.readFileSync("schema/product.schema.json", "utf8"));
 const categories = JSON.parse(fs.readFileSync("schema/categories.json", "utf8"));
 
 // Initialize AJV with format validation
@@ -31,7 +40,7 @@ console.log(`🔍 Validating ${files.length} listing(s)...\n`);
 
 for (const file of files) {
   const basename = path.basename(file, '.md');
-  const expectedCategory = path.dirname(file).split('/').pop();
+  const directoryName = path.dirname(file).split(/[/\\]/).pop();
 
   try {
     const raw = fs.readFileSync(file, "utf8");
@@ -56,34 +65,43 @@ for (const file of files) {
       continue;
     }
 
-    // Check category matches directory
-    if (data.category !== expectedCategory) {
-      console.error(`❌ ${file}: Category "${data.category}" doesn't match directory "${expectedCategory}"`);
+    // Generate slug from name
+    const generatedSlug = slugify(data.name);
+
+    // Generate categorySlug from category
+    const generatedCategorySlug = slugify(data.category);
+
+    // Check filename matches generated slug
+    if (generatedSlug !== basename) {
+      console.error(`❌ ${file}: Filename "${basename}" doesn't match generated slug "${generatedSlug}" from name "${data.name}"`);
       failed = true;
       continue;
     }
 
-    // Check category is valid
-    if (!categories.includes(data.category)) {
+    // Check directory matches generated categorySlug
+    if (generatedCategorySlug !== directoryName) {
+      console.error(`❌ ${file}: Directory "${directoryName}" doesn't match generated categorySlug "${generatedCategorySlug}" from category "${data.category}"`);
+      failed = true;
+      continue;
+    }
+
+    // Check category is valid (checking against display names or slugs)
+    const categorySlugValid = categories.includes(generatedCategorySlug);
+    const categoryNameValid = categories.includes(data.category);
+
+    if (!categorySlugValid && !categoryNameValid) {
       console.error(`❌ ${file}: Invalid category "${data.category}". Valid categories: ${categories.join(', ')}`);
       failed = true;
       continue;
     }
 
-    // Check filename matches slug
-    if (data.slug !== basename) {
-      console.error(`❌ ${file}: Filename "${basename}" doesn't match slug "${data.slug}"`);
-      failed = true;
-      continue;
-    }
-
     // Check for duplicate slugs
-    if (slugs.has(data.slug)) {
-      console.error(`❌ ${file}: Duplicate slug "${data.slug}"`);
+    if (slugs.has(generatedSlug)) {
+      console.error(`❌ ${file}: Duplicate slug "${generatedSlug}" (generated from name "${data.name}")`);
       failed = true;
       continue;
     }
-    slugs.add(data.slug);
+    slugs.add(generatedSlug);
 
     // Check for duplicate names (case insensitive)
     const lowerName = data.name.toLowerCase();
@@ -93,13 +111,6 @@ for (const file of files) {
       continue;
     }
     names.add(lowerName);
-
-    // Check content exists
-    if (!content || content.trim().length === 0) {
-      console.error(`❌ ${file}: No content found after YAML front-matter`);
-      failed = true;
-      continue;
-    }
 
     // Validate date format
     if (!/^\d{4}-\d{2}-\d{2}$/.test(data.updated_at)) {

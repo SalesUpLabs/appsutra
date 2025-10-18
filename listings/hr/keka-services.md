@@ -1,5 +1,5 @@
 ---
-icon: "/icons/ProductDetailsPage/keka/icon.png"
+icon: "https://keka.com/wp-content/uploads/2023/01/keka-logo.png"
 name: "Keka Services"
 company: "Keka Services Private Limited"
 trialPlan: true
@@ -76,6 +76,7 @@ locations:
   - "India"
   - "Global"
 website: "https://www.keka.com/?utm=appsutra.com"
+updated_at: "2025-01-18"
 keyFeatures:
   description: "Our platform is designed to simplify HR and payroll processes while empowering employees and managers. From seamless leave management to automated payroll and real-time analytics, these features help businesses stay compliant, boost efficiency, and improve overall workforce management."
   features:

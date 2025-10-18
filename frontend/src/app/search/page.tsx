@@ -5,10 +5,11 @@ import { useSearchParams } from "next/navigation";
 import { Search, Filter, X, ChevronDown } from "lucide-react";
 // import { Header } from '@/components/layout/header'
 // import { Footer } from '@/components/layout/footer'
-import { ListingCard } from "@/components/listings/listing-card";
+import { ProductCard } from "@/components/listings/product-card";
 import { searchListings, getPopularSearchTerms } from "@/lib/search";
 import { getCategories } from "@/lib/listings";
-import { Listing, SearchFilters, Category } from "@/lib/types";
+import { Product } from "@/types/product";
+import { SearchFilters, Category } from "@/lib/types";
 // import { getCategoryDisplayName } from "@/lib/utils";
 import { getAccentColor } from "@/lib/accent-color";
 
@@ -16,7 +17,7 @@ function SearchContent() {
   const searchParams = useSearchParams();
   const [query, setQuery] = useState(searchParams.get("q") || "");
   const [searchTags, setSearchTags] = useState<string[]>([]);
-  const [results, setResults] = useState<Listing[]>([]);
+  const [results, setResults] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [total, setTotal] = useState(0);
   const [categories, setCategories] = useState<Category[]>([]);
@@ -25,7 +26,6 @@ function SearchContent() {
   // Filter states
   const [filters, setFilters] = useState<SearchFilters>({
     category: searchParams.get("category") || undefined,
-    verified: searchParams.get("verified") === "true" ? true : undefined,
     trial: searchParams.get("trial") === "true" ? true : undefined,
   });
 
@@ -267,7 +267,7 @@ function SearchContent() {
                 )}
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {/* Category Filter */}
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -290,26 +290,6 @@ function SearchContent() {
                       </option>
                     ))}
                   </select>
-                </div>
-
-                {/* Verification Filter */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Verification
-                  </label>
-                  <div className="space-y-2">
-                    <label className="flex items-center">
-                      <input
-                        type="checkbox"
-                        checked={filters.verified === true}
-                        onChange={() => handleFilterChange("verified", true)}
-                        className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                      />
-                      <span className="ml-2 text-sm text-gray-700">
-                        Verified only
-                      </span>
-                    </label>
-                  </div>
                 </div>
 
                 {/* Trial Filter */}
@@ -371,10 +351,10 @@ function SearchContent() {
             </div>
           ) : results.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {results.map((listing) => (
-                <ListingCard
-                  key={listing.slug}
-                  listing={listing}
+              {results.map((product) => (
+                <ProductCard
+                  key={product.slug}
+                  product={product}
                   showCategory={!filters.category}
                 />
               ))}

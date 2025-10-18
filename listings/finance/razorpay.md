@@ -56,6 +56,7 @@ locations:
   - "India"
   - "Global"
 website: "https://razorpay.com/"
+updated_at: "2025-01-18"
 keyFeatures:
   description: "Razorpay offers a full range of payment tools for businesses to ensure smooth transactions, boost customer satisfaction, and streamline accounting. From online payments to automated invoicing, Razorpay is the go-to payment platform for modern businesses."
   features:
@@ -75,8 +76,6 @@ keyFeatures:
       desc: "Accept payments from around the world in multiple currencies."
     - title: "Developer Friendly APIs"
       desc: "Easy-to-integrate APIs for seamless payment processing on your website or app."
-    - title: "Mobile Payments"
-      desc: "Accept payments on mobile apps or through UPI with a smooth experience."
 buyingGuide:
   - question: "1. What's your business model?"
     why: "Helps determine the payment features you need"

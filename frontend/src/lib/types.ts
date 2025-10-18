@@ -1,3 +1,5 @@
+import { Product } from '@/types/product'
+
 export interface Listing {
   // YAML front-matter
   name: string
@@ -52,13 +54,12 @@ export interface SearchFilters {
   category?: string
   pricing?: 'free' | 'paid' | 'freemium'
   trial?: boolean
-  verified?: boolean
   locations?: string[]
   use_cases?: string[]
 }
 
 export interface SearchResult {
-  listings: Listing[]
+  listings: Product[]
   total: number
   categories: { [key: string]: number }
 }

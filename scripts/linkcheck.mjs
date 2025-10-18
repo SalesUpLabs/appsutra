@@ -93,8 +93,8 @@ async function processFile(file) {
       urlsToCheck.push({ url: data.website, field: 'website' });
     }
 
-    if (data.logo) {
-      urlsToCheck.push({ url: data.logo, field: 'logo' });
+    if (data.icon) {
+      urlsToCheck.push({ url: data.icon, field: 'icon' });
     }
 
     totalUrls += urlsToCheck.length;

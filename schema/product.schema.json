@@ -1,0 +1,222 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://appsutra.ai/product.schema.json",
+  "title": "AppSutra Product",
+  "description": "Schema for SaaS product listings in AppSutra Directory",
+  "type": "object",
+  "properties": {
+    "icon": {
+      "type": "string",
+      "format": "uri",
+      "description": "Product icon/logo URL"
+    },
+    "name": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 100,
+      "description": "Product name (slug will be auto-generated from this)"
+    },
+    "company": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 150,
+      "description": "Company name"
+    },
+    "trialPlan": {
+      "type": "boolean",
+      "description": "Whether a free trial is available"
+    },
+    "trialPlanPricing": {
+      "type": "string",
+      "maxLength": 100,
+      "description": "Trial plan pricing details (e.g., 'Free', 'Rs.1,200/mo')"
+    },
+    "category": {
+      "type": "string",
+      "description": "Product category display name (categorySlug will be auto-generated)"
+    },
+    "useCases": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Primary use cases"
+    },
+    "keywords": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 30,
+      "description": "Search keywords"
+    },
+    "integration": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string"
+          }
+        },
+        "required": ["title"],
+        "additionalProperties": false
+      },
+      "description": "Third-party integrations"
+    },
+    "description": {
+      "type": "string",
+      "minLength": 10,
+      "description": "Product description (supports markdown)"
+    },
+    "locations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "description": "Supported locations/regions"
+    },
+    "website": {
+      "type": "string",
+      "format": "uri",
+      "description": "Official website URL"
+    },
+    "keyFeatures": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string",
+          "description": "Overview of key features"
+        },
+        "features": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "title": {
+                "type": "string"
+              },
+              "desc": {
+                "type": "string"
+              }
+            },
+            "required": ["title", "desc"],
+            "additionalProperties": false
+          },
+          "maxItems": 8,
+          "description": "List of key features (maximum 8)"
+        }
+      },
+      "required": ["description", "features"],
+      "additionalProperties": false,
+      "description": "Key features section"
+    },
+    "buyingGuide": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "question": {
+            "type": "string"
+          },
+          "why": {
+            "type": "string"
+          },
+          "answer": {
+            "type": "string"
+          }
+        },
+        "required": ["question", "why", "answer"],
+        "additionalProperties": false
+      },
+      "maxItems": 8,
+      "description": "Buying guide questions (maximum 8)"
+    },
+    "pricing": {
+      "type": "object",
+      "properties": {
+        "desc": {
+          "type": "string",
+          "description": "Pricing overview description"
+        },
+        "plans": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "pricing": {
+                "type": "object",
+                "properties": {
+                  "amount": {
+                    "type": ["number", "null"],
+                    "description": "Price amount (null for custom pricing)"
+                  },
+                  "currency": {
+                    "type": "string",
+                    "description": "Currency code (e.g., INR, USD)"
+                  },
+                  "currencySymbol": {
+                    "type": "string",
+                    "description": "Currency symbol (e.g., ₹, $)"
+                  },
+                  "period": {
+                    "type": "string",
+                    "description": "Billing period (e.g., month, year)"
+                  },
+                  "perUnit": {
+                    "type": ["string", "null"],
+                    "description": "Per unit pricing (e.g., user, employee)"
+                  },
+                  "isCustom": {
+                    "type": "boolean",
+                    "description": "Whether this is custom pricing"
+                  }
+                },
+                "required": ["amount", "currency", "currencySymbol", "period"],
+                "additionalProperties": false
+              },
+              "description": {
+                "type": "string"
+              }
+            },
+            "required": ["name", "pricing", "description"],
+            "additionalProperties": false
+          },
+          "maxItems": 4,
+          "description": "Pricing plans (maximum 4)"
+        }
+      },
+      "required": ["desc", "plans"],
+      "additionalProperties": false,
+      "description": "Pricing information"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date",
+      "description": "Last updated date (YYYY-MM-DD)"
+    }
+  },
+  "required": [
+    "icon",
+    "name",
+    "company",
+    "trialPlan",
+    "trialPlanPricing",
+    "category",
+    "useCases",
+    "keywords",
+    "integration",
+    "description",
+    "locations",
+    "website",
+    "keyFeatures",
+    "buyingGuide",
+    "pricing",
+    "updated_at"
+  ],
+  "additionalProperties": false
+}

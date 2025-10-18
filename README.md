@@ -27,7 +27,7 @@ AppSutra is a community-driven directory of SaaS products optimized for Indian b
 4. **Open a Pull Request** - our validation will run automatically
 5. **Get reviewed** by maintainers and go live!
 
-> **Note:** Slugs are auto-generated from your `name` and `category` fields in YAML. No need to specify them manually!
+> **Note:** Slugs are auto-generated from your `name` and `category` fields in YAML. The filename must match `slugify(name)` and the folder must match `slugify(category)`. Validation runs automatically on PR submission.
 
 ### Example Listing Structure
 
@@ -38,8 +38,12 @@ name: "Razorpay"
 company: "Razorpay Software Private Limited"
 trialPlan: true
 trialPlanPricing: "Free"
-category: "Payment Gateway"
-# slug and categorySlug are auto-generated at build time
+category: "Finance"
+# IMPORTANT: Do NOT add 'slug' or 'categorySlug' fields
+# They are auto-generated during validation and build from 'name' and 'category'
+# - Filename must be: slugify("Razorpay") = "razorpay.md"
+# - Folder must be: slugify("Finance") = "finance/"
+#  - Location: listings/finance/razorpay.md
 useCases:
   - "Online Payments"
   - "E-commerce"
@@ -63,6 +67,7 @@ locations:
   - "India"
   - "Global"
 website: "https://razorpay.com/"
+updated_at: "2025-01-18"
 keyFeatures:
   description: "Razorpay offers a full range of payment tools..."
   features:
@@ -201,10 +206,10 @@ appsutra/
    - `name: "Razorpay"`
    - `category: "Finance"` (display name, can differ from folder)
 
-3. **Auto-Generate Slugs**: Build process generates slugs from YAML fields
-   - `name: "Razorpay"` → `slug: "razorpay"`
-   - `category: "Finance"` → `categorySlug: "finance"`
-   - **Note:** Slugs come from YAML, not folder/filename
+3. **Auto-Generate Slugs**: Validation and build process generate slugs from YAML fields
+   - `name: "Razorpay"` → `slug: "razorpay"` (validated against filename)
+   - `category: "Finance"` → `categorySlug: "finance"` (validated against folder)
+   - **Validation ensures**: filename = slugify(name), folder = slugify(category)
 
 4. **Parse at Build Time**: `gray-matter` parses YAML → Product type object
 
@@ -237,9 +242,12 @@ We welcome contributions from the community! Please read our [Contributing Guide
   - Maximum 8 key features
   - Maximum 4 pricing plans
   - Maximum 8 buying guide questions
+  - Maximum 30 keywords
 - **Use proper structure** - Follow the Product type interface exactly
 - **No manual slugs** - Slugs are auto-generated from name and category
-- **Maintain up-to-date information** - Update your listing when pricing or features change
+- **File naming**: Filename must match `slugify(name).md`, folder must match `slugify(category)`
+- **Required fields**: All fields in Product schema are required, including `updated_at` (YYYY-MM-DD format)
+- **Maintain up-to-date information** - Update `updated_at` when making changes
 
 ### For Users
 - Write constructive, helpful reviews
