@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { Product } from "@/types/product";
 import Image from "next/image";
+import BrandIcon from "@/components/ui/brandIconUtils";
 
 interface ProductInfoProps {
   product: Product;
@@ -25,9 +26,9 @@ export function ProductInfo({ product }: ProductInfoProps) {
   const keywordsString = product.keywords.slice(0, 6).join(", ");
 
   return (
-    <div className="grid grid-cols-3 gap-5">
+    <div className="grid grid-cols-5 gap-5">
       {/* Main Content Card */}
-      <div className="col-span-2 border border-[#5D93FF] rounded-2xl p-8 gap-6 bg-white">
+      <div className="col-span-4 border border-[#5D93FF] rounded-2xl p-8 gap-6 bg-white">
         {/* Header */}
         <div className="flex items-start justify-between mb-6">
           <h2 className="text-2xl sm:text-3xl lg:text-[2.25rem] font-semibold leading-tight tracking-normal text-black">
@@ -119,7 +120,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
       </div>
 
       {/* Sidebar Card */}
-      <div className="border border-[#5DFF80] rounded-2xl p-8 gap-6 bg-white h-fit">
+      <div className="col-span-1 border border-[#5DFF80] rounded-2xl p-8 gap-6 bg-white h-fit">
         {/* Verified Badge */}
         <div className="flex items-center gap-2 mb-6 bg-green-100 w-fit px-4 py-2 rounded-lg border border-[#25EB74] ">
           <Image
@@ -192,7 +193,9 @@ export function ProductInfo({ product }: ProductInfoProps) {
           <div className="flex gap-2">
             {product?.integration?.map((integration, index) => (
               <span key={index} className="text-lg" title={integration.title}>
-                {integration.icon}
+                <BrandIcon
+                  name={integration.title.toLowerCase()}
+                />
               </span>
             ))}
           </div>
