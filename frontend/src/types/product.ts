@@ -6,17 +6,24 @@ export interface Integration {
   title: string
 }
 
+export interface PricingInfo {
+  amount: number | null // null for custom pricing
+  currency: string // e.g., "INR", "USD"
+  currencySymbol: string // e.g., "₹", "$"
+  period: string // e.g., "month", "year"
+  perUnit?: string | null // e.g., "user", "employee", null for flat rate
+  isCustom?: boolean // true for custom pricing
+}
+
 export interface PricingPlan {
-  icon: string
-  title: string
-  pricing: string // e.g., "Rs.1,200/mo" or "Custom Pricing"
-  desc: string
-  link: string
+  name: string
+  pricing: PricingInfo
+  description: string // supports **bold** markdown syntax
 }
 
 export interface PricingDetails {
   desc: string
-  plans: PricingPlan[]
+  plans: PricingPlan[] // maximum 4 plans
 }
 
 export interface KeyFeature {

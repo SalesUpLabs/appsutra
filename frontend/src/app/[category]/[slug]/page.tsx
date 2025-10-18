@@ -154,20 +154,51 @@ const ProductData: Product = {
   pricing: {
     desc: "Keka offers a variety of pricing plans to suit different business needs. Here are the main plans available:",
     plans: [
-      {
-        icon: "/Keka.png",
-        title: "Startup Plan",
-        pricing: "Rs.1,200/mo", //per user per month
-        desc: "Ideal for small businesses and startups looking for essential HR and payroll features.",
-        link: "https://www.keka.com/pricing/",
-      },
-      {
-        icon: "/Keka.png",
-        title: "Business Plan",
-        pricing: "Custom Pricing", //contact for pricing
-        desc: "Designed for growing businesses that need advanced HR functionalities and integrations.",
-        link: "https://www.keka.com/pricing/",
-      },
+         {
+        name: 'Starter Plan',
+        pricing: {
+            amount: 8000,
+            currency: 'INR',
+            currencySymbol: '₹',
+            period: 'month',
+            perUnit: null, // null means flat rate, could be 'user', 'employee', etc.
+        },
+        description: 'For up to **50 employees**, Keka offers an affordable starter plan with all essential HR and payroll features.',
+    },
+    {
+        name: 'Growth Plan',
+        pricing: {
+            amount: 12000,
+            currency: 'INR',
+            currencySymbol: '₹',
+            period: 'month',
+            perUnit: null,
+        },
+        description: 'Plans start at a monthly rate, covering up to **100 employees** with core HR and payroll features.',
+    },
+    {
+        name: 'Scale Plan',
+        pricing: {
+            amount: 8000,
+            currency: 'INR',
+            currencySymbol: '₹',
+            period: 'month',
+            perUnit: null,
+        },
+        description: 'Available at a monthly rate for up to **200 employees**, with complete HR and payroll functionality.',
+    },
+    {
+        name: 'Enterprise Plan',
+        pricing: {
+            amount: null, // null for custom pricing
+            currency: 'INR',
+            currencySymbol: '₹',
+            period: 'month',
+            perUnit: null,
+            isCustom: true,
+        },
+        description: 'Custom pricing for 200+ employees - Includes payroll processing statutory compliance and support.',
+    }
     ],
   },
 };
@@ -266,10 +297,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
         <ProductInfo product={ProductData} />
         <KeyFeatures data={ProductData.keyFeatures} />
         <BuyingGuide questions={ProductData.buyingGuide} />
+        <PricingOverview data={ProductData.pricing} />
         <div className="border-2 border-red-700">
-        <PricingOverview />
-        </div>
         <IntegrationsPage />
+        </div>
         {/* <SoftwareComparisonCarousel /> */}
       </div>
       {/* </div> */}
