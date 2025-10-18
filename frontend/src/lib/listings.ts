@@ -321,6 +321,14 @@ export async function getProductBySlug(
 }
 
 /**
+ * Get products by category slug
+ */
+export async function getProductsByCategory(categorySlug: string): Promise<Product[]> {
+  const products = await getAllProducts()
+  return products.filter(product => product.categorySlug === categorySlug)
+}
+
+/**
  * Get related products based on category, use cases, and keywords
  */
 export async function getRelatedProducts(

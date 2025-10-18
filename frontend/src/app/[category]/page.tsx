@@ -2,8 +2,8 @@ import { notFound } from 'next/navigation'
 import { Metadata } from 'next'
 // import { Header } from '@/components/layout/header'
 // import { Footer } from '@/components/layout/footer'
-import { ListingCard } from '@/components/listings/listing-card'
-import { getListingsByCategory, getCategories } from '@/lib/listings'
+import { ProductCard } from '@/components/listings/product-card'
+import { getProductsByCategory, getCategories } from '@/lib/listings'
 import { getCategoryDisplayName } from '@/lib/utils'
 
 interface CategoryPageProps {
@@ -22,9 +22,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
   const { category } = await params
   const categoryName = getCategoryDisplayName(category)
-  const listings = await getListingsByCategory(category)
+  const products = await getProductsByCategory(category)
 
-  if (listings.length === 0) {
+  if (products.length === 0) {
     return {
       title: 'Category Not Found - AppSutra',
     }
@@ -32,11 +32,11 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
   return {
     title: `${categoryName} Software - AppSutra Directory`,
-    description: `Discover the best ${categoryName.toLowerCase()} software for Indian businesses. Compare ${listings.length} verified solutions with transparent pricing and reviews.`,
+    description: `Discover the best ${categoryName.toLowerCase()} software for Indian businesses. Compare ${products.length} verified solutions with transparent pricing and reviews.`,
     keywords: [categoryName.toLowerCase(), 'software', 'SaaS', 'India', 'business tools'],
     openGraph: {
       title: `${categoryName} Software - AppSutra Directory`,
-      description: `Discover the best ${categoryName.toLowerCase()} software for Indian businesses. Compare ${listings.length} verified solutions with transparent pricing and reviews.`,
+      description: `Discover the best ${categoryName.toLowerCase()} software for Indian businesses. Compare ${products.length} verified solutions with transparent pricing and reviews.`,
       type: 'website',
     },
   }
@@ -44,26 +44,21 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 
 export default async function CategoryPage({ params }: CategoryPageProps) {
   const { category } = await params
-  const listings = await getListingsByCategory(category)
+  const products = await getProductsByCategory(category)
   const categoryName = getCategoryDisplayName(category)
 
-  if (listings.length === 0) {
+  if (products.length === 0) {
     notFound()
   }
 
-  // Separate verified and unverified listings
-  const verifiedListings = listings.filter(listing => listing.verified)
-  const unverifiedListings = listings.filter(listing => !listing.verified)
-
   // Stats
-  const trialCount = listings.filter(listing => listing.trial).length
-  const indianCount = listings.filter(listing =>
-    listing.locations.some(loc => loc.toLowerCase().includes('india'))
+  const trialCount = products.filter(product => product.trialPlan).length
+  const indianCount = products.filter(product =>
+    product.locations.some(loc => loc.toLowerCase().includes('india'))
   ).length
 
   return (
     <div className="min-h-screen bg-white">
-      {/* <Header /> */}
 
       {/* Category Hero */}
       <section className="bg-gradient-to-r from-blue-50 to-indigo-100 py-16">
@@ -73,19 +68,15 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
               {categoryName} Software
             </h1>
             <p className="text-xl text-gray-600 mb-6 max-w-3xl mx-auto">
-              Discover {listings.length} verified {categoryName.toLowerCase()} solutions
+              Discover {products.length} verified {categoryName.toLowerCase()} solutions
               designed for Indian businesses with transparent pricing and community reviews.
             </p>
 
             {/* Quick Stats */}
             <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-600">
               <div className="flex items-center space-x-1">
-                <span className="font-medium text-gray-900">{listings.length}</span>
+                <span className="font-medium text-gray-900">{products.length}</span>
                 <span>Products</span>
-              </div>
-              <div className="flex items-center space-x-1">
-                <span className="font-medium text-gray-900">{verifiedListings.length}</span>
-                <span>Verified</span>
               </div>
               <div className="flex items-center space-x-1">
                 <span className="font-medium text-gray-900">{trialCount}</span>
@@ -106,7 +97,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center space-y-4 md:space-y-0">
             <div>
               <h2 className="text-lg font-medium text-gray-900">
-                {listings.length} {categoryName} Solutions
+                {products.length} {categoryName} Solutions
               </h2>
               <p className="text-sm text-gray-600">
                 All solutions are community-verified and regularly updated
@@ -126,45 +117,16 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         </div>
       </section>
 
-      {/* Verified Listings */}
-      {verifiedListings.length > 0 && (
-        <section className="py-12">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              Verified Solutions
-            </h2>
-            <p className="text-gray-600 mb-8">
-              Hand-picked solutions verified by our expert team
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {verifiedListings.map((listing) => (
-                <ListingCard key={listing.slug} listing={listing} />
-              ))}
-            </div>
+      {/* Product Listings */}
+      <section className="py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {products.map((product) => (
+              <ProductCard key={product.slug} product={product} />
+            ))}
           </div>
-        </section>
-      )}
-
-      {/* All Other Listings */}
-      {unverifiedListings.length > 0 && (
-        <section className="py-12 bg-gray-50">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">
-              Community Submitted
-            </h2>
-            <p className="text-gray-600 mb-8">
-              Additional solutions submitted by the community
-            </p>
-
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {unverifiedListings.map((listing) => (
-                <ListingCard key={listing.slug} listing={listing} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
+        </div>
+      </section>
 
       {/* Call to Action */}
       <section className="py-16">
@@ -197,7 +159,6 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
         </div>
       </section>
 
-      {/* <Footer /> */}
     </div>
   )
 }
