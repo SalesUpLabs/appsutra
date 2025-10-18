@@ -1,50 +1,47 @@
-import {  Scale, TrendingUp, Lock, Users, DollarSign, Clock, Award, CalendarDays } from 'lucide-react';
-
-interface KeyFeature {
-  icon: string;
-  title: string;
-  desc: string;
-}
-
-interface KeyFeaturesData {
-  description: string;
-  features: KeyFeature[];
-}
+import { Product } from "@/types/product";
+import Image from "next/image";
 
 interface KeyFeaturesProps {
-  data: KeyFeaturesData;
+  data: Product["keyFeatures"];
 }
 
-export default function KeyFeatures({ data }: KeyFeaturesProps) {
-  // Map icon names to Lucide components
-  const iconMap: { [key: string]: React.ReactNode } = {
-    'calendar': <CalendarDays  className="w-6 h-6" strokeWidth={2} />,
-    'scale': <Scale className="w-6 h-6" strokeWidth={2} />,
-    'trending': <TrendingUp className="w-6 h-6" strokeWidth={2} />,
-    'lock': <Lock className="w-6 h-6" strokeWidth={2} />,
-    'users': <Users className="w-6 h-6" strokeWidth={2} />,
-    'dollar': <DollarSign className="w-6 h-6" strokeWidth={2} />,
-    'clock': <Clock className="w-6 h-6" strokeWidth={2} />,
-    'award': <Award className="w-6 h-6" strokeWidth={2} />,
-  };
+const ICON_SIZE = 60;
 
-  // Define color mapping based on index
-  const getColors = (index: number) => {
-    const colorSets = [
-      { icon: 'text-red-500', border: 'border-red-500' },
-      { icon: 'text-green-500', border: 'border-green-500' },
-      { icon: 'text-blue-500', border: 'border-blue-500' },
-      { icon: 'text-yellow-600', border: 'border-yellow-600' },
-    ];
-    return colorSets[index % colorSets.length];
-  };
+const FEATURE_ICONS = [
+  { src: "/icons/KeyFeatures/Calendar.png", alt: "Calendar Icon" },
+  { src: "/icons/KeyFeatures/Scale.png", alt: "Scale Icon" },
+  { src: "/icons/KeyFeatures/Progress.png", alt: "Progress Icon" },
+  { src: "/icons/KeyFeatures/Dollar.png", alt: "Dollar Icon" },
+  { src: "/icons/KeyFeatures/Scale.png", alt: "Scale Icon" },
+  { src: "/icons/KeyFeatures/Progress.png", alt: "Progress Icon" },
+  { src: "/icons/KeyFeatures/Dollar.png", alt: "Dollar Icon" },
+  { src: "/icons/KeyFeatures/Calendar.png", alt: "Calendar Icon" },
+] as const;
+
+const COLOR_SETS = [
+  { icon: "text-red-500", border: "border-[#FCCFC766]" },
+  { icon: "text-green-500", border: "border-[#CAEBD066]" },
+  { icon: "text-blue-500", border: "border-[#84ADFF66]" },
+  { icon: "text-yellow-600", border: "border-[#FFD5AE4D]" },
+  { icon: "text-green-500", border: "border-[#CAEBD066]" },
+  { icon: "text-blue-500", border: "border-[#84ADFF66]" },
+  { icon: "text-yellow-600", border: "border-[#FFD5AE4D]" },
+  { icon: "text-red-500", border: "border-[#FCCFC766]" },
+] as const;
+
+const MAX_FEATURES = 8;
+
+export default function KeyFeatures({ data }: KeyFeaturesProps) {
+  const features = data.features.slice(0, MAX_FEATURES);
 
   return (
-    <section id="key-features" className="w-full bg-white py-16 ">
+    <section id="key-features" className="w-full bg-white py-16">
       <div className="max-w-[1400px] mx-auto">
         {/* Header */}
-        <h2 className="text-[36px] font-semibold text-black mb-6">Key Features</h2>
-        
+        <h2 className="text-[36px] font-semibold text-black mb-6">
+          Key Features
+        </h2>
+
         {/* Description */}
         <p className="text-[#525050] text-[15px] font-medium leading-relaxed mb-12 max-w-[1200px]">
           {data.description}
@@ -52,16 +49,23 @@ export default function KeyFeatures({ data }: KeyFeaturesProps) {
 
         {/* Features Grid */}
         <div className="grid grid-cols-4 gap-6">
-          {data.features.map((feature, index) => {
-            const colors = getColors(index);
+          {features.map((feature, index) => {
+            const colors = COLOR_SETS[index];
+            const icon = FEATURE_ICONS[index];
+
             return (
               <div
-                key={index}
-                className={`bg-white rounded-xl py-[20px] px-[30px] border-2 ${colors.border} shadow-lg transition-all hover:shadow-xl`}
+                key={`${feature.title}-${index}`}
+                className={`bg-white rounded-xl py-[20px] px-[30px] border-2 ${colors.border}`}
               >
                 {/* Icon */}
                 <div className={`mb-4 ${colors.icon}`}>
-                  {iconMap[feature.icon] || iconMap['calendar']}
+                  <Image
+                    src={icon.src}
+                    width={ICON_SIZE}
+                    height={ICON_SIZE}
+                    alt={icon.alt}
+                  />
                 </div>
 
                 {/* Title */}

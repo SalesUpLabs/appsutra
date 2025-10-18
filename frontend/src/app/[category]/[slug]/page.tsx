@@ -69,42 +69,34 @@ const ProductData: Product = {
       "Our platform is designed to simplify HR and payroll processes while empowering employees and managers. From seamless leave management to automated payroll and real-time analytics, these features help businesses stay compliant, boost efficiency, and improve overall workforce management.",
     features: [
       {
-        icon: "calendar",
         title: "Leave & Claims Management",
         desc: "Manage employee leaves and claims with ease.",
       },
       {
-        icon: "scale",
         title: "Statutory Compliance",
         desc: "Ensure PF, ESI, and tax compliance effortlessly.",
       },
       {
-        icon: "trending",
         title: "Performance Management",
         desc: "Track goals, appraisals & growth with ease.",
       },
       {
-        icon: "lock",
         title: "Automated Payroll",
         desc: "HR tasks anytime, anywhere via mobile.",
       },
       {
-        icon: "scale",
         title: "Statutory Compliance",
         desc: "Ensure PF, ESI, and tax compliance effortlessly.",
       },
       {
-        icon: "trending",
         title: "Performance Management",
         desc: "Track goals, appraisals & growth with ease.",
       },
       {
-        icon: "lock",
         title: "Automated Payroll",
         desc: "HR tasks anytime, anywhere via mobile.",
       },
       {
-        icon: "calendar",
         title: "Leave & Claims Management",
         desc: "Manage employee leaves and claims with ease.",
       },
@@ -230,10 +222,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
       {/* <div className="relative flex flex-col h-screen"> */}
       <div className="px-6 py-3">
         <ProductInfo product={ProductData} />
+        <KeyFeatures data={ProductData.keyFeatures} />
         <div className="border-2 border-red-700">
-          <KeyFeatures data={ProductData.keyFeatures} />
+          <BuyingGuide />
         </div>
-        <BuyingGuide />
         <PricingOverview />
         <IntegrationsPage />
         {/* <SoftwareComparisonCarousel /> */}

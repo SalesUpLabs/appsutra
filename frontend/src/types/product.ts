@@ -20,14 +20,13 @@ export interface PricingDetails {
 }
 
 export interface KeyFeature {
-  icon: string
   title: string
   desc: string
 }
 
 export interface KeyFeatures {
   description: string
-  features: KeyFeature[]
+  features: KeyFeature[] //maximum 8 features
 }
 
 export interface BuyingGuideItem {
