@@ -1,35 +1,43 @@
-'use client';
+"use client";
 
-import { Button } from "@/components/ui/button"
-import { Building2, Calendar, Scale } from "lucide-react"
-import { useState, useEffect } from 'react'
+import { Button } from "@/components/ui/button";
+import { Building2, Calendar, Scale } from "lucide-react";
+import { useState, useEffect } from "react";
 
 interface ProductHeaderProps {
-    company: string
-    name: string
-    icon: string
-    freeplan: boolean
-    freeplanpricing: string
-    categorySlug: string
-    slug: string
+  company: string;
+  name: string;
+  icon: string;
+  freeplan: boolean;
+  freeplanpricing: string;
+  categorySlug: string;
+  slug: string;
 }
 
-export function ProductHeader({ company, name, icon, freeplan, freeplanpricing, categorySlug, slug }: ProductHeaderProps) {
-  const [activeTab, setActiveTab] = useState('product-information');
+export function ProductHeader({
+  company,
+  name,
+  icon,
+  freeplan,
+  freeplanpricing,
+  categorySlug,
+  slug,
+}: ProductHeaderProps) {
+  const [activeTab, setActiveTab] = useState("product-information");
 
   const tabs = [
-    { id: 'product-information', label: 'Product Information' },
-    { id: 'key-features', label: 'Key Features' },
-    { id: 'buying-guide', label: 'Buying Guide' },
-    { id: 'pricing', label: 'Pricing' },
-    { id: 'integrations', label: 'Integrations' },
-    { id: 'alternatives', label: 'Alternatives' },
+    { id: "product-information", label: "Product Information" },
+    { id: "key-features", label: "Key Features" },
+    { id: "buying-guide", label: "Buying Guide" },
+    { id: "pricing", label: "Pricing" },
+    { id: "integrations", label: "Integrations" },
+    { id: "alternatives", label: "Alternatives" },
   ];
 
   // Set active tab based on URL hash on mount
   useEffect(() => {
-    const hash = window.location.hash.replace('#', '');
-    if (hash && tabs.some(tab => tab.id === hash)) {
+    const hash = window.location.hash.replace("#", "");
+    if (hash && tabs.some((tab) => tab.id === hash)) {
       setActiveTab(hash);
     }
   }, []);
@@ -38,7 +46,7 @@ export function ProductHeader({ company, name, icon, freeplan, freeplanpricing, 
     setActiveTab(tabId);
 
     // Update URL hash
-    window.history.pushState(null, '', `#${tabId}`);
+    window.history.pushState(null, "", `#${tabId}`);
 
     // Scroll to element with offset for sticky headers
     const element = document.getElementById(tabId);
@@ -50,7 +58,7 @@ export function ProductHeader({ company, name, icon, freeplan, freeplanpricing, 
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: 'smooth'
+        behavior: "smooth",
       });
     }
   };
@@ -78,7 +86,8 @@ export function ProductHeader({ company, name, icon, freeplan, freeplanpricing, 
             <div className="flex items-center gap-2 text-gray-600 mb-4">
               <Building2 className="w-4 h-4" />
               <span className="text-sm">
-                By <span className="font-semibold text-blue-600">{company}</span>
+                By{" "}
+                <span className="font-semibold text-blue-600">{company}</span>
               </span>
             </div>
 
@@ -103,23 +112,24 @@ export function ProductHeader({ company, name, icon, freeplan, freeplanpricing, 
       </div>
 
       {/* Navigation Bar */}
-      <div className="w-full h-[72px] flex items-start justify-start px-[50.5px] gap-x-[95px] bg-white  shadow-md  sticky top-16 z-10">
+      {/* Navigation Bar */}
+      <div className="w-full h-[72px] flex items-center justify-start px-[3%] sm:px-[4%] lg:px-[5.8%] gap-x-[3%] sm:gap-x-[4%] lg:gap-x-[5.5%] bg-white shadow-md sticky top-16 z-10">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
-          
+
           return (
             <button
               key={tab.id}
               onClick={() => handleTabClick(tab.id)}
-              className={`flex items-center justify-center py-[25px] px-[5px] h-[72px] transition-colors ${
-                isActive ? 'border-b-2 border-blue-600' : ''
+              className={`flex items-center justify-center py-6 px-1 sm:px-1.5 h-[72px] transition-colors ${
+                isActive ? "border-b-2 border-blue-600" : ""
               }`}
             >
               <span
-                className={` text-[18px] whitespace-nowrap ${
+                className={`text-base sm:text-[17px] lg:text-lg whitespace-nowrap ${
                   isActive
-                    ? 'font-semibold text-blue-600'
-                    : 'font-medium  text-neutral-800 hover:text-blue-600'
+                    ? "font-semibold text-blue-600"
+                    : "font-medium text-neutral-800 hover:text-blue-600"
                 }`}
               >
                 {tab.label}
@@ -129,5 +139,5 @@ export function ProductHeader({ company, name, icon, freeplan, freeplanpricing, 
         })}
       </div>
     </>
-  )
+  );
 }

@@ -1,16 +1,12 @@
 import React from 'react';
 import Image from 'next/image';
 
-import image1 from '@/public/image1.png';
-import image2 from '@/public/image2.png';
-import image3 from '@/public/image3.png';
-import image4 from '@/public/image4.png';
 
 // --- Data for Pricing Plans ---
 const pricingPlans = [
     {
         name: 'Starter Plan',
-        Icon: image1 || '/image1.png',
+        Icon:  '/ribbon-badge.png',
         price: 'Rs. 8,000',
         priceSuffix: 'per month',
         description: <>For up to <strong>50 employees</strong>, Keka offers an affordable starter plan with all essential HR and payroll features.</>,
@@ -22,7 +18,7 @@ const pricingPlans = [
     },
     {
         name: 'Growth Plan',
-        Icon: image2 || '/image2.png',
+        Icon:  '/ribbon-badge.png',
         price: 'Rs. 12,000',
         priceSuffix: 'per month',
         description: <>Plans start at a monthly rate, covering up to <strong>100 employees</strong> with core HR and payroll features.</>,
@@ -34,7 +30,7 @@ const pricingPlans = [
     },
     {
         name: 'Scale Plan',
-        Icon: image3 || '/image3.png',
+        Icon:  '/ribbon-badge.png',
         price: 'Rs. 8000',
         priceSuffix: 'per month',
         description: <>Available at a monthly rate for up to <strong>200 employees</strong>, with complete HR and payroll functionality.</>,
@@ -46,7 +42,7 @@ const pricingPlans = [
     },
     {
         name: 'Enterprise Plan',
-        Icon: image4 || '/image4.png',
+        Icon:  '/ribbon-badge.png',
         price: 'Rs. 8000',
         priceSuffix: 'per month',
         description: <>Custom pricing for 200+ employees - Includes payroll processing statutory compliance and support.</>,
@@ -81,7 +77,7 @@ const PricingOverview = () => {
             >
               <div className="flex-grow">
                 <div className="mb-6">
-                  <Image src={plan.Icon} alt={plan.name} className={`w-12 h-12 ${plan.theme.textColor}`} />
+                  <Image src={plan.Icon} alt={plan.name} className={`w-12 h-12 ${plan.theme.textColor}`} width={48} height={48} />
                 </div>
                 <h2 className="text-lg font-bold text-gray-800 mb-3">{plan.name}</h2>
                 <div className="mb-5 flex items-baseline">
