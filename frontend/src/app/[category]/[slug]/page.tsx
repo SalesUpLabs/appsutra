@@ -63,7 +63,6 @@ const ProductData: Product = {
   //markdown content
   locations: ["India", "Global"],
   website: "https://www.keka.com/?utm=appsutra.com",
-  // "keyFeatures": {"description": "Our platform is designed to simplify HR and payroll processes while empowering employees and managers. From seamless leave management to automated payroll and real-time analytics, these features help businesses stay compliant, boost efficiency, and improve overall workforce management.", "features": [{"icon": "calender.png", "title": "Leave & Claims Management", "desc": "Manage employee leaves and claims with ease."}]},
   keyFeatures: {
     description:
       "Our platform is designed to simplify HR and payroll processes while empowering employees and managers. From seamless leave management to automated payroll and real-time analytics, these features help businesses stay compliant, boost efficiency, and improve overall workforce management.",
@@ -104,10 +103,53 @@ const ProductData: Product = {
   },
   buyingGuide: [
     {
-      question: "1. What's your team size and expected growth?",
+      question: "1. What's your team size and expected growth?",
       why: "Critical for pricing and feature planning",
-      answer: "Consider both current needs and 12-18 month projections",
+      answer:
+        "Consider both current needs and 12-18 month projections",
     },
+    {
+      question: "2. Which existing tools need integration?",
+      why: "Affects workflow efficiency and adoption",
+      answer:
+        "List your current stack: CRM, project management, calendar, etc.",
+    },
+    {
+      question: "3. What's your security and compliance requirements?",
+      why: "May be regulatory requirement",
+      answer:
+        "Consider GDPR, SOC2, HIPAA, or industry-specific standards",
+    },
+    {
+      question: "4. Who will be the primary administrators?",
+      why: "Affects training needs and ongoing management",
+      answer:
+        "Plan for user onboarding, training, and ongoing support",
+    },
+    {
+      question: "5. What's your budget range and billing preference?",
+      why: "Determines viable options",
+      answer:
+        "Consider monthly vs annual billing, volume discounts, and hidden costs",
+    },
+    {
+      question: "6. Who will be the primary administrators?",
+      why: "Affects training needs and ongoing management",
+      answer:
+        "Plan for user onboarding, training, and ongoing support",
+    },
+    {
+      question: "7. What's your security and compliance requirements?",
+      why: "May be regulatory requirement",
+      answer:
+        "Consider GDPR, SOC2, HIPAA, or industry-specific standards",
+    },
+    {
+      question: "8. Which existing tools need integration?",
+      why: "Affects workflow efficiency and adoption",
+      answer:
+        "List your current stack: CRM, project management, calendar, etc.",
+    }
   ],
   pricing: {
     desc: "Keka offers a variety of pricing plans to suit different business needs. Here are the main plans available:",
@@ -223,10 +265,10 @@ export default async function ProductPage({ params }: ProductPageProps) {
       <div className="px-6 py-3">
         <ProductInfo product={ProductData} />
         <KeyFeatures data={ProductData.keyFeatures} />
+        <BuyingGuide questions={ProductData.buyingGuide} />
         <div className="border-2 border-red-700">
-          <BuyingGuide />
-        </div>
         <PricingOverview />
+        </div>
         <IntegrationsPage />
         {/* <SoftwareComparisonCarousel /> */}
       </div>

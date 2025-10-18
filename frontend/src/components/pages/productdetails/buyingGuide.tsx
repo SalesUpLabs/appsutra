@@ -1,70 +1,26 @@
 import React from "react";
-import Image from "next/image";
-// import pointer from "@/public/image.png";
 
+interface BuyingGuideQuestion {
+  question: string;
+  why: string;
+  answer: string;
+}
+
+interface BuyingGuideProps {
+  questions?: BuyingGuideQuestion[];
+}
 
 const PointerIcon = () => (
   <img
     src="/icons/why-choose-us/pointer-icon.svg"
     alt="Pointer Icon"
-    className="h-5 w-5" 
+    className="h-5 w-5"
   />
 );
 
-const BuyingGuide = () => {
-  const guideQuestions = [
-    {
-      question: "1. What's your team size and expected growth?",
-      why: "Critical for pricing and feature planning",
-      answer:
-        "Consider both current needs and 12-18 month projections",
-    },
-    {
-      question: "2. Which existing tools need integration?",
-      why: "Affects workflow efficiency and adoption",
-      answer:
-        "List your current stack: CRM, project management, calendar, etc.",
-    },
-    {
-      question: "3. What's your security and compliance requirements?",
-      why: "May be regulatory requirement",
-      answer:
-        "Consider GDPR, SOC2, HIPAA, or industry-specific standards",
-    },
-    {
-      question: "4. Who will be the primary administrators?",
-      why: "Affects training needs and ongoing management",
-      answer:
-        "Plan for user onboarding, training, and ongoing support",
-    },
-    {
-      question: "5. What's your budget range and billing preference?",
-      why: "Determines viable options",
-      answer:
-        "Consider monthly vs annual billing, volume discounts, and hidden costs",
-    },
-    {
-      question: "6. Who will be the primary administrators?",
-      why: "Affects training needs and ongoing management",
-      answer:
-        "Plan for user onboarding, training, and ongoing support",
-    },
-    {
-      question: "7. What's your security and compliance requirements?",
-      why: "May be regulatory requirement",
-      answer:
-        "Consider GDPR, SOC2, HIPAA, or industry-specific standards",
-    },
-    {
-      question: "8. Which existing tools need integration?",
-      why: "Affects workflow efficiency and adoption",
-      answer:
-        "List your current stack: CRM, project management, calendar, etc.",
-    },
-  ];
-
-  const leftColumnQuestions = guideQuestions.slice(0, 4);
-  const rightColumnQuestions = guideQuestions.slice(4, 8);
+const BuyingGuide = ({ questions = [] }: BuyingGuideProps) => {
+  const leftColumnQuestions = questions.slice(0, 4);
+  const rightColumnQuestions = questions.slice(4, 8);
 
   return (
     <div>
@@ -105,7 +61,7 @@ const BuyingGuide = () => {
             {leftColumnQuestions.map((item, index) => (
               <div
                 key={index}
-                className="pl-4 border-l-2 border-[#a3cfb4]"
+                className="pl-4 border-l-[3px] border-[#0B833766]"
               >
                 <h3 className="text-[#525050] font-semibold mb-2 text-base">
                   {item.question}
@@ -117,10 +73,8 @@ const BuyingGuide = () => {
                   </span>
                 </p>
                 <p className="text-[#666666] text-sm flex items-start">
-                  <span className="mr-2 text-gray-400 ">
-                    <PointerIcon />
-                  </span>
-                  {item.answer}
+                
+                💡 {item.answer}
                 </p>
               </div>
             ))}
@@ -131,7 +85,7 @@ const BuyingGuide = () => {
             {rightColumnQuestions.map((item, index) => (
               <div
                 key={index}
-                className="pl-4 border-l-2 border-[#a3cfb4]"
+                className="pl-4 border-l-[3px] border-[#0B833766]"
               >
                 <h3 className="text-[#525050] font-semibold mb-2 text-base">
                   {item.question}
@@ -143,10 +97,7 @@ const BuyingGuide = () => {
                   </span>
                 </p>
                 <p className="text-[#666666] text-sm flex items-start">
-                  <span className="mr-2 text-gray-400 ">
-                    <PointerIcon />
-                  </span>
-                  {item.answer}
+                  💡 {item.answer}
                 </p>
               </div>
             ))}
