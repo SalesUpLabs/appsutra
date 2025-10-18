@@ -1,188 +1,246 @@
-import { notFound } from 'next/navigation'
-import { Metadata } from 'next'
-import Link from 'next/link'
-import { ExternalLink, CheckCircle, MapPin, Calendar, Github, Star, MessageSquare } from 'lucide-react'
-// import { Header } from '@/components/layout/header'
-// import { Footer } from '@/components/layout/footer'
-import { ListingCard } from '@/components/listings/listing-card'
-import { getListingBySlug, getAllListings, getRelatedListings } from '@/lib/listings'
-import { formatPricing, isIndianCompany, formatDate, getCategoryDisplayName } from '@/lib/utils'
-import WhyChooseUs from '@/components/pages/productdetails/whyChooseUs'
-import { Product } from '@/types/product'
-import { ProductHeader } from '@/components/pages/productdetails/productHeader'
-import { ProductInfo } from '@/components/pages/productdetails/productinfo'
-import KeyFeatures from '@/components/pages/productdetails/keyFeatures'
-import { SoftwareComparisonCarousel } from '@/components/pages/productdetails/alternative'
-import IntegrationsPage from '@/components/pages/productdetails/integrationsPage'
-import BuyingGuide from '@/components/pages/productdetails/buyingGuide'
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
+import { notFound } from "next/navigation";
+import { Metadata } from "next";
+import {
+  getListingBySlug,
+  getAllListings,
+  getRelatedListings,
+} from "@/lib/listings";
+import {
+  formatPricing,
+  isIndianCompany,
+  formatDate,
+  getCategoryDisplayName,
+} from "@/lib/utils";
+import WhyChooseUs from "@/components/pages/productdetails/whyChooseUs";
+import { Product } from "@/types/product";
+import { ProductHeader } from "@/components/pages/productdetails/productHeader";
+import { ProductInfo } from "@/components/pages/productdetails/productinfo";
+import KeyFeatures from "@/components/pages/productdetails/keyFeatures";
+import IntegrationsPage from "@/components/pages/productdetails/integrationsPage";
+import BuyingGuide from "@/components/pages/productdetails/buyingGuide";
+import PricingOverview from "@/components/pages/productdetails/pricingOverview";
 
 interface ProductPageProps {
   params: Promise<{
-    category: string
-    slug: string
-  }>
+    category: string;
+    slug: string;
+  }>;
 }
-
 
 const ProductData: Product = {
-  "icon": "/icons/ProductDetailsPage/keka/icon.png",
-  "name": "Keka Services",
-  "company": "Keka Services Private Limited",
-  "freeplan": true,
-  "freeplanpricing": "Rs.1,200/mo",
-  "category": "Human Resource",
-  "categorySlug": "human-resource",
-  "slug": "keka-services",
-  "useCases": ["Lead Management","Sales Pipeline", "Financial Services"],
-  "keywords": ["hr","hrms","payroll","employee management","attendance","time tracking","performance management","recruitment","onboarding","offboarding","leave management","benefits administration","compliance management"],
-  "integration": [{ "icon": "razorpay.png" , "title": "Razorpay"},{ "icon": "zapier.png" , "title": "Zapier"},{ "icon": "slack.png" , "title": "Slack"},{ "icon": "microsoft-teams.png" , "title": "Microsoft Teams"}],
-  "description": "A modern HR & payroll platform for growing businesses.\n\nKeka is your people enabler. From automation of people processes to creating an engaged and driven culture, Keka is all you need to build a good to great company.\n\nThe world has changed, and it's going to keep changing. Keka HR helps your teams to adapt, evolve, and scale by working more effectively. Spend less time on mundane tasks and focus more on strategy. Turn data into smarter decisions and create experiences your employees will love.\n\nIt is a cloud-based HR and payroll management platform designed to simplify people operations for modern organizations. It streamlines employee lifecycle management — from hiring and onboarding to payroll, attendance, performance, and compliance — all in one place.\n\nBuilt with employee-first design, Keka empowers HR teams to automate repetitive tasks, reduce administrative overhead, and focus on people development. With seamless integrations, data security, and customizable workflows, it adapts to businesses of every size.\n\n**Key Highlights**\n- Unified HR, payroll, and talent management system\n- Employee self-service portal for accessibility\n- Customizable workflows to match company policies\n- Secure, compliant, and scalable for SMBs and enterprises",
+  icon: "/icons/ProductDetailsPage/keka/icon.png",
+  name: "Keka Services",
+  company: "Keka Services Private Limited",
+  freeplan: true,
+  freeplanpricing: "Rs.1,200/mo",
+  category: "Human Resource",
+  categorySlug: "human-resource",
+  slug: "keka-services",
+  useCases: ["Lead Management", "Sales Pipeline", "Financial Services"],
+  keywords: [
+    "hr",
+    "hrms",
+    "payroll",
+    "employee management",
+    "attendance",
+    "time tracking",
+    "performance management",
+    "recruitment",
+    "onboarding",
+    "offboarding",
+    "leave management",
+    "benefits administration",
+    "compliance management",
+  ],
+  integration: [
+    { icon: "razorpay.png", title: "Razorpay" },
+    { icon: "zapier.png", title: "Zapier" },
+    { icon: "slack.png", title: "Slack" },
+    { icon: "microsoft-teams.png", title: "Microsoft Teams" },
+  ],
+  description:
+    "A modern HR & payroll platform for growing businesses.\n\nKeka is your people enabler. From automation of people processes to creating an engaged and driven culture, Keka is all you need to build a good to great company.\n\nThe world has changed, and it's going to keep changing. Keka HR helps your teams to adapt, evolve, and scale by working more effectively. Spend less time on mundane tasks and focus more on strategy. Turn data into smarter decisions and create experiences your employees will love.\n\nIt is a cloud-based HR and payroll management platform designed to simplify people operations for modern organizations. It streamlines employee lifecycle management — from hiring and onboarding to payroll, attendance, performance, and compliance — all in one place.\n\nBuilt with employee-first design, Keka empowers HR teams to automate repetitive tasks, reduce administrative overhead, and focus on people development. With seamless integrations, data security, and customizable workflows, it adapts to businesses of every size.\n\n**Key Highlights**\n- Unified HR, payroll, and talent management system\n- Employee self-service portal for accessibility\n- Customizable workflows to match company policies\n- Secure, compliant, and scalable for SMBs and enterprises",
   //markdown content
-  "locations": ["India", "Global"],
-  "website": "https://www.keka.com/?utm=appsutra.com",
+  locations: ["India", "Global"],
+  website: "https://www.keka.com/?utm=appsutra.com",
   // "keyFeatures": {"description": "Our platform is designed to simplify HR and payroll processes while empowering employees and managers. From seamless leave management to automated payroll and real-time analytics, these features help businesses stay compliant, boost efficiency, and improve overall workforce management.", "features": [{"icon": "calender.png", "title": "Leave & Claims Management", "desc": "Manage employee leaves and claims with ease."}]},
-   "keyFeatures": {
-    "description": "Our platform is designed to simplify HR and payroll processes while empowering employees and managers. From seamless leave management to automated payroll and real-time analytics, these features help businesses stay compliant, boost efficiency, and improve overall workforce management.", 
-    "features": [
+  keyFeatures: {
+    description:
+      "Our platform is designed to simplify HR and payroll processes while empowering employees and managers. From seamless leave management to automated payroll and real-time analytics, these features help businesses stay compliant, boost efficiency, and improve overall workforce management.",
+    features: [
       {
-        "icon": "calendar", 
-        "title": "Leave & Claims Management", 
-        "desc": "Manage employee leaves and claims with ease."
+        icon: "calendar",
+        title: "Leave & Claims Management",
+        desc: "Manage employee leaves and claims with ease.",
       },
       {
-        "icon": "scale", 
-        "title": "Statutory Compliance", 
-        "desc": "Ensure PF, ESI, and tax compliance effortlessly."
+        icon: "scale",
+        title: "Statutory Compliance",
+        desc: "Ensure PF, ESI, and tax compliance effortlessly.",
       },
       {
-        "icon": "trending", 
-        "title": "Performance Management", 
-        "desc": "Track goals, appraisals & growth with ease."
+        icon: "trending",
+        title: "Performance Management",
+        desc: "Track goals, appraisals & growth with ease.",
       },
       {
-        "icon": "lock", 
-        "title": "Automated Payroll", 
-        "desc": "HR tasks anytime, anywhere via mobile."
+        icon: "lock",
+        title: "Automated Payroll",
+        desc: "HR tasks anytime, anywhere via mobile.",
       },
       {
-        "icon": "scale", 
-        "title": "Statutory Compliance", 
-        "desc": "Ensure PF, ESI, and tax compliance effortlessly."
+        icon: "scale",
+        title: "Statutory Compliance",
+        desc: "Ensure PF, ESI, and tax compliance effortlessly.",
       },
       {
-        "icon": "trending", 
-        "title": "Performance Management", 
-        "desc": "Track goals, appraisals & growth with ease."
+        icon: "trending",
+        title: "Performance Management",
+        desc: "Track goals, appraisals & growth with ease.",
       },
       {
-        "icon": "lock", 
-        "title": "Automated Payroll", 
-        "desc": "HR tasks anytime, anywhere via mobile."
+        icon: "lock",
+        title: "Automated Payroll",
+        desc: "HR tasks anytime, anywhere via mobile.",
       },
       {
-        "icon": "calendar", 
-        "title": "Leave & Claims Management", 
-        "desc": "Manage employee leaves and claims with ease."
-      }
-    ]
+        icon: "calendar",
+        title: "Leave & Claims Management",
+        desc: "Manage employee leaves and claims with ease.",
+      },
+    ],
   },
-  "buyingGuide":[{"question":"1. What's your team size and expected growth?","why": "Critical for pricing and feature planning", "answer":"Consider both current needs and 12-18 month projections"}],
-  "pricing": {
-    "desc": "Keka offers a variety of pricing plans to suit different business needs. Here are the main plans available:",
-    "plans": [
+  buyingGuide: [
+    {
+      question: "1. What's your team size and expected growth?",
+      why: "Critical for pricing and feature planning",
+      answer: "Consider both current needs and 12-18 month projections",
+    },
+  ],
+  pricing: {
+    desc: "Keka offers a variety of pricing plans to suit different business needs. Here are the main plans available:",
+    plans: [
       {
-        "icon": "/Keka.png",
-        "title": "Startup Plan",
-        "pricing": "Rs.1,200/mo", //per user per month
-        "desc": "Ideal for small businesses and startups looking for essential HR and payroll features.",
-        "link": "https://www.keka.com/pricing/"
+        icon: "/Keka.png",
+        title: "Startup Plan",
+        pricing: "Rs.1,200/mo", //per user per month
+        desc: "Ideal for small businesses and startups looking for essential HR and payroll features.",
+        link: "https://www.keka.com/pricing/",
       },
       {
-        "icon": "/Keka.png",
-        "title": "Business Plan",
-        "pricing": "Custom Pricing", //contact for pricing
-        "desc": "Designed for growing businesses that need advanced HR functionalities and integrations.",
-        "link": "https://www.keka.com/pricing/"
-      }]
-  }
-
-}
+        icon: "/Keka.png",
+        title: "Business Plan",
+        pricing: "Custom Pricing", //contact for pricing
+        desc: "Designed for growing businesses that need advanced HR functionalities and integrations.",
+        link: "https://www.keka.com/pricing/",
+      },
+    ],
+  },
+};
 
 export async function generateStaticParams() {
-  const listings = await getAllListings()
+  const listings = await getAllListings();
   return listings.map((listing) => ({
     category: listing.category,
     slug: listing.slug,
-  }))
+  }));
 }
 
-export async function generateMetadata({ params }: ProductPageProps): Promise<Metadata> {
-  const { category, slug } = await params
-  const listing = await getListingBySlug(category, slug)
+export async function generateMetadata({
+  params,
+}: ProductPageProps): Promise<Metadata> {
+  const { category, slug } = await params;
+  const listing = await getListingBySlug(category, slug);
 
   if (!listing) {
     return {
-      title: 'Product Not Found - AppSutra',
-    }
+      title: "Product Not Found - AppSutra",
+    };
   }
 
   return {
-    title: `${listing.name} - ${getCategoryDisplayName(listing.category)} Software | AppSutra`,
-    description: listing.excerpt || `${listing.name} is a ${listing.category} solution. ${formatPricing(listing.pricing)}. ${listing.trial ? 'Free trial available.' : ''}`,
-    keywords: [listing.name, ...listing.keywords || [], listing.category, 'software', 'SaaS', 'India'],
+    title: `${listing.name} - ${getCategoryDisplayName(
+      listing.category
+    )} Software | AppSutra`,
+    description:
+      listing.excerpt ||
+      `${listing.name} is a ${listing.category} solution. ${formatPricing(
+        listing.pricing
+      )}. ${listing.trial ? "Free trial available." : ""}`,
+    keywords: [
+      listing.name,
+      ...(listing.keywords || []),
+      listing.category,
+      "software",
+      "SaaS",
+      "India",
+    ],
     openGraph: {
-      title: `${listing.name} - ${getCategoryDisplayName(listing.category)} Software`,
-      description: listing.excerpt || `${listing.name} is a ${listing.category} solution`,
-      type: 'website',
+      title: `${listing.name} - ${getCategoryDisplayName(
+        listing.category
+      )} Software`,
+      description:
+        listing.excerpt || `${listing.name} is a ${listing.category} solution`,
+      type: "website",
       images: listing.logo ? [{ url: listing.logo }] : [],
     },
-  }
+  };
 }
 
 function parseMarkdownContent(content: string) {
   // Simple markdown parsing - in production, you'd use a proper markdown parser
-  const sections = content.split(/^##\s+/m).filter(Boolean)
-  const parsed: { [key: string]: string } = {}
+  const sections = content.split(/^##\s+/m).filter(Boolean);
+  const parsed: { [key: string]: string } = {};
 
-  sections.forEach(section => {
-    const lines = section.trim().split('\n')
-    const title = lines[0].replace(/^\*\*|\*\*$/g, '').trim()
-    const body = lines.slice(1).join('\n').trim()
-    parsed[title.toLowerCase()] = body
-  })
+  sections.forEach((section) => {
+    const lines = section.trim().split("\n");
+    const title = lines[0].replace(/^\*\*|\*\*$/g, "").trim();
+    const body = lines.slice(1).join("\n").trim();
+    parsed[title.toLowerCase()] = body;
+  });
 
-  return parsed
+  return parsed;
 }
 
 export default async function ProductPage({ params }: ProductPageProps) {
-  const { category, slug } = await params
-  const listing = await getListingBySlug(category, slug)
+  const { category, slug } = await params;
+  const listing = await getListingBySlug(category, slug);
 
   if (!listing) {
-    notFound()
+    notFound();
   }
 
-  const relatedListings = await getRelatedListings(listing, 3)
-  const categoryName = getCategoryDisplayName(listing.category)
-  const parsedContent = parseMarkdownContent(listing.content)
+  const relatedListings = await getRelatedListings(listing, 3);
+  const categoryName = getCategoryDisplayName(listing.category);
+  const parsedContent = parseMarkdownContent(listing.content);
 
   return (
     <div className="min-h-screen bg-white">
       {/* <Header /> */}
-      <WhyChooseUs/> 
-      <ProductHeader company={ProductData.company} name={ProductData.name} icon={ProductData.icon} freeplan={ProductData.freeplan} freeplanpricing={ProductData.freeplanpricing}  categorySlug={ProductData.categorySlug} slug={ProductData.slug}/>
+      <WhyChooseUs />
+      <ProductHeader
+        company={ProductData.company}
+        name={ProductData.name}
+        icon={ProductData.icon}
+        freeplan={ProductData.freeplan}
+        freeplanpricing={ProductData.freeplanpricing}
+        categorySlug={ProductData.categorySlug}
+        slug={ProductData.slug}
+      />
       {/* <div className="relative flex flex-col h-screen"> */}
-    <div className="px-6 space-y-5 mt-6">
-      <ProductInfo product={ProductData} />
-      <KeyFeatures data={ProductData.keyFeatures} />
-      <BuyingGuide />
-      <IntegrationsPage />
-      <SoftwareComparisonCarousel />
-    </div>
-{/* </div> */}
+      <div className="px-6 py-3">
+        <ProductInfo product={ProductData} />
+        <div className="border-2 border-red-700">
+          <KeyFeatures data={ProductData.keyFeatures} />
+        </div>
+        <BuyingGuide />
+        <PricingOverview />
+        <IntegrationsPage />
+        {/* <SoftwareComparisonCarousel /> */}
+      </div>
+      {/* </div> */}
 
       {/* <Footer /> */}
     </div>
-  )
+  );
 }
