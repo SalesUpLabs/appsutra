@@ -4,7 +4,7 @@ name: "Keka Services"
 company: "Keka Services Private Limited"
 trialPlan: true
 trialPlanPricing: "Rs.1,200/mo"
-category: "Human Resource"
+category: "HR"
 useCases:
   - "Lead Management"
   - "Sales Pipeline"

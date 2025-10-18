@@ -233,7 +233,7 @@ export async function getRelatedListings(
 // ===== Product Functions (Markdown-based) =====
 
 /**
- * Get all products from markdown files (flat directory structure)
+ * Get all products from markdown files (organized in category folders)
  */
 export async function getAllProducts(): Promise<Product[]> {
   if (!fs.existsSync(LISTINGS_DIR)) {
@@ -242,52 +242,60 @@ export async function getAllProducts(): Promise<Product[]> {
   }
 
   const products: Product[] = []
-  const files = fs.readdirSync(LISTINGS_DIR, { withFileTypes: true })
+  const categories = fs.readdirSync(LISTINGS_DIR, { withFileTypes: true })
 
-  for (const file of files) {
-    // Skip directories and non-markdown files
-    if (file.isDirectory() || !file.name.endsWith('.md')) continue
+  for (const categoryDir of categories) {
+    // Only process directories
+    if (!categoryDir.isDirectory()) continue
 
-    const filePath = path.join(LISTINGS_DIR, file.name)
+    const categoryPath = path.join(LISTINGS_DIR, categoryDir.name)
+    const files = fs.readdirSync(categoryPath)
 
-    try {
-      const fileContent = fs.readFileSync(filePath, 'utf8')
-      const { data } = matter(fileContent)
+    for (const file of files) {
+      // Only process markdown files
+      if (!file.endsWith('.md')) continue
 
-      // Validate required fields
-      if (!data.name || !data.category) {
-        console.warn(`Skipping invalid product: ${filePath} (missing name or category)`)
-        continue
+      const filePath = path.join(categoryPath, file)
+
+      try {
+        const fileContent = fs.readFileSync(filePath, 'utf8')
+        const { data } = matter(fileContent)
+
+        // Validate required fields
+        if (!data.name || !data.category) {
+          console.warn(`Skipping invalid product: ${filePath} (missing name or category)`)
+          continue
+        }
+
+        // Auto-generate slugs from name and category fields (not from folder/filename)
+        const slug = slugify(data.name)
+        const categorySlug = slugify(data.category)
+
+        // Map YAML front-matter to Product type
+        const product: Product = {
+          icon: data.icon,
+          name: data.name,
+          company: data.company,
+          trialPlan: data.trialPlan || false,
+          trialPlanPricing: data.trialPlanPricing || '',
+          category: data.category,
+          categorySlug: categorySlug, // Auto-generated from category field
+          slug: slug, // Auto-generated from name field
+          useCases: data.useCases || [],
+          keywords: data.keywords || [],
+          integration: data.integration || [],
+          description: data.description || '',
+          locations: data.locations || [],
+          website: data.website,
+          keyFeatures: data.keyFeatures || { description: '', features: [] },
+          buyingGuide: data.buyingGuide || [],
+          pricing: data.pricing || { desc: '', plans: [] },
+        }
+
+        products.push(product)
+      } catch (error) {
+        console.error(`Error parsing product ${filePath}:`, error)
       }
-
-      // Auto-generate slugs from name and category
-      const slug = slugify(data.name)
-      const categorySlug = slugify(data.category)
-
-      // Map YAML front-matter to Product type
-      const product: Product = {
-        icon: data.icon,
-        name: data.name,
-        company: data.company,
-        trialPlan: data.trialPlan || false,
-        trialPlanPricing: data.trialPlanPricing || '',
-        category: data.category,
-        categorySlug: categorySlug, // Auto-generated
-        slug: slug, // Auto-generated
-        useCases: data.useCases || [],
-        keywords: data.keywords || [],
-        integration: data.integration || [],
-        description: data.description || '',
-        locations: data.locations || [],
-        website: data.website,
-        keyFeatures: data.keyFeatures || { description: '', features: [] },
-        buyingGuide: data.buyingGuide || [],
-        pricing: data.pricing || { desc: '', plans: [] },
-      }
-
-      products.push(product)
-    } catch (error) {
-      console.error(`Error parsing product ${filePath}:`, error)
     }
   }
 
@@ -296,7 +304,7 @@ export async function getAllProducts(): Promise<Product[]> {
 
 /**
  * Get a single product by category slug and product slug
- * Searches through all products since we have a flat directory structure
+ * Searches through all products to find matching category and product
  */
 export async function getProductBySlug(
   categorySlug: string,

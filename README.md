@@ -22,12 +22,12 @@ AppSutra is a community-driven directory of SaaS products optimized for Indian b
 ### Adding Your Product
 
 1. **Fork this repository**
-2. **Create your listing file** at `listings/<your-product-name>.md`
+2. **Create your listing file** at `listings/<category-folder>/<your-product>.md`
 3. **Fill in the details** using our template (see example below)
 4. **Open a Pull Request** - our validation will run automatically
 5. **Get reviewed** by maintainers and go live!
 
-> **Note:** Slugs are auto-generated from your product name and category. No need to specify them manually!
+> **Note:** Slugs are auto-generated from your `name` and `category` fields in YAML. No need to specify them manually!
 
 ### Example Listing Structure
 
@@ -168,10 +168,13 @@ npm run build
 
 ```
 appsutra/
-├── listings/              # Product listings (flat structure)
-│   ├── razorpay.md       # Payment gateway product
-│   ├── keka-services.md  # HR software product
-│   └── ...               # All products in one directory
+├── listings/              # Product listings (organized by category)
+│   ├── hr/               # HR category folder
+│   │   └── keka-services.md
+│   ├── finance/          # Finance category folder
+│   │   └── razorpay.md
+│   └── payment-gateway/  # Payment Gateway category folder
+│       └── ...
 ├── frontend/             # Next.js web application
 │   ├── src/
 │   │   ├── app/         # Next.js App Router pages
@@ -191,19 +194,29 @@ appsutra/
 
 **How listings become web pages:**
 
-1. **Create Markdown File**: Add `listings/your-product.md` with YAML front-matter
-2. **Auto-Generate Slugs**: Build process generates slugs from `name` and `category`
-   - `name: "Razorpay"` → `slug: "razorpay"`
-   - `category: "Payment Gateway"` → `categorySlug: "payment-gateway"`
-3. **Parse at Build Time**: `gray-matter` parses YAML → Product type object
-4. **Generate Static Pages**: Next.js creates HTML at `/payment-gateway/razorpay`
-5. **Deploy**: Static HTML files served via CDN
+1. **Organize by Category**: Place product in category folder
+   - Example: `listings/finance/razorpay.md`
 
-**Benefits:**
-- ✅ No database required
-- ✅ Fast page loads (static HTML)
-- ✅ Git-based version control
-- ✅ Automatic slug generation
+2. **Define in YAML**: Add YAML front-matter with product details
+   - `name: "Razorpay"`
+   - `category: "Finance"` (display name, can differ from folder)
+
+3. **Auto-Generate Slugs**: Build process generates slugs from YAML fields
+   - `name: "Razorpay"` → `slug: "razorpay"`
+   - `category: "Finance"` → `categorySlug: "finance"`
+   - **Note:** Slugs come from YAML, not folder/filename
+
+4. **Parse at Build Time**: `gray-matter` parses YAML → Product type object
+
+5. **Generate Static Pages**: Next.js creates HTML at `/finance/razorpay`
+
+6. **Deploy**: Static HTML files served via CDN
+
+**Key Points:**
+- ✅ **Folder names** = Organizational structure (can be anything)
+- ✅ **YAML category** = Source of truth for categorySlug
+- ✅ **YAML name** = Source of truth for product slug
+- ✅ No database required, fast static HTML
 - ✅ Type-safe with TypeScript
 
 ## 🤝 Contributing

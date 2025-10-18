@@ -4,7 +4,7 @@ name: "Razorpay"
 company: "Razorpay Software Private Limited"
 trialPlan: true
 trialPlanPricing: "Free"
-category: "Payment Gateway"
+category: "Finance"
 useCases:
   - "Online Payments"
   - "E-commerce"
