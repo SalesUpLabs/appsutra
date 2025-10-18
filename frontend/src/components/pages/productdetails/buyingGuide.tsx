@@ -48,8 +48,8 @@ const BuyingGuide = ({ questions = [] }: BuyingGuideProps) => {
       </div>
 
       <p className="text-gray-600 mb-8 text-base">
-        Before finalizing a solution, it's important to evaluate whether
-        it truly fits your team's needs. To do this, make sure you can
+        Before finalizing a solution, it&apos;s important to evaluate whether
+        it truly fits your team&apos;s needs. To do this, make sure you can
         confidently answer the following key questions that will help you
         assess its effectiveness, usability, and long-term value:
       </p>

@@ -22,58 +22,86 @@ AppSutra is a community-driven directory of SaaS products optimized for Indian b
 ### Adding Your Product
 
 1. **Fork this repository**
-2. **Create your listing file** at `listings/<category>/<slug>.md`
+2. **Create your listing file** at `listings/<your-product-name>.md`
 3. **Fill in the details** using our template (see example below)
 4. **Open a Pull Request** - our validation will run automatically
 5. **Get reviewed** by maintainers and go live!
+
+> **Note:** Slugs are auto-generated from your product name and category. No need to specify them manually!
 
 ### Example Listing Structure
 
 ```yaml
 ---
-name: "Zoho CRM"
-slug: "zoho-crm"
-category: "crm"
-website: "https://www.zoho.com/crm/"
-logo: "https://example.com/logo.png"
-pricing: "Free + Paid from ₹900/mo"
-locations: ["India", "Global"]
-use_cases: ["SMB", "Sales Automation", "Lead Management"]
-keywords: ["crm", "sales", "automation"]
-trial: true
-integrations: ["Gmail", "WhatsApp", "Zapier"]
-contact_email: "partners@zoho.com"
-listing_owner_github: "@zohocrm"
-verified: false
-updated_at: "2025-09-15"
+icon: "https://example.com/logo.png"
+name: "Razorpay"
+company: "Razorpay Software Private Limited"
+trialPlan: true
+trialPlanPricing: "Free"
+category: "Payment Gateway"
+# slug and categorySlug are auto-generated at build time
+useCases:
+  - "Online Payments"
+  - "E-commerce"
+  - "Subscription Billing"
+keywords:
+  - "payment gateway"
+  - "online payments"
+  - "e-commerce"
+integration:
+  - title: "Shopify"
+  - title: "WooCommerce"
+  - title: "Zapier"
+description: |
+  Razorpay is a comprehensive payment gateway platform designed to empower businesses...
+
+  **Key Highlights**
+  - Comprehensive payment processing platform
+  - Accept payments globally through multiple channels
+  - Simple API integrations for developers
+locations:
+  - "India"
+  - "Global"
+website: "https://razorpay.com/"
+keyFeatures:
+  description: "Razorpay offers a full range of payment tools..."
+  features:
+    - title: "Payment Gateway"
+      desc: "Accept payments via credit cards, debit cards, UPI, wallets."
+    - title: "Subscription Management"
+      desc: "Create and manage recurring billing for subscription-based businesses."
+    # Maximum 8 features
+buyingGuide:
+  - question: "1. What's your business model?"
+    why: "Helps determine the payment features you need"
+    answer: "E-commerce, subscription-based, service-based, or other?"
+  # Maximum 8 questions
+pricing:
+  desc: "Razorpay offers flexible pricing plans..."
+  plans:
+    - name: "Basic Plan"
+      pricing:
+        amount: 0
+        currency: "INR"
+        currencySymbol: "₹"
+        period: "month"
+        perUnit: null
+      description: "Free plan with all essential features."
+    # Maximum 4 plans
 ---
-
-**About**
-
-Zoho CRM is a comprehensive customer relationship management platform designed for businesses of all sizes...
-
-**Highlights**
-- Advanced pipeline management
-- WhatsApp integration for India
-- Mobile apps for field sales
-
-**Pricing**
-- Free: Up to 3 users
-- Standard: ₹900/user/month
-- Professional: ₹1,600/user/month
 ```
 
 ## 📂 Categories
 
 - **CRM** - Customer relationship management
-- **HR** - Human resources and recruitment
+- **Human Resource** - HR software and recruitment
+- **Payment Gateway** - Payment processing and merchant services
 - **Marketing** - Digital marketing and automation
-- **Finance** - Accounting and financial management
+- **Finance** - Financial management tools
 - **Support** - Customer support and helpdesk
 - **Analytics** - Business intelligence and analytics
 - **Security** - Cybersecurity and compliance
 - **DevTools** - Development and technical tools
-- **Accounting** - Accounting and bookkeeping
 
 ## 🔍 Writing Reviews
 
@@ -114,19 +142,69 @@ npm run linkcheck
 npm test
 ```
 
+### Frontend Development
+
+```bash
+# Navigate to frontend directory
+cd frontend
+
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# The build process will:
+# 1. Read all .md files from ../listings/
+# 2. Auto-generate slugs from name and category
+# 3. Generate static pages for each product
+# 4. Output optimized HTML files
+```
+
 ### File Structure
 
 ```
 appsutra/
-├── listings/           # Product listings organized by category
-│   ├── crm/
-│   ├── hr/
-│   └── ...
-├── schema/            # JSON Schema validation
-├── scripts/           # Validation and utility scripts
-├── .github/          # GitHub templates and workflows
-└── docs/             # Documentation
+├── listings/              # Product listings (flat structure)
+│   ├── razorpay.md       # Payment gateway product
+│   ├── keka-services.md  # HR software product
+│   └── ...               # All products in one directory
+├── frontend/             # Next.js web application
+│   ├── src/
+│   │   ├── app/         # Next.js App Router pages
+│   │   ├── lib/         # Data parsing and utilities
+│   │   │   └── listings.ts  # Markdown parser & slug generator
+│   │   ├── types/       # TypeScript type definitions
+│   │   │   └── product.ts   # Product type interface
+│   │   └── components/  # React components
+│   └── public/          # Static assets
+├── schema/              # JSON Schema validation
+├── scripts/             # Validation and utility scripts
+├── .github/            # GitHub templates and workflows
+└── docs/               # Documentation
 ```
+
+### Architecture: Markdown → Static Site
+
+**How listings become web pages:**
+
+1. **Create Markdown File**: Add `listings/your-product.md` with YAML front-matter
+2. **Auto-Generate Slugs**: Build process generates slugs from `name` and `category`
+   - `name: "Razorpay"` → `slug: "razorpay"`
+   - `category: "Payment Gateway"` → `categorySlug: "payment-gateway"`
+3. **Parse at Build Time**: `gray-matter` parses YAML → Product type object
+4. **Generate Static Pages**: Next.js creates HTML at `/payment-gateway/razorpay`
+5. **Deploy**: Static HTML files served via CDN
+
+**Benefits:**
+- ✅ No database required
+- ✅ Fast page loads (static HTML)
+- ✅ Git-based version control
+- ✅ Automatic slug generation
+- ✅ Type-safe with TypeScript
 
 ## 🤝 Contributing
 
@@ -140,10 +218,15 @@ We welcome contributions from the community! Please read our [Contributing Guide
 ## 📜 Guidelines
 
 ### For Vendors
-- Keep descriptions factual and neutral
-- Include India-specific context where relevant
-- Provide accurate pricing in ₹
-- Maintain up-to-date information
+- **Keep descriptions factual and neutral** - No promotional language
+- **Include India-specific context** - ₹ pricing, local integrations
+- **Follow field limits**:
+  - Maximum 8 key features
+  - Maximum 4 pricing plans
+  - Maximum 8 buying guide questions
+- **Use proper structure** - Follow the Product type interface exactly
+- **No manual slugs** - Slugs are auto-generated from name and category
+- **Maintain up-to-date information** - Update your listing when pricing or features change
 
 ### For Users
 - Write constructive, helpful reviews

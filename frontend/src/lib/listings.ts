@@ -2,10 +2,13 @@ import fs from 'fs'
 import path from 'path'
 import matter from 'gray-matter'
 import { Listing, Category } from './types'
-import { extractExcerpt, getCategoryDisplayName } from './utils'
+import { Product } from '@/types/product'
+import { extractExcerpt, getCategoryDisplayName, slugify } from './utils'
 
-// Path to the listings directory (relative to the project root)
+// Path to the listings directory (root level, outside frontend)
 const LISTINGS_DIR = path.join(process.cwd(), '..', 'listings')
+// Fallback to root listings for markdown files
+const ROOT_LISTINGS_DIR = path.join(process.cwd(), '..', 'listings')
 const CATEGORIES_FILE = path.join(process.cwd(), '..', 'schema', 'categories.json')
 
 export async function getAllListings(): Promise<Listing[]> {
@@ -225,4 +228,129 @@ export async function getRelatedListings(
     .sort((a, b) => b.score - a.score)
     .slice(0, limit)
     .map(item => item.listing)
+}
+
+// ===== Product Functions (Markdown-based) =====
+
+/**
+ * Get all products from markdown files (flat directory structure)
+ */
+export async function getAllProducts(): Promise<Product[]> {
+  if (!fs.existsSync(LISTINGS_DIR)) {
+    console.warn('Listings directory not found:', LISTINGS_DIR)
+    return []
+  }
+
+  const products: Product[] = []
+  const files = fs.readdirSync(LISTINGS_DIR, { withFileTypes: true })
+
+  for (const file of files) {
+    // Skip directories and non-markdown files
+    if (file.isDirectory() || !file.name.endsWith('.md')) continue
+
+    const filePath = path.join(LISTINGS_DIR, file.name)
+
+    try {
+      const fileContent = fs.readFileSync(filePath, 'utf8')
+      const { data } = matter(fileContent)
+
+      // Validate required fields
+      if (!data.name || !data.category) {
+        console.warn(`Skipping invalid product: ${filePath} (missing name or category)`)
+        continue
+      }
+
+      // Auto-generate slugs from name and category
+      const slug = slugify(data.name)
+      const categorySlug = slugify(data.category)
+
+      // Map YAML front-matter to Product type
+      const product: Product = {
+        icon: data.icon,
+        name: data.name,
+        company: data.company,
+        trialPlan: data.trialPlan || false,
+        trialPlanPricing: data.trialPlanPricing || '',
+        category: data.category,
+        categorySlug: categorySlug, // Auto-generated
+        slug: slug, // Auto-generated
+        useCases: data.useCases || [],
+        keywords: data.keywords || [],
+        integration: data.integration || [],
+        description: data.description || '',
+        locations: data.locations || [],
+        website: data.website,
+        keyFeatures: data.keyFeatures || { description: '', features: [] },
+        buyingGuide: data.buyingGuide || [],
+        pricing: data.pricing || { desc: '', plans: [] },
+      }
+
+      products.push(product)
+    } catch (error) {
+      console.error(`Error parsing product ${filePath}:`, error)
+    }
+  }
+
+  return products
+}
+
+/**
+ * Get a single product by category slug and product slug
+ * Searches through all products since we have a flat directory structure
+ */
+export async function getProductBySlug(
+  categorySlug: string,
+  slug: string
+): Promise<Product | null> {
+  const products = await getAllProducts()
+
+  // Find product matching both category slug and product slug
+  const product = products.find(
+    p => p.categorySlug === categorySlug && p.slug === slug
+  )
+
+  return product || null
+}
+
+/**
+ * Get related products based on category, use cases, and keywords
+ */
+export async function getRelatedProducts(
+  currentProduct: Product,
+  limit: number = 4
+): Promise<Product[]> {
+  const products = await getAllProducts()
+
+  // Filter out the current product
+  const others = products.filter(p => p.slug !== currentProduct.slug)
+
+  // Score based on category match, use cases overlap, and keywords overlap
+  const scored = others.map(product => {
+    let score = 0
+
+    // Same category gets highest score
+    if (product.category === currentProduct.category) {
+      score += 10
+    }
+
+    // Shared use cases
+    const sharedUseCases = product.useCases?.filter(useCase =>
+      currentProduct.useCases?.includes(useCase)
+    ) || []
+    score += sharedUseCases.length * 3
+
+    // Shared keywords
+    const sharedKeywords = product.keywords?.filter(keyword =>
+      currentProduct.keywords?.includes(keyword)
+    ) || []
+    score += sharedKeywords.length * 2
+
+    return { product, score }
+  })
+
+  // Sort by score and return top results
+  return scored
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map(item => item.product)
 }

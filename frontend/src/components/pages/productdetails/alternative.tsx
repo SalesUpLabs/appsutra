@@ -80,7 +80,7 @@ export function SoftwareComparisonCarousel() {
             <div>
               <h2 className="text-4xl font-bold text-gray-900 mb-6">Softwares with similar functionality</h2>
               <p className="text-gray-700 text-base leading-relaxed mb-8">
-                Whether you're looking for alternatives, complementary tools, or programs in the same category, this
+                Whether you&apos;re looking for alternatives, complementary tools, or programs in the same category, this
                 collection highlights options that can help you.
               </p>
             </div>

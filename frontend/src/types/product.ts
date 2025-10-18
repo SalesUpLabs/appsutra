@@ -49,8 +49,8 @@ export interface Product {
   trialPlan: boolean
   trialPlanPricing: string
   category: string
-  categorySlug: string
-  slug: string
+  categorySlug: string // Auto-generated from category at build time
+  slug: string // Auto-generated from name at build time
   useCases: string[]
   keywords: string[]
   integration: Integration[]

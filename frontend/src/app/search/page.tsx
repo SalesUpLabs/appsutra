@@ -88,7 +88,7 @@ function SearchContent() {
                   alt="ribbon badge"
                   className="h-4 w-4"
                 />
-                India's Leading Business Solution Consultant
+                India&apos;s Leading Business Solution Consultant
               </div>
             </div>
             <h1 className="text-4xl sm:text-4xl font-semibold text-gray-900 text-center mb-6">
