@@ -27,8 +27,8 @@ export interface PricingDetails {
 
 export interface KeyFeature {
   title: string
-  desc: string
-}
+  desc: string 
+} //maximum 8 features
 
 export interface KeyFeatures {
   description: string
@@ -46,8 +46,8 @@ export interface Product {
   icon: string
   name: string
   company: string
-  freeplan: boolean
-  freeplanpricing: string
+  trialPlan: boolean
+  trialPlanPricing: string
   category: string
   categorySlug: string
   slug: string

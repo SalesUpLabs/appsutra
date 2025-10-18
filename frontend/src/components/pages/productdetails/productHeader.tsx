@@ -8,8 +8,8 @@ interface ProductHeaderProps {
   company: string;
   name: string;
   icon: string;
-  freeplan: boolean;
-  freeplanpricing: string;
+  trialPlan: boolean;
+  trialPlanPricing: string;
   categorySlug: string;
   slug: string;
 }
@@ -18,8 +18,8 @@ export function ProductHeader({
   company,
   name,
   icon,
-  freeplan,
-  freeplanpricing,
+  trialPlan,
+  trialPlanPricing,
   categorySlug,
   slug,
 }: ProductHeaderProps) {
@@ -93,7 +93,7 @@ export function ProductHeader({
 
             {/* Pricing */}
             <div className="text-lg font-semibold text-green-600">
-              {freeplan && freeplanpricing}
+              {trialPlan && trialPlanPricing}
             </div>
           </div>
 

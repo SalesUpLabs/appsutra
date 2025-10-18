@@ -31,8 +31,8 @@ const ProductData: Product = {
   icon: "/icons/ProductDetailsPage/keka/icon.png",
   name: "Keka Services",
   company: "Keka Services Private Limited",
-  freeplan: true,
-  freeplanpricing: "Rs.1,200/mo",
+  trialPlan: true,
+  trialPlanPricing: "Rs.1,200/mo",
   category: "Human Resource",
   categorySlug: "human-resource",
   slug: "keka-services",
@@ -258,7 +258,7 @@ export async function generateMetadata({
       listing.excerpt ||
       `${listing.name} is a ${listing.category} solution. ${formatPricing(
         listing.pricing
-      )}. ${listing.trial ? "Free trial available." : ""}`,
+      )}. ${listing.trial ? "No trial available." : ""}`,
     keywords: [
       listing.name,
       ...(listing.keywords || []),
@@ -308,29 +308,24 @@ export default async function ProductPage({ params }: ProductPageProps) {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* <Header /> */}
       <WhyChooseUs />
       <ProductHeader
         company={ProductData.company}
         name={ProductData.name}
         icon={ProductData.icon}
-        freeplan={ProductData.freeplan}
-        freeplanpricing={ProductData.freeplanpricing}
+        trialPlan={ProductData.trialPlan}
+        trialPlanPricing={ProductData.trialPlanPricing}
         categorySlug={ProductData.categorySlug}
         slug={ProductData.slug}
       />
-      {/* <div className="relative flex flex-col h-screen"> */}
       <div className="px-6 py-3">
         <ProductInfo product={ProductData} />
         <KeyFeatures data={ProductData.keyFeatures} />
         <BuyingGuide questions={ProductData.buyingGuide} />
         <PricingOverview data={ProductData.pricing} />
         <IntegrationsPage integrations={ProductData.integration} />
-        {/* <SoftwareComparisonCarousel /> */}
       </div>
-      {/* </div> */}
 
-      {/* <Footer /> */}
     </div>
   );
 }
