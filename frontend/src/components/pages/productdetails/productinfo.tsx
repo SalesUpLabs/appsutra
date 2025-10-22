@@ -26,22 +26,22 @@ export function ProductInfo({ product }: ProductInfoProps) {
   const keywordsString = product.keywords.slice(0, 6).join(", ");
 
   return (
-    <div className="grid grid-cols-5 gap-5" id="product-information">
+    <div className="grid grid-cols-5 gap-fluid-5" id="product-information">
       {/* Main Content Card */}
-      <div className="col-span-4 border border-[#5D93FF] rounded-2xl p-8 gap-6 bg-white">
+      <div className="col-span-4 border border-[#5D93FF] rounded-2xl p-fluid-8 gap-fluid-6 bg-white">
         {/* Header */}
-        <div className="flex items-start justify-between mb-6">
-          <h2 className="text-2xl sm:text-3xl lg:text-[2.25rem] font-semibold leading-tight tracking-normal text-black">
+        <div className="flex items-start justify-between mb-fluid-6">
+          <h2 className="text-fluid-3xl font-semibold leading-tight tracking-normal text-black">
             What is {product.name}?
           </h2>
           <a
             href={product.website}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-blue-500 hover:text-blue-600 transition-colors flex-shrink-0"
+            className="flex items-center gap-fluid-2 text-blue-500 hover:text-blue-600 transition-colors flex-shrink-0"
           >
-            <ExternalLink className="w-5 h-5" />
-            <span className="text-sm font-medium">Visit Website</span>
+            <ExternalLink className="w-fluid-5 h-fluid-5" />
+            <span className="text-fluid-sm font-medium">Visit Website</span>
           </a>
         </div>
 
@@ -51,7 +51,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
             remarkPlugins={[remarkGfm]}
             components={{
               p: ({ children }) => (
-                <p className="text-gray-700 mb-4 text-sm sm:text-base lg:text-[1rem] font-medium leading-[190%] tracking-normal">
+                <p className="text-gray-700 mb-fluid-4 text-fluid-base font-medium leading-[190%] tracking-normal">
                   {children}
                 </p>
               ),
@@ -61,12 +61,12 @@ export function ProductInfo({ product }: ProductInfoProps) {
                 </strong>
               ),
               ul: ({ children }) => (
-                <ul className="list-disc list-inside text-gray-700 mb-4 space-y-2 text-sm sm:text-base lg:text-[1rem] font-medium leading-[190%]">
+                <ul className="list-disc list-inside text-gray-700 mb-fluid-4 space-y-fluid-2 text-fluid-base font-medium leading-[190%]">
                   {children}
                 </ul>
               ),
               ol: ({ children }) => (
-                <ol className="list-decimal list-inside text-gray-700 mb-4 space-y-2 text-sm sm:text-base lg:text-[1rem] font-medium leading-[190%]">
+                <ol className="list-decimal list-inside text-gray-700 mb-fluid-4 space-y-fluid-2 text-fluid-base font-medium leading-[190%]">
                   {children}
                 </ol>
               ),
@@ -76,17 +76,17 @@ export function ProductInfo({ product }: ProductInfoProps) {
                 </li>
               ),
               h1: ({ children }) => (
-                <h1 className="text-xl sm:text-2xl lg:text-[2.25rem] font-semibold text-black mb-4 mt-6 leading-tight">
+                <h1 className="text-fluid-3xl font-semibold text-black mb-fluid-4 mt-fluid-6 leading-tight">
                   {children}
                 </h1>
               ),
               h2: ({ children }) => (
-                <h2 className="text-lg sm:text-xl lg:text-[1.5rem] font-semibold text-black mb-3 mt-5 leading-tight">
+                <h2 className="text-fluid-2xl font-semibold text-black mb-fluid-3 mt-fluid-5 leading-tight">
                   {children}
                 </h2>
               ),
               h3: ({ children }) => (
-                <h3 className="text-base sm:text-lg lg:text-[1.25rem] font-semibold text-black mb-2 mt-4 leading-tight">
+                <h3 className="text-fluid-xl font-semibold text-black mb-fluid-2 mt-fluid-4 leading-tight">
                   {children}
                 </h3>
               ),
@@ -101,7 +101,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
               ...{" "}
               <button
                 onClick={() => setIsExpanded(true)}
-                className="text-blue-500 hover:text-blue-600 text-sm sm:text-base font-medium transition-colors inline"
+                className="text-blue-500 hover:text-blue-600 text-fluid-base font-medium transition-colors inline"
               >
                 Show More
               </button>
@@ -111,7 +111,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
           {remainingDesc && isExpanded && (
             <button
               onClick={() => setIsExpanded(false)}
-              className="text-blue-500 hover:text-blue-600 text-sm sm:text-base font-medium transition-colors block mt-2"
+              className="text-blue-500 hover:text-blue-600 text-fluid-base font-medium transition-colors block mt-fluid-2"
             >
               Show Less
             </button>
@@ -120,33 +120,33 @@ export function ProductInfo({ product }: ProductInfoProps) {
       </div>
 
       {/* Sidebar Card */}
-      <div className="col-span-1 border border-[#5DFF80] rounded-2xl p-8 gap-6 bg-white h-fit">
+      <div className="col-span-1 border border-[#5DFF80] rounded-2xl p-fluid-8 gap-fluid-6 bg-white h-fit">
         {/* Verified Badge */}
-        <div className="flex items-center gap-2 mb-6 bg-green-100 w-fit px-4 py-2 rounded-lg border border-[#25EB74] ">
+        <div className="flex items-center gap-fluid-2 mb-fluid-6 bg-green-100 w-fit px-fluid-4 py-fluid-2 rounded-lg border border-[#25EB74] ">
           <Image
             src="/icons/productInfo/verifiedBadge.png"
             alt="Verified Badge"
             width={20}
             height={20}
-            className="w-5 h-5"
+            className="w-fluid-5 h-fluid-5"
           />
 
-          <span className="text-sm font-semibold text-green-700">
+          <span className="text-fluid-sm font-semibold text-green-700">
             Verified Business
           </span>
         </div>
 
         {/* Category */}
-        <div className="mb-6">
-          <h3 className="font-bold text-black mb-2 text-base">Category</h3>
-          <p className="text-sm text-gray-600">{product.category}</p>
+        <div className="mb-fluid-6">
+          <h3 className="font-bold text-black mb-fluid-2 text-fluid-base">Category</h3>
+          <p className="text-fluid-sm text-gray-600">{product.category}</p>
         </div>
 
         {/* Use Cases - Only show when expanded */}
         {isExpanded && (
-          <div className="mb-6 animate-in fade-in duration-300">
-            <h3 className="font-bold text-black mb-3 text-base">Use Cases</h3>
-            <div className="flex flex-wrap gap-2">
+          <div className="mb-fluid-6 animate-in fade-in duration-300">
+            <h3 className="font-bold text-black mb-fluid-3 text-fluid-base">Use Cases</h3>
+            <div className="flex flex-wrap gap-fluid-2">
               {displayUseCases?.map((useCase, index) => {
                 const colors = [
                   {
@@ -169,7 +169,7 @@ export function ProductInfo({ product }: ProductInfoProps) {
                 return (
                   <span
                     key={index}
-                    className={`px-3 py-1 border ${color.border} rounded-full text-xs font-medium ${color.text} ${color.bg}`}
+                    className={`px-fluid-3 py-fluid-1 border ${color.border} rounded-full text-fluid-xs font-medium ${color.text} ${color.bg}`}
                   >
                     {useCase}
                   </span>
@@ -181,18 +181,18 @@ export function ProductInfo({ product }: ProductInfoProps) {
 
         {/* Keywords - Only show when expanded */}
         {isExpanded && (
-          <div className="mb-6 animate-in fade-in duration-300">
-            <h3 className="font-bold text-black mb-2 text-base">Keywords</h3>
-            <p className="text-sm text-gray-600">{keywordsString}</p>
+          <div className="mb-fluid-6 animate-in fade-in duration-300">
+            <h3 className="font-bold text-black mb-fluid-2 text-fluid-base">Keywords</h3>
+            <p className="text-fluid-sm text-gray-600">{keywordsString}</p>
           </div>
         )}
 
         {/* Integrations */}
         <div>
-          <h3 className="font-bold text-black mb-3 text-base">Integrations:</h3>
-          <div className="flex gap-2">
+          <h3 className="font-bold text-black mb-fluid-3 text-fluid-base">Integrations:</h3>
+          <div className="flex gap-fluid-2">
             {product?.integration?.slice(0, 4).map((integration, index) => (
-              <span key={index} className="text-lg" title={integration.title}>
+              <span key={index} className="text-fluid-lg" title={integration.title}>
                 <BrandIcon name={integration.title.toLowerCase()} />
               </span>
             ))}

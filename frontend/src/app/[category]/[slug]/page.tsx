@@ -48,6 +48,7 @@ export async function generateMetadata({
       excerpt ||
       `${product.name} by ${product.company} is a ${product.category} solution.`,
     keywords: [
+      
       product.name,
       ...(product.keywords || []),
       product.category,
@@ -85,7 +86,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         categorySlug={product.categorySlug}
         slug={product.slug}
       />
-      <div className="px-6 py-3">
+      <div className="px-fluid-6 py-fluid-3">
         <ProductInfo product={product} />
         <KeyFeatures data={product.keyFeatures} />
         <BuyingGuide questions={product.buyingGuide} />

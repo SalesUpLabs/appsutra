@@ -35,20 +35,20 @@ export default function KeyFeatures({ data }: KeyFeaturesProps) {
   const features = data.features.slice(0, MAX_FEATURES);
 
   return (
-    <section id="key-features" className="w-full bg-white py-16">
+    <section id="key-features" className="w-full bg-white py-fluid-16">
       <div className="max-w-[1400px] mx-auto">
         {/* Header */}
-        <h2 className="text-[36px] font-semibold text-black mb-6">
+        <h2 className="text-fluid-4xl font-semibold text-black mb-fluid-6">
           Key Features
         </h2>
 
         {/* Description */}
-        <p className="text-[#525050] text-[15px] font-medium leading-relaxed mb-12 max-w-[1200px]">
+        <p className="text-[#525050] text-fluid-base font-medium leading-relaxed mb-fluid-12 max-w-[1200px]">
           {data.description}
         </p>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid grid-cols-4 gap-fluid-6">
           {features.map((feature, index) => {
             const colors = COLOR_SETS[index];
             const icon = FEATURE_ICONS[index];
@@ -56,25 +56,26 @@ export default function KeyFeatures({ data }: KeyFeaturesProps) {
             return (
               <div
                 key={`${feature.title}-${index}`}
-                className={`bg-white rounded-xl py-[20px] px-[30px] border-2 ${colors.border}`}
+                className={`bg-white rounded-xl py-fluid-5 px-[clamp(1.5rem,1.75rem+0.313vw,1.875rem)] border-2 ${colors.border}`}
               >
                 {/* Icon */}
-                <div className={`mb-4 ${colors.icon}`}>
+                <div className={`mb-fluid-4 ${colors.icon}`}>
                   <Image
                     src={icon.src}
                     width={ICON_SIZE}
                     height={ICON_SIZE}
                     alt={icon.alt}
+                    className="w-[clamp(3rem,3.5rem+0.313vw,3.75rem)] h-[clamp(3rem,3.5rem+0.313vw,3.75rem)]"
                   />
                 </div>
 
                 {/* Title */}
-                <h3 className="text-[16px] font-bold text-[#525050] mb-2 leading-snug">
+                <h3 className="text-fluid-base font-bold text-[#525050] mb-fluid-2 leading-snug">
                   {feature.title}
                 </h3>
 
                 {/* Description */}
-                <p className="font-medium text-[16px] text-[#525050] leading-relaxed">
+                <p className="font-medium text-fluid-base text-[#525050] leading-relaxed">
                   {feature.desc}
                 </p>
               </div>

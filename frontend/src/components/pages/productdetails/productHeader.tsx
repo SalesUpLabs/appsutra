@@ -65,47 +65,47 @@ export function ProductHeader({
 
   return (
     <>
-      <div className="w-full bg-white p-6">
+      <div className="w-full bg-white p-fluid-6">
         {/* Header with logo and action buttons */}
-        <div className="flex items-start justify-between gap-4">
+        <div className="flex items-start justify-between gap-fluid-4">
           {/* Left side - Logo and service info */}
           <div className="flex-1">
             {/* Logo */}
-            <div className="mb-4">
+            <div className="mb-fluid-4">
               <img
                 src={icon || ""}
                 alt={`${name} logo`}
-                className="h-12 w-auto"
+                className="h-fluid-12 w-auto"
               />
             </div>
 
             {/* Service name */}
-            <h2 className="text-2xl font-bold text-gray-900 mb-2">{name}</h2>
+            <h2 className="text-fluid-2xl font-bold text-gray-900 mb-fluid-2">{name}</h2>
 
             {/* Provider info */}
-            <div className="flex items-center gap-2 text-gray-600 mb-4">
-              <Building2 className="w-4 h-4" />
-              <span className="text-sm">
+            <div className="flex items-center gap-fluid-2 text-gray-600 mb-fluid-4">
+              <Building2 className="w-fluid-4 h-fluid-4" />
+              <span className="text-fluid-sm">
                 By{" "}
                 <span className="font-semibold text-blue-600">{company}</span>
               </span>
             </div>
 
             {/* Pricing */}
-            <div className="text-lg font-semibold text-green-600">
+            <div className="text-fluid-lg font-semibold text-green-600">
               {trialPlan && trialPlanPricing}
             </div>
           </div>
 
           {/* Right side - Action buttons */}
-          <div className="flex flex-col gap-3">
-            <button className="w-[199px] text-white font-semibold h-14 rounded-[9px] bg-gradient-to-r from-[#2563EB] to-[#5288FF] border border-[rgba(37,99,235,0.4)] flex flex-row items-center justify-center gap-2.5 px-5 py-3.75 hover:opacity-90 transition-opacity">
-              <Calendar className="w-5 h-5" />
-              Curate Demo
+          <div className="flex flex-col gap-fluid-3">
+            <button className="min-w-[clamp(11rem,12rem+1vw,12.5rem)] text-white font-semibold h-[clamp(3rem,3.25rem+0.5vw,3.5rem)] rounded-[9px] bg-gradient-to-r from-[#2563EB] to-[#5288FF] border border-[rgba(37,99,235,0.4)] flex flex-row items-center justify-center gap-fluid-2 px-fluid-5 py-fluid-3 hover:opacity-90 transition-opacity">
+              <Calendar className="w-fluid-5 h-fluid-5" />
+              <span className="text-fluid-base">Curate Demo</span>
             </button>
-            <button className="w-[199px] h-14 rounded-[9px] bg-gradient-to-br from-[rgba(37,99,235,0.04)] to-[rgba(255,255,255,0.04)] border border-[rgba(37,99,235,0.4)] flex flex-row items-center justify-center gap-1 px-3.75 py-2.5 hover:bg-gradient-to-br hover:from-[rgba(37,99,235,0.08)] hover:to-[rgba(255,255,255,0.08)] transition-colors font-semibold text-[#2563EB]">
-              <Scale className="w-5 h-5" />
-              Compare Items
+            <button className="min-w-[clamp(11rem,12rem+1vw,12.5rem)] h-[clamp(3rem,3.25rem+0.5vw,3.5rem)] rounded-[9px] bg-gradient-to-br from-[rgba(37,99,235,0.04)] to-[rgba(255,255,255,0.04)] border border-[rgba(37,99,235,0.4)] flex flex-row items-center justify-center gap-fluid-2 px-fluid-4 py-fluid-2 hover:bg-gradient-to-br hover:from-[rgba(37,99,235,0.08)] hover:to-[rgba(255,255,255,0.08)] transition-colors font-semibold text-[#2563EB]">
+              <Scale className="w-fluid-5 h-fluid-5" />
+              <span className="text-fluid-base">Compare Items</span>
             </button>
           </div>
         </div>
@@ -113,7 +113,7 @@ export function ProductHeader({
 
       {/* Navigation Bar */}
       {/* Navigation Bar */}
-      <div className="w-full h-[72px] flex items-center justify-start px-[3%] sm:px-[4%] lg:px-[5.8%] gap-x-[3%] sm:gap-x-[4%] lg:gap-x-[5.5%] bg-white shadow-md sticky top-16 z-10">
+      <div className="w-full h-[clamp(4rem,4.25rem+0.5vw,4.5rem)] flex items-center justify-start px-[clamp(3%,4%,5.8%)] gap-x-[clamp(3%,4%,5.5%)] bg-white shadow-md sticky top-16 z-10">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
 
@@ -121,12 +121,12 @@ export function ProductHeader({
             <button
               key={tab.id}
               onClick={() => handleTabClick(tab.id)}
-              className={`flex items-center justify-center py-6 px-1 sm:px-1.5 h-[72px] transition-colors ${
+              className={`flex items-center justify-center py-fluid-6 px-fluid-1 h-full transition-colors ${
                 isActive ? "border-b-2 border-blue-600" : ""
               }`}
             >
               <span
-                className={`text-base sm:text-[17px] lg:text-lg whitespace-nowrap ${
+                className={`text-fluid-lg whitespace-nowrap ${
                   isActive
                     ? "font-semibold text-blue-600"
                     : "font-medium text-neutral-800 hover:text-blue-600"

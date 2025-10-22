@@ -43,48 +43,48 @@ const PricingOverview = ({ data }: PricingOverviewProps) => {
   const plans = data.plans.slice(0, MAX_PLANS);
 
   return (
-    <div className="bg-white min-h-screen font-sans py-12 sm:py-16" id="pricing">
+    <div className="bg-white min-h-screen font-sans py-fluid-12" id="pricing">
         {/* Header Section */}
-        <div className="mb-14 text-left">
-          <h1 className="text-3xl  font-semibold text-gray-800 mb-5">
+        <div className="mb-[clamp(2.5rem,3rem+0.938vw,3.5rem)] text-left">
+          <h1 className="text-fluid-3xl font-semibold text-gray-800 mb-fluid-5">
             Pricing Overview
           </h1>
-          <p className="text-gray-500 text-base leading-relaxed">
+          <p className="text-gray-500 text-fluid-base leading-relaxed">
             {data.desc}
           </p>
         </div>
 
         {/* Pricing Cards Section */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-fluid-6">
           {plans.map((plan, index) => {
             const theme = themes[index % themes.length];
 
             return (
               <div
                 key={plan.name}
-                className={`rounded-lg p-6 border flex flex-col transition-transform duration-300 hover:scale-102 hover:shadow-md ${theme.borderColor}`}
+                className={`rounded-lg p-fluid-6 border flex flex-col transition-transform duration-300 hover:scale-102 hover:shadow-md ${theme.borderColor}`}
               >
                 <div className="flex-grow">
-                  <div className="mb-6">
-                    <Image src={icons[index]} alt={plan.name} className={`w-12 h-12 ${theme.textColor}`} width={48} height={48} />
+                  <div className="mb-fluid-6">
+                    <Image src={icons[index]} alt={plan.name} className={`w-fluid-12 h-fluid-12 ${theme.textColor}`} width={48} height={48} />
                   </div>
-                  <h2 className="text-lg font-bold text-gray-800 mb-3">{plan.name}</h2>
-                  <div className="mb-5 flex items-baseline">
-                      <p className={`text-2xl font-bold ${theme.textColor}`}>
+                  <h2 className="text-fluid-lg font-bold text-gray-800 mb-fluid-3">{plan.name}</h2>
+                  <div className="mb-fluid-5 flex items-baseline">
+                      <p className={`text-fluid-2xl font-bold ${theme.textColor}`}>
                           {plan.pricing.isCustom ? 'Custom' : `${plan.pricing.currencySymbol}${plan.pricing.amount?.toLocaleString('en-IN')}`}
                       </p>
-                      <span className="ml-1.5 text-sm text-gray-600 font-medium">
+                      <span className="ml-fluid-1 text-fluid-sm text-gray-600 font-medium">
                         {plan.pricing.isCustom ? 'pricing' : `per ${plan.pricing.period}${plan.pricing.perUnit ? ` / ${plan.pricing.perUnit}` : ''}`}
                       </span>
                   </div>
-                  <p className="text-gray-600 text-sm leading-relaxed">
+                  <p className="text-gray-600 text-fluid-sm leading-relaxed">
                     {plan.description.split('**').map((part, i) =>
                       i % 2 === 0 ? part : <strong key={i} className="font-bold text-gray-800">{part}</strong>
                     )}
                   </p>
                 </div>
 
-                <button className={`w-full mt-6 py-2.5 px-6 rounded-lg font-medium shadow-sm transition-all duration-300 ${theme.buttonClasses}`}>
+                <button className={`w-full mt-fluid-6 py-[clamp(0.563rem,0.625rem+0.156vw,0.688rem)] px-fluid-6 rounded-lg font-medium shadow-sm transition-all duration-300 ${theme.buttonClasses}`}>
                   Buy Now
                 </button>
               </div>

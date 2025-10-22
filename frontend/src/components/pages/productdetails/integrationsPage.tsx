@@ -18,19 +18,19 @@ const IntegrationsPage = ({ integrations = [] }: IntegrationsPageProps) => {
     : integrations.slice(0, INITIAL_DISPLAY_COUNT);
 
   return (
-    <div className="w-full bg-white p-6 sm:p-8 rounded-xl border border-orange-300 shadow-sm -mt-12 mb-10" id="integrations">
-      <h1 className="text-3xl font-semibold text-gray-800 mb-6">
+    <div className="w-full bg-white p-fluid-6 rounded-xl border border-orange-300 shadow-sm -mt-fluid-12 mb-fluid-10" id="integrations">
+      <h1 className="text-fluid-3xl font-semibold text-gray-800 mb-fluid-6">
         Integrations ({integrations.length})
       </h1>
 
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-fluid-3">
         {integrationsToShow.map((integration, index) => {
           const accentColor = getAccentColor(index);
 
           return (
             <div
               key={`${integration.title}-${index}`}
-              className="flex items-center gap-2 px-3 py-1.5 border rounded-md bg-white hover:bg-gray-50 transition-colors"
+              className="flex items-center gap-fluid-2 px-fluid-3 py-fluid-1 border rounded-md bg-white hover:bg-gray-50 transition-colors"
               style={{ borderColor: accentColor }}
             >
               <BrandIcon
@@ -38,7 +38,7 @@ const IntegrationsPage = ({ integrations = [] }: IntegrationsPageProps) => {
                 size={20}
                 color={accentColor}
               />
-              <span className="text-sm font-medium text-gray-700">
+              <span className="text-fluid-sm font-medium text-gray-700">
                 {integration.title}
               </span>
             </div>
@@ -47,16 +47,16 @@ const IntegrationsPage = ({ integrations = [] }: IntegrationsPageProps) => {
       </div>
 
       {integrations.length > INITIAL_DISPLAY_COUNT && (
-        <div className="mt-6">
+        <div className="mt-fluid-6">
           <button
             onClick={() => setShowAll(!showAll)}
-            className="flex items-center gap-1 text-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors"
+            className="flex items-center gap-fluid-1 text-fluid-sm font-semibold text-blue-600 hover:text-blue-800 transition-colors"
           >
             {showAll ? "Show Less" : "Show More"}
             {showAll ? (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
+                className="h-fluid-4 w-fluid-4"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -71,7 +71,7 @@ const IntegrationsPage = ({ integrations = [] }: IntegrationsPageProps) => {
             ) : (
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-4 w-4"
+                className="h-fluid-4 w-fluid-4"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
