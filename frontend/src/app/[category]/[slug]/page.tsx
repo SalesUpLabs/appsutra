@@ -86,7 +86,7 @@ export default async function ProductPage({ params }: ProductPageProps) {
         categorySlug={product.categorySlug}
         slug={product.slug}
       />
-      <div className="px-fluid-6 py-fluid-3">
+      <div className="px-[clamp(1.5rem,3rem+1vw,4.3rem)] py-fluid-3">
         <ProductInfo product={product} />
         <KeyFeatures data={product.keyFeatures} />
         <BuyingGuide questions={product.buyingGuide} />
