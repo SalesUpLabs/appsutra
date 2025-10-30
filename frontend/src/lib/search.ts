@@ -107,37 +107,6 @@ export async function searchListings(
   }
 }
 
-export async function getSearchSuggestions(query: string, limit: number = 5): Promise<string[]> {
-  if (!query.trim() || query.length < 2) return []
-
-  const allProducts = await getAllProducts()
-  const suggestions = new Set<string>()
-
-  // Collect suggestions from names, keywords, and use cases
-  allProducts.forEach(product => {
-    // Product names
-    if (product.name.toLowerCase().includes(query.toLowerCase())) {
-      suggestions.add(product.name)
-    }
-
-    // Keywords
-    product.keywords?.forEach(keyword => {
-      if (keyword.toLowerCase().includes(query.toLowerCase())) {
-        suggestions.add(keyword)
-      }
-    })
-
-    // Use cases
-    product.useCases?.forEach(useCase => {
-      if (useCase.toLowerCase().includes(query.toLowerCase())) {
-        suggestions.add(useCase)
-      }
-    })
-  })
-
-  return Array.from(suggestions).slice(0, limit)
-}
-
 export function getPopularSearchTerms(): string[] {
   return [
     'CRM',
