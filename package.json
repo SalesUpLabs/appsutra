@@ -1,17 +1,36 @@
 {
-  "name": "appsutra-directory",
-  "version": "1.0.0",
-  "description": "AppSutra Open Directory - A GitHub-based SaaS directory for India-first products",
+  "name": "@appsutra/data",
+  "version": "0.1.0",
+  "description": "AppSutra Data Package - Community-curated SaaS product listings for India",
+  "private": false,
   "type": "module",
+  "main": "dist/listings.json",
+  "files": [
+    "dist",
+    "schema",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
+    "build:data": "tsx scripts/build-data.ts",
     "validate": "node scripts/validate.mjs",
     "linkcheck": "node scripts/linkcheck.mjs",
-    "test": "npm run validate && npm run linkcheck"
+    "test": "npm run validate && npm run linkcheck",
+    "prepublishOnly": "npm run test && npm run build:data"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SalesUpLabs/appsutra.git"
   },
   "keywords": [
     "saas",
     "directory",
     "india",
+    "listings",
+    "data-package",
     "github",
     "open-source"
   ],
@@ -24,6 +43,11 @@
     "gray-matter": "^4.0.3",
     "slugify": "^1.6.6",
     "undici": "^6.6.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "tsx": "^4.19.1",
+    "typescript": "^5.3.3"
   },
   "engines": {
     "node": ">=18.0.0"

@@ -147,26 +147,17 @@ npm run linkcheck
 npm test
 ```
 
-### Frontend Development
+### Building Data Package
 
 ```bash
-# Navigate to frontend directory
-cd frontend
+# Build the data package (compiles MD → JSON)
+npm run build:data
 
-# Install dependencies
-npm install
+# Output: dist/listings.json
+# This file contains all validated listings in JSON format
 
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-
-# The build process will:
-# 1. Read all .md files from ../listings/
-# 2. Auto-generate slugs from name and category
-# 3. Generate static pages for each product
-# 4. Output optimized HTML files
+# Run full pre-publish validation
+npm run prepublishOnly
 ```
 
 ### File Structure
@@ -180,24 +171,25 @@ appsutra/
 │   │   └── razorpay.md
 │   └── payment-gateway/  # Payment Gateway category folder
 │       └── ...
-├── frontend/             # Next.js web application
-│   ├── src/
-│   │   ├── app/         # Next.js App Router pages
-│   │   ├── lib/         # Data parsing and utilities
-│   │   │   └── listings.ts  # Markdown parser & slug generator
-│   │   ├── types/       # TypeScript type definitions
-│   │   │   └── product.ts   # Product type interface
-│   │   └── components/  # React components
-│   └── public/          # Static assets
 ├── schema/              # JSON Schema validation
-├── scripts/             # Validation and utility scripts
+│   ├── product.schema.json  # Product validation schema
+│   └── categories.json      # Category definitions
+├── scripts/             # Validation and build scripts
+│   ├── validate.mjs     # Schema validation
+│   ├── linkcheck.mjs    # URL verification
+│   └── build-data.ts    # MD → JSON compiler
+├── dist/                # Build output
+│   └── listings.json    # Compiled data package
 ├── .github/            # GitHub templates and workflows
-└── docs/               # Documentation
+│   └── workflows/
+│       ├── validate-listings.yml
+│       └── release.yml  # Auto-publish to GitHub Packages
+└── package.json        # @appsutra/data package config
 ```
 
-### Architecture: Markdown → Static Site
+### Architecture: Data Package Pipeline
 
-**How listings become web pages:**
+**How listings become consumable data:**
 
 1. **Organize by Category**: Place product in category folder
    - Example: `listings/finance/razorpay.md`
@@ -206,23 +198,94 @@ appsutra/
    - `name: "Razorpay"`
    - `category: "Finance"` (display name, can differ from folder)
 
-3. **Auto-Generate Slugs**: Validation and build process generate slugs from YAML fields
+3. **Auto-Generate Slugs**: Build process generates slugs from YAML fields
    - `name: "Razorpay"` → `slug: "razorpay"` (validated against filename)
    - `category: "Finance"` → `categorySlug: "finance"` (validated against folder)
    - **Validation ensures**: filename = slugify(name), folder = slugify(category)
 
-4. **Parse at Build Time**: `gray-matter` parses YAML → Product type object
+4. **Compile to JSON**: `build-data.ts` parses all MD files with `gray-matter`
+   - Validates against `product.schema.json`
+   - Generates `slug` and `categorySlug` fields
+   - Outputs to `dist/listings.json`
 
-5. **Generate Static Pages**: Next.js creates HTML at `/finance/razorpay`
+5. **Publish Package**: GitHub Actions publishes `@appsutra/data` to GitHub Packages
 
-6. **Deploy**: Static HTML files served via CDN
+6. **Consume**: Applications install the package and import the data
 
 **Key Points:**
-- ✅ **Folder names** = Organizational structure (can be anything)
-- ✅ **YAML category** = Source of truth for categorySlug
-- ✅ **YAML name** = Source of truth for product slug
-- ✅ No database required, fast static HTML
-- ✅ Type-safe with TypeScript
+- ✅ **Data-only package** - No frontend code, just structured data
+- ✅ **Automated publishing** - Tag version, GitHub Actions handles the rest
+- ✅ **Type-safe compilation** - TypeScript build with schema validation
+- ✅ **Consumable via npm** - Install via GitHub Packages
+
+## 📦 Data Package Distribution
+
+AppSutra publishes listings as a consumable npm package via GitHub Packages, enabling other applications to use our curated dataset.
+
+### Package: `@appsutra/data`
+
+**Published to:** GitHub Packages (`npm.pkg.github.com`)
+**Main Export:** `dist/listings.json` - Compiled array of all product listings
+
+### Publishing Workflow
+
+1. **Make changes** to listings in `listings/` directory
+2. **Commit and push** to the main branch
+3. **Tag a version**: `git tag v0.1.x && git push --tags`
+4. **GitHub Actions automatically**:
+   - Validates all listings against schema
+   - Builds data package (`npm run build:data`)
+   - Publishes to GitHub Packages
+
+### Build Process
+
+```bash
+# Install dependencies (includes TypeScript)
+npm install
+
+# Validate listings
+npm run validate
+
+# Check all URLs
+npm run linkcheck
+
+# Build data package (compiles MD → JSON)
+npm run build:data
+
+# Output: dist/listings.json with all listings
+```
+
+The `build-data.ts` script:
+- Parses all `.md` files with `gray-matter`
+- Validates against `schema/product.schema.json`
+- Auto-generates `slug` and `categorySlug` fields
+- Compiles into a single JSON array
+
+### Consuming the Package
+
+Other applications can install and use the data:
+
+```bash
+# Configure .npmrc for GitHub Packages
+echo "@appsutra:registry=https://npm.pkg.github.com" >> .npmrc
+
+# Set auth token (requires read:packages scope)
+export NODE_AUTH_TOKEN=ghp_your_token
+
+# Install package
+npm install @appsutra/data
+```
+
+```typescript
+// Import in your application
+import listings from '@appsutra/data/dist/listings.json';
+
+// Use the data
+const allProducts = listings;
+const financeProducts = listings.filter(l => l.categorySlug === 'finance');
+```
+
+Any web application, mobile app, or backend service can consume this data package to display SaaS product information.
 
 ## 🤝 Contributing
 

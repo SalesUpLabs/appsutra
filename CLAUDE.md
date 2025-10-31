@@ -4,131 +4,132 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-AppSutra Open Directory is a comprehensive GitHub-based SaaS directory ecosystem with two main components:
+AppSutra is a data-only package that publishes curated SaaS product listings as `@appsutra/data` via GitHub Packages.
 
-1. **Backend Directory System** - Community-driven listings managed via GitHub
-2. **Frontend Web Interface** - Next.js application for user-friendly browsing
+**This repository contains:**
+- Product listings as Markdown files with YAML front-matter
+- JSON Schema validation for data quality
+- Build scripts to compile MD → JSON
+- GitHub Actions for automated validation and publishing
 
-The system allows vendors to add listings via Pull Requests and users to leave reviews via GitHub Issues, with full automation and validation.
+**Key Features:**
+- ✅ Data package (`@appsutra/data`) published to GitHub Packages
+- ✅ Community-driven listings managed via Pull Requests
+- ✅ Automated validation and quality assurance
+- ✅ Consumable by any application via npm install
+
+Vendors can add listings via Pull Requests, with automated validation ensuring data quality before publication.
 
 ## Project Architecture
 
 ### Core Components
 
-**Directory System:**
-- `listings/` - Markdown files with YAML front-matter for each SaaS listing
-- `schema/` - JSON Schema validation files for listings and categories
-- `scripts/` - Node.js ESM validation and utility scripts
+**Data Package Structure:**
+- `listings/` - Markdown files with YAML front-matter for each SaaS product
+- `schema/` - JSON Schema validation files
+- `scripts/` - Validation and build scripts (Node.js ESM + TypeScript)
+- `dist/` - Compiled output (listings.json)
 - `.github/` - GitHub Actions workflows and issue/PR templates
-
-**Frontend Application:**
-- `frontend/` - Complete Next.js application with TypeScript
-- `frontend/src/app/` - Next.js App Router pages and layouts
-- `frontend/src/components/` - Reusable UI components
-- `frontend/src/lib/` - Data fetching, search, and utility functions
+- `package.json` - Package configuration for `@appsutra/data`
 
 **Key Files:**
-- `listings/<category>/<slug>.md` - Individual SaaS listings
-- `schema/listing.schema.json` - JSON Schema for validation
+- `listings/<category>/<slug>.md` - Individual product listings
+- `schema/product.schema.json` - **PRIMARY** JSON Schema for validation
 - `schema/categories.json` - Valid category definitions
-- `scripts/validate.mjs` - Listing validation script
-- `scripts/linkcheck.mjs` - URL validation script
-- `frontend/src/lib/listings.ts` - Listing parser and data management
-- `frontend/src/lib/github.ts` - GitHub API integration for reviews
+- `scripts/validate.mjs` - Schema validation script
+- `scripts/linkcheck.mjs` - URL verification script
+- `scripts/build-data.ts` - MD → JSON compiler (generates slugs, validates, compiles)
+- `dist/listings.json` - **OUTPUT** - Compiled data consumed by applications
 
 ### Technology Stack
 
-**Backend/Validation:**
+**Data Processing:**
 - Node.js 20+ with ESM modules
 - Ajv for JSON Schema validation
 - gray-matter for YAML front-matter parsing
 - fast-glob for file discovery
 - undici for HTTP checks
+- TypeScript (tsx) for build scripts
 
-**Frontend:**
-- Next.js 15 with App Router and TypeScript
-- Tailwind CSS for styling and responsive design
-- Fuse.js for client-side fuzzy search
-- GitHub API integration for reviews
-- Static generation for performance
-
-**CI/CD & Deployment:**
-- GitHub Actions for validation and labeling
-- Vercel for frontend deployment
-- Automated testing and validation workflows
+**Package Publishing:**
+- GitHub Actions for CI/CD automation
+- GitHub Packages (`npm.pkg.github.com`) for distribution
+- Automated validation on every PR
+- Automated publishing on version tags
 
 ## Development Commands
 
-### Backend/Directory Commands
+### Installation
 
-**In root directory:**
 ```bash
-# Install backend dependencies
+# Install dependencies
 npm install
+```
 
+### Validation Commands
+
+```bash
 # Validate all listings against schema
 npm run validate
 
 # Check all URLs in listings
 npm run linkcheck
 
-# Run all validation tests
+# Run all validation tests (validate + linkcheck)
 npm test
 ```
 
-### Frontend Commands
+### Build Commands
 
-**In frontend/ directory:**
 ```bash
-# Install frontend dependencies
-npm install
+# Build data package (compile MD → JSON)
+npm run build:data
 
-# Start development server
-npm run dev
+# Output: dist/listings.json
 
-# Build for production
-npm run build
-
-# Start production server
-npm start
-
-# Run linting
-npm run lint
+# Run full pre-publish validation (validate + linkcheck + build)
+npm run prepublishOnly
 ```
 
-### Pre-Commit Validation Workflow
+### Publishing a New Version
 
-**IMPORTANT: Always run these commands before committing changes:**
-
-1. **Backend Validation** (from root):
 ```bash
-npm test                    # Runs validate + linkcheck
-```
-
-2. **Frontend Validation** (from frontend/):
-```bash
-npm run build              # Ensure frontend builds successfully
-npm run lint               # Check for code style issues
-```
-
-3. **Full System Test** (from root):
-```bash
-# Validate backend
-npm test
-
-# Test frontend build
-cd frontend && npm run build && cd ..
-
-# If all pass, commit changes
+# 1. Make changes to listings and commit
 git add .
-git commit -m "your commit message"
+git commit -m "Add new products"
+git push
+
+# 2. Tag a new version
+git tag v0.1.x
+git push --tags
+
+# 3. GitHub Actions automatically:
+#    - Validates all listings
+#    - Builds data package
+#    - Publishes to GitHub Packages as @appsutra/data
+```
+
+### Pre-Commit Workflow
+
+**IMPORTANT: Always run before committing:**
+
+```bash
+# Run all tests
+npm test
+
+# Test data build
+npm run build:data
+
+# If both pass, commit
+git add .
+git commit -m "your message"
 git push
 ```
 
-**Automated Checks:**
-- GitHub Actions will automatically run validation on every PR
-- All validation must pass before merging
-- Frontend build errors will block deployment
+**Automated CI/CD:**
+- GitHub Actions validates every PR automatically
+- Validation must pass before merging
+- New versions auto-publish on git tags
 
 ## Listing File Format
 
@@ -163,76 +164,133 @@ Product description here...
 Detailed pricing information...
 ```
 
-## Frontend Architecture
+## Data Package Architecture
 
-### Page Structure
-- **Homepage** (`/`) - Hero, categories, featured products
-- **Category Pages** (`/[category]`) - Filtered listings by category
-- **Product Pages** (`/[category]/[slug]`) - Detailed product information
-- **Search Page** (`/search`) - Advanced search with filters
+This repository publishes the `@appsutra/data` package to GitHub Packages.
 
-### Data Flow
-1. **Build Time**: Parse markdown files from `listings/` directory
-2. **Static Generation**: Create pages for all categories and products
-3. **Runtime**: Fetch GitHub Issues for reviews via API
-4. **Updates**: Webhook rebuilds on new listings
+### Data Pipeline Flow
 
-### Key Components
-- `Header/Footer` - Navigation and branding
-- `ListingCard` - Product display component
-- `ReviewCard` - GitHub Issue review display
-- `SearchInterface` - Advanced filtering and search
+```
+1. Source          → listings/*.md (Markdown + YAML)
+2. Validation      → JSON Schema + URL checks
+3. Compilation     → build-data.ts (MD → JSON)
+4. Output          → dist/listings.json
+5. Publishing      → GitHub Packages (@appsutra/data)
+6. Consumption     → npm install @appsutra/data
+```
+
+### Package Configuration
+
+**package.json:**
+```json
+{
+  "name": "@appsutra/data",
+  "version": "0.1.0",
+  "main": "dist/listings.json",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}
+```
+
+### Build Script (`build-data.ts`)
+
+The TypeScript build script:
+1. Discovers all `*.md` files in `listings/`
+2. Parses YAML front-matter with `gray-matter`
+3. Validates against `product.schema.json`
+4. Auto-generates `slug` and `categorySlug` fields
+5. Validates filename = slugify(name), folder = slugify(category)
+6. Compiles all listings into `dist/listings.json`
+
+### Consuming the Package
+
+**Installation:**
+```bash
+# Configure .npmrc
+echo "@appsutra:registry=https://npm.pkg.github.com" >> .npmrc
+
+# Authenticate (requires GitHub token with read:packages)
+export NODE_AUTH_TOKEN=ghp_your_token
+
+# Install package
+npm install @appsutra/data
+```
+
+**Usage Example:**
+```typescript
+import listings from '@appsutra/data/dist/listings.json';
+
+// All products
+const products = listings;
+
+// Filter by category
+const financeApps = listings.filter(p => p.categorySlug === 'finance');
+
+// Find by slug
+const product = listings.find(p => p.slug === 'razorpay');
+```
+
+Any application can consume this data package by installing it via npm and importing the JSON file.
 
 ## GitHub Integration
 
 ### Pull Request Workflow
-1. Vendors fork the repository
-2. Add listing as `listings/<category>/<slug>.md`
-3. Open PR using provided template
-4. Automated validation runs via GitHub Actions
-5. Manual review and merge by maintainers
-6. Frontend automatically rebuilds with new content
+1. Contributors fork the repository
+2. Add/update listing: `listings/<category>/<slug>.md`
+3. Open PR (validation runs automatically)
+4. GitHub Actions validates schema + links
+5. Maintainers review and merge
+6. Optionally tag version to publish new package
 
 ### Review System
-- GitHub Issues with structured templates (`review.yml`)
-- Rating system via issue labels
-- Structured data parsing (pros/cons/context)
-- Frontend displays reviews with GitHub API integration
+- Users can submit reviews via GitHub Issues
+- Structured templates for consistent feedback
+- All reviews are public and auditable
+- Community-driven quality control
 
-### Automation
+### Automation Features
 - Auto-labeling PRs by category
-- Schema and link validation on every PR
-- Frontend build and deployment on merge
-- Review aggregation and display
+- Schema validation on every PR
+- Link checking on every PR
+- Automated package publishing on version tags
+- Pre-merge validation requirements
 
 ## Development Workflow
 
 ### Adding New Listings
-1. Create markdown file in appropriate category folder
-2. Follow YAML schema requirements
+1. Create markdown file: `listings/<category>/<slug>.md`
+2. Add YAML front-matter following `product.schema.json`
+3. Ensure filename = slugify(name), folder = slugify(category)
+4. Run validation: `npm test`
+5. Test compilation: `npm run build:data`
+6. Commit and push
+
+### Updating Existing Listings
+1. Edit the markdown file directly
+2. Update `updated_at` field to current date (YYYY-MM-DD)
 3. Run validation: `npm test`
-4. Frontend will automatically pick up new listings
+4. Commit and push
 
-### Modifying Frontend
-1. Work in `frontend/` directory
-2. Test locally: `npm run dev`
-3. Build test: `npm run build`
-4. Commit only after successful build
+### Publishing New Data Version
+1. Ensure all changes are committed and pushed
+2. Tag a new version: `git tag v0.1.x`
+3. Push tags: `git push --tags`
+4. GitHub Actions automatically:
+   - Validates all listings
+   - Builds data package
+   - Publishes to GitHub Packages
+5. Applications can update to new version: `npm install @appsutra/data@0.1.x`
 
-### Before Every Commit
+### Pre-Commit Checklist
 ```bash
-# From root directory
-npm test                    # Backend validation
+# Always run before committing
+npm test                    # Validate schema + check links
+npm run build:data          # Test compilation
 
-# From frontend directory
-cd frontend
-npm run build              # Frontend build test
-npm run lint               # Code quality check
-cd ..
-
-# Only commit if all tests pass
+# If both pass
 git add .
-git commit -m "description"
+git commit -m "Add/update listings"
 git push
 ```
 
@@ -246,53 +304,95 @@ git push
 
 ### Content Moderation
 - Factual, neutral descriptions only
-- India-context friendly (₹ pricing, local features)
-- No promotional language or personal attacks
+- India-focused content (₹ pricing, local features)
+- No promotional language
 - Community-driven review system via GitHub Issues
+- All submissions reviewed by maintainers
 
-### Performance & SEO
-- Static generation for optimal loading
-- Structured data (JSON-LD) for rich snippets
-- CDN deployment with Indian region optimization
-- Mobile-responsive design
+## Publishing to GitHub Packages
 
-## Deployment
+### Automated Publishing (Recommended)
 
-### Automatic Deployment
-- **Frontend**: Vercel with automatic builds on push to main
-- **Content**: Static regeneration when listings are updated
-- **Reviews**: Real-time via GitHub API
-
-### Manual Deployment
 ```bash
-# Frontend only
-cd frontend
-npm run build
-# Deploy to Vercel or other platform
+# 1. Commit all changes
+git add .
+git commit -m "Update listings"
+git push
 
-# Full system verification
-npm test                    # Backend validation
-cd frontend && npm run build   # Frontend build
+# 2. Tag a new version
+git tag v0.1.x
+git push --tags
+
+# 3. GitHub Actions automatically publishes to GitHub Packages
 ```
+
+### Manual Verification
+
+```bash
+# Test compilation locally before tagging
+npm run build:data          # Compile MD → JSON
+npm run prepublishOnly      # Full validation + build
+
+# Check output
+cat dist/listings.json | jq length
+```
+
+### Version Management
+
+- Use semantic versioning: `v0.1.0`, `v0.2.0`, `v1.0.0`
+- Increment patch for listing updates: `v0.1.0` → `v0.1.1`
+- Increment minor for new features/fields: `v0.1.0` → `v0.2.0`
+- Increment major for breaking changes: `v0.9.0` → `v1.0.0`
 
 ## Troubleshooting
 
 ### Common Issues
-- **Validation Failures**: Check YAML syntax and required fields
-- **Build Errors**: Ensure all dependencies are installed
-- **Link Check Failures**: Verify URLs are accessible
-- **Review Display Issues**: Check GitHub API rate limits
+
+**Validation Failures:**
+- Check YAML syntax is correct
+- Ensure all required fields are present (`product.schema.json`)
+- Verify filename matches slugify(name)
+- Verify folder matches slugify(category)
+
+**Build Errors:**
+- Run `npm install` to ensure dependencies are installed
+- Check TypeScript compilation with `npm run build:data`
+- Review error messages for specific issues
+
+**Link Check Failures:**
+- Verify URLs are accessible and not broken
+- Check for typos in website field
+- Ensure URLs use HTTPS where possible
+
+**Publishing Failures:**
+- Verify GitHub token has `write:packages` permission
+- Ensure package.json name is `@appsutra/data`
+- Check that publishConfig registry is set correctly
 
 ### Debug Commands
+
 ```bash
 # Validate specific file
-node scripts/validate.mjs listings/crm/specific-file.md
+node scripts/validate.mjs listings/finance/razorpay.md
 
-# Check specific URL
-node scripts/linkcheck.mjs listings/crm/specific-file.md
+# Check links in specific file
+node scripts/linkcheck.mjs listings/finance/razorpay.md
 
-# Frontend debug build
-cd frontend && npm run build 2>&1 | tee build.log
+# Test full data build
+npm run build:data
+
+# Inspect compiled output
+cat dist/listings.json | jq '.[0]'  # View first listing
+cat dist/listings.json | jq length   # Count total listings
+cat dist/listings.json | jq 'map(.categorySlug) | unique'  # List categories
 ```
 
-This repository maintains high quality standards through automated validation, community review, and comprehensive testing before every deployment.
+### Quality Standards
+
+This repository maintains high quality through:
+- ✅ Automated JSON Schema validation
+- ✅ Comprehensive link checking
+- ✅ Required PR reviews before merge
+- ✅ Community feedback via Issues
+- ✅ Continuous integration testing
+- ✅ Semantic versioning for changes

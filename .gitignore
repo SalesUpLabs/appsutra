@@ -110,3 +110,5 @@ coverage/
 # Validation artifacts
 validation-logs/
 *.validation.log
+
+archive

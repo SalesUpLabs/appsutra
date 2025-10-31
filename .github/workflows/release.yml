@@ -1,0 +1,68 @@
+name: Release Data Package
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run validation
+        run: npm run validate
+
+      - name: Check links
+        run: npm run linkcheck
+        continue-on-error: true  # Don't fail release on link check failures
+
+      - name: Build data package
+        run: npm run build:data
+
+      - name: Verify dist output
+        run: |
+          if [ ! -f dist/listings.json ]; then
+            echo "Error: dist/listings.json not found"
+            exit 1
+          fi
+          echo "✅ Data package built successfully"
+          ls -lh dist/
+
+      - name: Publish to GitHub Packages
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create release summary
+        run: |
+          echo "## 📦 Package Published" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Package:** \`@appsutra/data\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Version:** \`${GITHUB_REF#refs/tags/}\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Registry:** GitHub Packages" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📊 Stats" >> $GITHUB_STEP_SUMMARY
+          LISTING_COUNT=$(jq length dist/listings.json)
+          echo "- Total listings: $LISTING_COUNT" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📥 Installation" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`bash" >> $GITHUB_STEP_SUMMARY
+          echo "npm install @appsutra/data@${GITHUB_REF#refs/tags/v}" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
