@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Repository Overview
 
-AppSutra is a data-only package that publishes curated SaaS product listings as `@appsutra/data` via GitHub Packages.
+AppSutra is a data-only package that publishes curated SaaS product listings as `@appsutra/data` to npm.
 
 **This repository contains:**
 - Product listings as Markdown files with YAML front-matter
@@ -13,10 +13,10 @@ AppSutra is a data-only package that publishes curated SaaS product listings as 
 - GitHub Actions for automated validation and publishing
 
 **Key Features:**
-- ✅ Data package (`@appsutra/data`) published to GitHub Packages
+- ✅ Data package (`@appsutra/data`) published to npm registry
 - ✅ Community-driven listings managed via Pull Requests
 - ✅ Automated validation and quality assurance
-- ✅ Consumable by any application via npm install
+- ✅ Consumable by any application via npm install (no authentication required)
 
 Vendors can add listings via Pull Requests, with automated validation ensuring data quality before publication.
 
@@ -53,7 +53,7 @@ Vendors can add listings via Pull Requests, with automated validation ensuring d
 
 **Package Publishing:**
 - GitHub Actions for CI/CD automation
-- GitHub Packages (`npm.pkg.github.com`) for distribution
+- npm registry (`registry.npmjs.org`) for distribution
 - Automated validation on every PR
 - Automated publishing on version tags
 
@@ -106,7 +106,7 @@ git push --tags
 # 3. GitHub Actions automatically:
 #    - Validates all listings
 #    - Builds data package
-#    - Publishes to GitHub Packages as @appsutra/data
+#    - Publishes to npm as @appsutra/data
 ```
 
 ### Pre-Commit Workflow
@@ -166,7 +166,7 @@ Detailed pricing information...
 
 ## Data Package Architecture
 
-This repository publishes the `@appsutra/data` package to GitHub Packages.
+This repository publishes the `@appsutra/data` package to the npm registry.
 
 ### Data Pipeline Flow
 
@@ -175,7 +175,7 @@ This repository publishes the `@appsutra/data` package to GitHub Packages.
 2. Validation      → JSON Schema + URL checks
 3. Compilation     → build-data.ts (MD → JSON)
 4. Output          → dist/listings.json
-5. Publishing      → GitHub Packages (@appsutra/data)
+5. Publishing      → npm registry (@appsutra/data)
 6. Consumption     → npm install @appsutra/data
 ```
 
@@ -207,13 +207,7 @@ The TypeScript build script:
 
 **Installation:**
 ```bash
-# Configure .npmrc
-echo "@appsutra:registry=https://npm.pkg.github.com" >> .npmrc
-
-# Authenticate (requires GitHub token with read:packages)
-export NODE_AUTH_TOKEN=ghp_your_token
-
-# Install package
+# Install directly from npm (no authentication required)
 npm install @appsutra/data
 ```
 
@@ -309,7 +303,7 @@ git push
 - Community-driven review system via GitHub Issues
 - All submissions reviewed by maintainers
 
-## Publishing to GitHub Packages
+## Publishing to npm Registry
 
 ### Automated Publishing (Recommended)
 
@@ -323,7 +317,7 @@ git push
 git tag v0.1.x
 git push --tags
 
-# 3. GitHub Actions automatically publishes to GitHub Packages
+# 3. GitHub Actions automatically publishes to npm registry
 ```
 
 ### Manual Verification
@@ -365,9 +359,9 @@ cat dist/listings.json | jq length
 - Ensure URLs use HTTPS where possible
 
 **Publishing Failures:**
-- Verify GitHub token has `write:packages` permission
-- Ensure package.json name is `@appsutra/data`
-- Check that publishConfig registry is set correctly
+- Verify NPM_TOKEN secret is set in GitHub repository settings
+- Ensure you have npm account access to publish @appsutra/data
+- Check that publishConfig registry is set to registry.npmjs.org
 
 ### Debug Commands
 

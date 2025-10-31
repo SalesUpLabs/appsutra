@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          registry-url: 'https://npm.pkg.github.com'
+          registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
         run: npm ci
@@ -45,10 +45,10 @@ jobs:
           echo "✅ Data package built successfully"
           ls -lh dist/
 
-      - name: Publish to GitHub Packages
+      - name: Publish to npm
         run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: Create release summary
         run: |
@@ -56,7 +56,7 @@ jobs:
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "**Package:** \`@appsutra/data\`" >> $GITHUB_STEP_SUMMARY
           echo "**Version:** \`${GITHUB_REF#refs/tags/}\`" >> $GITHUB_STEP_SUMMARY
-          echo "**Registry:** GitHub Packages" >> $GITHUB_STEP_SUMMARY
+          echo "**Registry:** npm (registry.npmjs.org)" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📊 Stats" >> $GITHUB_STEP_SUMMARY
           LISTING_COUNT=$(jq length dist/listings.json)

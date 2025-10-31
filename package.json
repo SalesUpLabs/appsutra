@@ -19,7 +19,8 @@
     "prepublishOnly": "npm run test && npm run build:data"
   },
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://registry.npmjs.org",
+    "access": "public"
   },
   "repository": {
     "type": "git",
