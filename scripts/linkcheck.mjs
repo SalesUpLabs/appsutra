@@ -23,20 +23,27 @@ let totalUrls = 0;
 console.log(`🔗 Checking links in ${files.length} listing(s)...\n`);
 
 // Helper function to check a single URL
-async function checkUrl(url, context, retries = RETRY_ATTEMPTS) {
+async function checkUrl(url, context, retries = RETRY_ATTEMPTS, useGet = false) {
   try {
     const response = await request(url, {
-      method: "HEAD",
+      method: useGet ? "GET" : "HEAD",
       timeout: TIMEOUT,
       headers: {
-        'User-Agent': 'AppSutra-LinkChecker/1.0 (+https://github.com/salesuplabs/appsutra)'
+        'User-Agent': 'Mozilla/5.0 (compatible; AppSutra-LinkChecker/1.0; +https://github.com/salesuplabs/appsutra)',
+        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'
       }
     });
 
     if (response.statusCode >= 400) {
+      // If HEAD returns 406, try GET request (some sites block HEAD)
+      if (response.statusCode === 406 && !useGet) {
+        console.log(`⚠️  ${context}: ${url} blocked HEAD request, trying GET...`);
+        return await checkUrl(url, context, retries, true);
+      }
+
       if (retries > 0) {
         console.log(`⚠️  ${context}: ${url} returned ${response.statusCode}, retrying...`);
-        return await checkUrl(url, context, retries - 1);
+        return await checkUrl(url, context, retries - 1, useGet);
       }
       console.error(`❌ ${context}: ${url} → HTTP ${response.statusCode}`);
       return false;
@@ -47,7 +54,7 @@ async function checkUrl(url, context, retries = RETRY_ATTEMPTS) {
   } catch (error) {
     if (retries > 0 && (error.code === 'UND_ERR_CONNECT_TIMEOUT' || error.code === 'ENOTFOUND')) {
       console.log(`⚠️  ${context}: ${url} failed (${error.code}), retrying...`);
-      return await checkUrl(url, context, retries - 1);
+      return await checkUrl(url, context, retries - 1, useGet);
     }
 
     console.error(`❌ ${context}: ${url} → ${error.message}`);
